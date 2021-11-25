@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><img src="https://res.cloudinary.com/mertyalcin/image/upload/v1637136345/poembook_1_ddutd3.png" alt="" width="200" height="53"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li *ngIf="isLoggedIn()" class="nav-item">
+          <a  class="nav-link active" aria-current="page" href="#">Şiirler</a>
+        </li>
+        <li *ngIf="isLoggedIn()" class="nav-item">
+          <a  class="nav-link" href="/categories/Didaktik">Kategoriler</a>
+        </li>
+        <li *ngIf="isLoggedIn()" class="nav-item">
+          <a  class="nav-link" href="/most-liked">En Beğenilenler</a>
+        </li>     
+        <li *ngIf="isLoggedIn()" class="nav-item">
+          <a  class="nav-link" href="/most-comment">En Çok Yorum Alanlar</a>
+        </li>    
+        <li *ngIf="isLoggedIn()" class="nav-item">
+          <a  class="nav-link" href="/random">Rastgele Şiir</a>
+        </li>      
+        <li *ngIf="isLoggedIn()" class="nav-item">
+          <a  class="nav-link" href="/poem/search">Şiir Ara</a>
+        </li>   
+ 
+
+        <li class="nav-item dropdown" id="navbarDropdownMenu" *ngIf="isLoggedIn()">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Merhaba {{user?.firstName}} 
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item"  href="/myaccount">Hesabım</a></li>
+            <li><a class="dropdown-item"  href="{{'/user/'+user.username}}">Profilim</a></li>
+            <li><a class="dropdown-item" (click)="onLogout()" href="#">Çıkış</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

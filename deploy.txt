@@ -1,0 +1,1 @@
+ng build --build-optimizer --base-href="http://mert-yalcin.com.tr/"

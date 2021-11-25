@@ -1,0 +1,257 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { NotificationType } from '../enum/notification-type.enum';
+import { DataResult } from '../model/result/data-result';
+import { Result } from '../model/result/result';
+import { User } from '../model/user';
+import { AuthenticationService } from '../service/authentication.service';
+import { CategoryService } from '../service/category.service';
+import { FollowService } from '../service/follow.service';
+import { NotificationService } from '../service/notification.service';
+import { PoemCommentService } from '../service/poem-comment.service';
+import { PoemLikeService } from '../service/poem-like.service';
+import { PoemService } from '../service/poem.service';
+import { UserService } from '../service/user.service';
+
+@Component({
+  selector: 'app-my-account',
+  templateUrl: './my-account.component.html',
+  styleUrls: ['./my-account.component.css']
+})
+export class MyAccountComponent implements OnInit,OnDestroy { 
+  public currentUser: User;
+  public editUser=new User();
+  private currentUsername:string
+  public isFollowing: boolean;
+  public newPassword: string;
+  public loading= false;
+  public newEmail:string;
+  public newUsername:string;
+  public fileName:string;
+  public newAvatar:File;
+  private subscriptions: Subscription[] = [];
+  constructor(    
+    private authenticationService: AuthenticationService,
+    private notificationService: NotificationService,
+    private userService: UserService,
+ ) { }
+  ngOnInit() {    
+    this.currentUser=this.authenticationService.getUserFromLocalCache();
+    this.currentUsername=this.currentUser.username;
+    this.getCurrentUserInfo();
+  }
+  onSelectEditProfile(): void {      
+    this.clickButton('openEditProfile');
+  }
+  onSelectChangePassword(): void {      
+    this.clickButton('openChangePassword');
+  }
+  onSelectChangeEmail(): void {      
+    this.clickButton('openChangeEmail');
+  }
+  onSelectChangeUsername(): void {      
+    this.clickButton('openChangeUsername');
+  }
+  onSelectChangeAvatar(): void {      
+    this.clickButton('openChangeAvatar');
+  }
+  public onAvatarChange(fileName: string, newAvatar: File): void {
+    this.fileName =  fileName;
+    this.newAvatar = newAvatar;
+  }
+  public onSelectUploadAvatar(): void {
+    this.clickButton('edit-avatar-input');
+  }
+  private clickButton(buttonId: string): void {
+    document.getElementById(buttonId).click();
+  }
+  private getCurrentUserInfo(){
+    this.subscriptions.push(    
+      this.userService.getUser(this.currentUsername).subscribe(
+        (response: DataResult) => {
+          if (response.success) {
+            this.editUser=response.data;
+           // this.sendNotification(NotificationType.SUCCESS, response.message);          
+          } else {
+            this.sendNotification(NotificationType.ERROR, response.message);          }
+        },
+        (error: HttpErrorResponse) => {
+          this.sendNotification(NotificationType.ERROR, error.error.message);
+        }
+      )
+    );
+  }
+  public OnUpdateProfile(){
+   let formData=this.updateProfileFormData(this.currentUsername,this.editUser);
+    this.subscriptions.push(    
+      this.userService.selfUpdate(formData).subscribe(
+        (response: Result) => {
+          if (response.success) {         
+            this.clickButton("closeEditProfile")  
+           this.sendNotification(NotificationType.SUCCESS, response.message);          
+          } else {
+            this.sendNotification(NotificationType.ERROR, response.message);          }
+        },
+        (error: HttpErrorResponse) => {
+          this.sendNotification(NotificationType.ERROR, error.error.message);
+        }
+      )
+    );
+  }
+  public onChangePassword(){
+    let formData=this.changePasswordFormData();
+     this.subscriptions.push(    
+       this.userService.changePassword(formData).subscribe(
+         (response: Result) => {
+           if (response.success) {         
+             this.clickButton("closeChangePassword")  
+            this.sendNotification(NotificationType.SUCCESS, response.message);          
+           } else {
+             this.sendNotification(NotificationType.ERROR, response.message);          }
+         },
+         (error: HttpErrorResponse) => {
+           this.sendNotification(NotificationType.ERROR, error.error.message);
+         }
+       )
+     );
+   }
+   public onChangeEmail(){
+    let formData=this.changeEmailFormData();
+     this.subscriptions.push(    
+       this.userService.changeEmail(formData).subscribe(
+         (response: Result) => {
+           if (response.success) {         
+             this.clickButton("closeChangeEmail");  
+            this.sendNotification(NotificationType.SUCCESS, response.message);          
+           } else {
+             this.sendNotification(NotificationType.ERROR, response.message);          }
+         },
+         (error: HttpErrorResponse) => {
+           this.sendNotification(NotificationType.ERROR, error.error.message);
+         }
+       )
+     );
+   }
+   public onChangeUsername(){
+    let formData=this.changeUsernameFormData();
+     this.subscriptions.push(    
+       this.userService.changeUsername(formData).subscribe(
+         (response: Result) => {
+           if (response.success) {         
+             this.clickButton("closeChangeUsername");  
+            this.sendNotification(NotificationType.SUCCESS, response.message);          
+           } else {
+             this.sendNotification(NotificationType.ERROR, response.message);          }
+         },
+         (error: HttpErrorResponse) => {
+           this.sendNotification(NotificationType.ERROR, error.error.message);
+         }
+       )
+     );
+   }
+
+   public onUpdateAvatar(): void {
+    this.loading=true;
+    const formData = new FormData();
+    formData.append('avatar', this.newAvatar);
+    formData.append('username', this.currentUsername);
+    this.subscriptions.push(
+      this.userService.updateAvatar(formData).subscribe(
+        (response: Result) => {
+          if(response.success){     
+            this.updateLoggedInUser();
+            location.reload()
+            this.loading=false;
+            this.sendNotification(NotificationType.SUCCESS, response.message);
+            this.clickButton("closeChangeAvatar");
+          }
+          else{
+            this.loading=false;
+            this.sendNotification(NotificationType.ERROR, response.message);
+          }
+          
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.loading=false;
+          this.sendNotification(NotificationType.ERROR, errorResponse.error.message);        
+        }
+      )
+    );
+  }
+  private updateProfileFormData(loggedInUsername: string, user: User): FormData {
+    const formData = new FormData();   
+    formData.append('currentUsername', loggedInUsername);
+    formData.append('firstName', user.firstName);
+    formData.append('lastName', user.lastName);
+    formData.append('username', user.username);
+    formData.append('facebookAccount', user.facebookAccount);
+    formData.append('twitterAccount', user.twitterAccount);
+    formData.append('instagramAccount', user.instagramAccount);
+    formData.append('aboutMe', user.aboutMe); 
+    return formData;
+  }
+  private changePasswordFormData(): FormData {
+    const formData = new FormData();   
+    formData.append('username', this.currentUsername);
+    formData.append('password', this.newPassword);
+    return formData;
+  }
+  private changeEmailFormData(): FormData {
+    const formData = new FormData();   
+    formData.append('currentUsername', this.currentUsername);
+    formData.append('newEmail', this.newEmail);
+    return formData;
+  }
+  private changeUsernameFormData(): FormData {
+    const formData = new FormData();   
+    formData.append('currentUsername', this.currentUsername);
+    formData.append('newUsername', this.newUsername);
+    return formData;
+  }
+
+  private updateLoggedInUser():User{
+    this.subscriptions.push(
+      this.userService.getUser(this.currentUsername).subscribe(
+        (response: DataResult) => {
+          if(response.success){            
+            this.authenticationService.updateLoggedInUser(response.data)
+          }
+          else{
+       
+            this.sendNotification(NotificationType.ERROR, response.message);
+           
+          }
+          
+        },
+        (errorResponse: HttpErrorResponse) => {        
+          this.sendNotification(NotificationType.ERROR, errorResponse.error.message);   
+          
+        }
+      )
+    );
+    return null;
+  }
+  private sendNotification(
+    notificationType: NotificationType,
+    message: string
+  ): void {
+    if (message) {
+      this.notificationService.notify(notificationType, message);
+    } else {
+      this.notificationService.notify(
+        NotificationType.ERROR,
+        'bir şeyler ters gitti.'
+      );
+    }
+  }
+  isAdmin():boolean{
+   return this.authenticationService.isAdminOrSuperAdmin;
+  }
+  isEditor():boolean{
+    return this.authenticationService.isAdminOrSuperAdminorOrEditor;
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+}
