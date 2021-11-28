@@ -49,6 +49,8 @@
         Yükleniyor
       </button>
       <button class="btn btn-primary" *ngIf="!followingsPoemsLoading&&followingsPoems.length>5" (click)="loadMorePoem()"> Devamını Gör</button>
-  
+      <div *ngIf="followingsPoems.length==0" class="alert alert-info" role="alert">
+        Görünüşe göre takip ettiğin kimse şiir paylaşmamış. En beğenilen şiirleri buradan inceleyebilirsin-> <a href="/most-liked"> En Beğenilenler</a>
+      </div>
 </div>
 </div>

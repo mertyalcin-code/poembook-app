@@ -17,6 +17,7 @@ import { TestComponent } from './test/test.component';
 import { MostCommentComponent } from './populer/most-comment/most-comment.component';
 import { MostLikedComponent } from './populer/most-liked/most-liked.component';
 import { SearchPoemsComponent } from './search-poems/search-poems.component';
+import { PoemPageComponent } from './poem-page/poem-page.component';
 
 const routes: Routes = [
   {path: 'login',component:LoginComponent},
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path: 'poem/search',component:SearchPoemsComponent,canActivate: [AuthenticationGuard] },
   {path: 'user/:username',component:UserComponent,canActivate: [AuthenticationGuard] },
   {path: 'categories/:category',component:CategoryComponent,canActivate: [AuthenticationGuard] },
+  {path: 'poem/:poemId',component:PoemPageComponent,canActivate: [AuthenticationGuard] },
   {path: 'myaccount',component:MyAccountComponent,canActivate: [AuthenticationGuard] },
   {path: 'admin/user/management',component:UserManagementComponent,canActivate: [AdminGuard] }, 
   {path: 'admin/poem/management',component:PoemManagementComponent,canActivate: [EditorGuard] }, 

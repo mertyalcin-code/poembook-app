@@ -28,13 +28,14 @@ import { PoemBoxComponent } from './poem-box/poem-box.component';
 import { MostLikedComponent } from './populer/most-liked/most-liked.component';
 import { MostCommentComponent } from './populer/most-comment/most-comment.component';
 import { SearchPoemsComponent } from './search-poems/search-poems.component';
+import { PoemPageComponent } from './poem-page/poem-page.component';
 
 
 
 
 
 @NgModule({
-  declarations: [																			
+  declarations: [																				
     AppComponent,
       LoginComponent,
       UserComponent,
@@ -54,7 +55,8 @@ import { SearchPoemsComponent } from './search-poems/search-poems.component';
       PoemBoxComponent,
       MostLikedComponent,
       MostCommentComponent,
-      SearchPoemsComponent
+      SearchPoemsComponent,
+      PoemPageComponent
    ],
   imports: [
     BrowserModule,

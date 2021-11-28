@@ -33,9 +33,11 @@ export class PoemBoxComponent implements OnInit,OnDestroy {
   private subscriptions: Subscription[] = []; 
   categories:Category[];
   showComment : Map<number,boolean>;
+  editCommentStatus=false;
   editPoemStatus= false;
   editPoem= new Poem();
-
+  editCommentId:number;
+  updateCommentLoading=false;
 
   constructor( private authenticationService: AuthenticationService,
     private notificationService: NotificationService,  
@@ -90,13 +92,21 @@ export class PoemBoxComponent implements OnInit,OnDestroy {
       }
     );
   }
-
+ 
   onEditPoem(poemId:number):void{
     this.editPoemStatus=true;
     this.editPoemForm.patchValue({
       poemTitle: this.poem.poemTitle,
       poemContent: this.poem.poemContent,
       categoryTitle: this.poem.categoryTitle,
+    });
+  }
+  onEditComment(poemCommentId:number,poemCommentText:string):void{
+    this.editCommentStatus=true;
+    this.editCommentId=poemCommentId;
+    this.editCommentForm.patchValue({      
+     comment: poemCommentText
+   
     });
   }
 
@@ -167,6 +177,13 @@ addCommentForm = new FormGroup({
     Validators.minLength(1),
   ]),
 });
+
+editCommentForm = new FormGroup({
+  comment: new FormControl('', [
+    Validators.required,
+    Validators.minLength(1),
+  ]),
+});
 editPoemForm = new FormGroup({
   poemTitle: new FormControl('', [
     Validators.required,
@@ -204,7 +221,11 @@ clearEditPoemForm() {
     categoryTitle: '',
   });
 }
-
+clearEditCommentForm() {
+  this.editPoemForm.patchValue({
+    comment: '',    
+  });
+}
 
 addComment(poemId: number): void {
   this.commentLoading = true;
@@ -229,6 +250,36 @@ addComment(poemId: number): void {
             errorResponse.error.message
           );
           this.commentLoading = false;
+        }
+      )
+  );
+}
+updateComment(): void { 
+  this.updateCommentLoading=true;
+  this.editCommentStatus=true;
+  this.subscriptions.push(
+    this.poemCommentService
+      .updateComment(this.editCommentData())
+      .subscribe(
+        (response: Result) => {
+          if (response.success) {
+            this.updateCommentLoading=false;
+            this.editCommentStatus=false;
+            this.sendNotification(NotificationType.SUCCESS, response.message);
+            this.clearEditCommentForm();
+            this.getpoem();
+            this.editCommentId=null;
+          } else {
+            this.sendNotification(NotificationType.ERROR, response.message);
+            this.updateCommentLoading=false;
+          }
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.sendNotification(
+            NotificationType.ERROR,
+            errorResponse.error.message
+          );
+          this.updateCommentLoading=false;
         }
       )
   );
@@ -302,6 +353,13 @@ public createCommentData(poemId: number): FormData {
   formData.append('username', this.currentUsername);
   formData.append('poemId', JSON.stringify(poemId));
   formData.append('poemCommentText', this.addCommentForm.value.comment);
+  return formData;
+}
+public editCommentData(): FormData {
+  const formData = new FormData();
+  formData.append('currentUsername', this.currentUsername);
+  formData.append('poemCommentId', JSON.stringify(this.editCommentId));
+  formData.append('poemCommentText', this.editCommentForm.value.comment);
   return formData;
 }
 deletePoem(poemId: number): void {

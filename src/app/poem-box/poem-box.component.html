@@ -134,7 +134,7 @@
                 <i class="mdi mdi-dots-vertical"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-end">
-                <a href="javascript:void(0);" class="dropdown-item"
+                <a (click)="onEditComment(comment.poemCommentId,comment.poemCommentText)" class="dropdown-item"
                   >Düzenle</a
                 >
 
@@ -147,12 +147,31 @@
             </div>
             <small *ngIf="comment.commentTimeInMinute<60" class="text-muted">{{ comment.commentTimeInMinute + " dk önce" }}</small >
               <small *ngIf="comment.commentTimeInMinute>=60 && comment.commentTimeInMinute<1440" class="text-muted">{{" "+float2int(comment.commentTimeInMinute/60)  + " saat önce" }}</small >
-                <small *ngIf="comment.commentTimeInMinute>=1440" class="text-muted">{{comment.lastCommentUpdateTime |date }}</small >
+                <small *ngIf="comment.commentTimeInMinute>=1440" class="text-muted">{{comment.commentTimeInMinute |date }}</small >
 
 
           </h5>
-          {{ comment.poemCommentText }}
-          <br />
+        <p > {{ comment.poemCommentText }}</p> 
+        <div class="w-100">
+          <form  *ngIf="editCommentStatus && editCommentId==comment.poemCommentId"
+            [formGroup]="editCommentForm"
+            (ngSubmit)="updateComment()"
+          >
+            <input
+              *ngIf="!updateCommentLoading"
+              type="text"
+              id="comment"
+              formControlName="comment"
+              class="form-control border-0 form-control-sm"
+              placeholder="Yorum Yap"
+            />
+            <button  *ngIf="updateCommentLoading && editCommentForm.valid" class="btn btn-primary" type="button" disabled>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Yorum yapılıyor...
+            </button>
+          </form>
+        </div>    
+          
         </div>
       </div>
 
