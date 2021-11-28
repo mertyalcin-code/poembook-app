@@ -3,10 +3,14 @@ import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { NotificationType } from '../enum/notification-type.enum';
+import { Category } from '../model/category';
+import { Poem } from '../model/poem';
 import { DataResult } from '../model/result/data-result';
 import { PoemBox } from '../model/result/poemBox';
 import { Result } from '../model/result/result';
+import { User } from '../model/user';
 import { AuthenticationService } from '../service/authentication.service';
+import { CategoryService } from '../service/category.service';
 import { NotificationService } from '../service/notification.service';
 import { PoemCommentService } from '../service/poem-comment.service';
 import { PoemLikeService } from '../service/poem-like.service';
@@ -21,21 +25,31 @@ import { PoemService } from '../service/poem.service';
 export class PoemBoxComponent implements OnInit,OnDestroy {
   @Input() poem: PoemBox;
   public currentUsername: string;
+  public currentUser: User;
   poemLoading: boolean;  
-  commentLoading: boolean;
+  loading: boolean;
+  commentLoading: boolean;  
   likeButtonLoading=false;
   private subscriptions: Subscription[] = []; 
+  categories:Category[];
   showComment : Map<number,boolean>;
+  editPoemStatus= false;
+  editPoem= new Poem();
+
 
   constructor( private authenticationService: AuthenticationService,
     private notificationService: NotificationService,  
     private poemService: PoemService,
     private poemCommentService: PoemCommentService,
-    private poemLikeService: PoemLikeService,) { }
+    private poemLikeService: PoemLikeService,
+    private categoryService: CategoryService,
+    ) { }
 
   ngOnInit() {
     this.currentUsername= this.authenticationService.getUserFromLocalCache().username;
+    this.currentUser= this.authenticationService.getUserFromLocalCache();
     this.getpoem();
+    this.getCategories();
   }
   
   getpoem():void{    
@@ -62,7 +76,30 @@ export class PoemBoxComponent implements OnInit,OnDestroy {
       )
     );
   }
- 
+  public getCategories(): void {
+    this.subscriptions.push();
+    this.categoryService.getCategories().subscribe(
+      (response: DataResult) => {
+        if (response.success) {
+          this.categories = response.data;
+        } else {
+       
+        }
+      },
+      (errorResponse: HttpErrorResponse) => {        
+      }
+    );
+  }
+
+  onEditPoem(poemId:number):void{
+    this.editPoemStatus=true;
+    this.editPoemForm.patchValue({
+      poemTitle: this.poem.poemTitle,
+      poemContent: this.poem.poemContent,
+      categoryTitle: this.poem.categoryTitle,
+    });
+  }
+
 likePoem(poemId:number){    
   this.likeButtonLoading = true;
   this.subscriptions.push(
@@ -130,14 +167,45 @@ addCommentForm = new FormGroup({
     Validators.minLength(1),
   ]),
 });
+editPoemForm = new FormGroup({
+  poemTitle: new FormControl('', [
+    Validators.required,
+    Validators.minLength(3),
+  ]),
+  poemContent: new FormControl('', [
+    Validators.required,
+    Validators.minLength(3),
+  ]),
+  categoryTitle: new FormControl('', [Validators.required]),
+});
+
 get comment() {
   return this.addCommentForm.get('comment');
 }
+get poemTitle() {
+  return this.editPoemForm.get('poemTitle');
+}
+get poemContent() {
+  return this.editPoemForm.get('poemContent');
+}
+get categoryTitle() {
+  return this.editPoemForm.get('categoryTitle');
+}
+
 clearAddCommentForm() {
   this.addCommentForm.patchValue({
     comment: '',
   });
 }
+clearEditPoemForm() {
+  this.editPoemForm.patchValue({
+    poemTitle: '',
+    poemContent: '',
+    categoryTitle: '',
+  });
+}
+
+
 addComment(poemId: number): void {
   this.commentLoading = true;
   this.subscriptions.push(
@@ -161,6 +229,35 @@ addComment(poemId: number): void {
             errorResponse.error.message
           );
           this.commentLoading = false;
+        }
+      )
+  );
+}
+updatePoem(poemId: number): void {
+  this.loading = true;
+  this.subscriptions.push(
+    this.poemService
+      .updatePoem(this.updatePoemData(poemId))
+      .subscribe(
+        (response: Result) => {
+          if (response.success) {
+            this.loading = false;
+            this.sendNotification(NotificationType.SUCCESS, response.message);
+            this.clearEditPoemForm();
+            this.getpoem();
+            this.editPoemStatus=false;
+          } else {
+            this.sendNotification(NotificationType.ERROR, response.message);
+            this.loading = false;
+            
+          }
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.sendNotification(
+            NotificationType.ERROR,
+            errorResponse.error.message
+          );
+          this.loading = false;
         }
       )
   );
@@ -235,6 +332,15 @@ public deletePoemData(poemId: number): FormData {
   const formData = new FormData();
   formData.append('currentUsername', this.currentUsername);
   formData.append('poemId', JSON.stringify(poemId));
+  return formData;
+}
+public updatePoemData(poemId: number): FormData {
+  const formData = new FormData();
+  formData.append('currentUsername', this.currentUsername);
+  formData.append('poemId', JSON.stringify(poemId));
+  formData.append('poemTitle',this.poemTitle.value);
+  formData.append('poemContent',this.poemContent.value);
+  formData.append('categoryTitle',this.categoryTitle.value);
   return formData;
 }
 

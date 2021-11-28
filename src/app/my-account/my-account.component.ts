@@ -83,69 +83,86 @@ export class MyAccountComponent implements OnInit,OnDestroy {
     );
   }
   public OnUpdateProfile(){
+    this.loading=true;
    let formData=this.updateProfileFormData(this.currentUsername,this.editUser);
     this.subscriptions.push(    
       this.userService.selfUpdate(formData).subscribe(
         (response: Result) => {
-          if (response.success) {         
+          if (response.success) {    
+            this.loading=false;     
             this.clickButton("closeEditProfile")  
            this.sendNotification(NotificationType.SUCCESS, response.message);          
           } else {
+            this.loading=false;
             this.sendNotification(NotificationType.ERROR, response.message);          }
         },
         (error: HttpErrorResponse) => {
+          this.loading=false;
           this.sendNotification(NotificationType.ERROR, error.error.message);
         }
       )
     );
   }
   public onChangePassword(){
+    this.loading=true;
     let formData=this.changePasswordFormData();
      this.subscriptions.push(    
        this.userService.changePassword(formData).subscribe(
          (response: Result) => {
-           if (response.success) {         
+           if (response.success) {       
+            this.loading=false;  
              this.clickButton("closeChangePassword")  
             this.sendNotification(NotificationType.SUCCESS, response.message);          
            } else {
+            this.loading=false;
              this.sendNotification(NotificationType.ERROR, response.message);          }
          },
          (error: HttpErrorResponse) => {
+          this.loading=false;
            this.sendNotification(NotificationType.ERROR, error.error.message);
          }
        )
      );
    }
    public onChangeEmail(){
+    this.loading=true;
     let formData=this.changeEmailFormData();
      this.subscriptions.push(    
        this.userService.changeEmail(formData).subscribe(
          (response: Result) => {
-           if (response.success) {         
+           if (response.success) {      
+            this.loading=false;   
              this.clickButton("closeChangeEmail");  
+            
             this.sendNotification(NotificationType.SUCCESS, response.message);          
            } else {
-             this.sendNotification(NotificationType.ERROR, response.message);          }
+             this.sendNotification(NotificationType.ERROR, response.message); 
+             this.loading=false;         }
          },
          (error: HttpErrorResponse) => {
            this.sendNotification(NotificationType.ERROR, error.error.message);
+           this.loading=false;
          }
        )
      );
    }
    public onChangeUsername(){
+     this.loading=true;
     let formData=this.changeUsernameFormData();
      this.subscriptions.push(    
        this.userService.changeUsername(formData).subscribe(
          (response: Result) => {
            if (response.success) {         
              this.clickButton("closeChangeUsername");  
+             this.loading=false;
             this.sendNotification(NotificationType.SUCCESS, response.message);          
            } else {
-             this.sendNotification(NotificationType.ERROR, response.message);          }
+             this.sendNotification(NotificationType.ERROR, response.message);  
+             this.loading=false;        }
          },
          (error: HttpErrorResponse) => {
            this.sendNotification(NotificationType.ERROR, error.error.message);
+           this.loading=false;
          }
        )
      );

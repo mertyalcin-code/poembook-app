@@ -206,8 +206,12 @@
       </div>
       <div class="modal-footer">
         <button id="closeEditProfile"  type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-        <button (click)="OnUpdateProfile()" type="submit" class="btn btn-primary">Değişiklikleri Kaydet</button>
+        <button *ngIf="loading==false" (click)="OnUpdateProfile()" type="submit" class="btn btn-primary">Değişiklikleri Kaydet</button>
+        <div *ngIf="loading==true" class="spinner-grow text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
       </div>
+    
     </div>
   </div>
 </div>
@@ -235,8 +239,12 @@
       </div>
       <div class="modal-footer">
         <button id="closeChangePassword"  type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-        <button (click)="onChangePassword()" type="submit" class="btn btn-primary">Değişiklikleri Kaydet</button>
+        <button *ngIf="loading==false" (click)="onChangePassword()" type="submit" class="btn btn-primary">Değişiklikleri Kaydet</button>
+        <div *ngIf="loading==true" class="spinner-grow text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
       </div>
+    
     </div>
   </div>
 </div>
@@ -264,8 +272,12 @@
       </div>
       <div class="modal-footer">
         <button id="closeChangeEmail"  type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-        <button (click)="onChangeEmail()" type="submit" class="btn btn-primary">Kaydet</button>
+        <button *ngIf="loading==false" (click)="onChangeEmail()" type="submit" class="btn btn-primary">Kaydet</button>
+        <div *ngIf="loading==true" class="spinner-grow text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
       </div>
+  
     </div>
   </div>
 </div>
@@ -293,7 +305,10 @@
       </div>
       <div class="modal-footer">
         <button id="closeChangeUsername"  type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-        <button (click)="onChangeUsername()" type="submit" class="btn btn-primary">Kaydet</button>
+        <button *ngIf="loading==false" (click)="onChangeUsername()" type="submit" class="btn btn-primary">Kaydet</button>
+        <div *ngIf="loading==true" class="spinner-grow text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
       </div>
     </div>
   </div>

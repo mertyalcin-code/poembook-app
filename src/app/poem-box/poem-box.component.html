@@ -20,7 +20,7 @@
             <i class="mdi mdi-dots-vertical"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-end">
-            <a href="javascript:void(0);" class="dropdown-item"
+            <a  (click)="onEditPoem(poem.poemId)" class="dropdown-item"
               >Düzenle</a
             >
 
@@ -41,15 +41,33 @@
         <h3 style="text-align: center">
           {{ poem.poemTitle }}
         </h3>
-        <div >
+        <div *ngIf="!editPoemStatus">
           <p
             class="e2e-inner-html-bound"
             style="text-align: center;overflow-y: auto;max-height: 500px;"
             [innerHTML]="poem.poemContent"
-          ></p>
-          
+          ></p>          
         </div>        
-    
+        <form *ngIf="editPoemStatus" action="#" class="row g-3" [formGroup]="editPoemForm" (ngSubmit)="updatePoem(poem.poemId)">
+
+          <div class="col-md-6">
+              <label for="poemTitle" class="form-label" >Şiir Başlığı</label>
+              <input type="text" class="form-control" formControlName="poemTitle" id="poemTitle" >
+            </div>
+            <div class="col-md-6">
+              <label for="categoryTitle" class="form-label">Kategori</label>
+              <select type="" class="form-select" formControlName="categoryTitle" id="categoryTitle">
+                  <option selected>Seçiniz...</option>
+                  <option *ngFor="let category of categories" value={{category.categoryTitle}} >{{category.categoryTitle}}</option> </select>
+            </div>                            
+          <angular-editor formControlName="poemContent" ></angular-editor>         
+                  
+                  <button *ngIf="!loading && editPoemForm.valid" type="submit" class="btn btn-sm btn-dark waves-effect waves-light">Şiirini Güncelle</button>
+                  <button *ngIf="loading" class="btn btn-primary" type="button" disabled>
+                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    Güncelleniyor
+                  </button>
+        </form>     
         <div>
 
 
@@ -141,7 +159,7 @@
       <div class="d-flex align-items-start mt-2">
         <a class="pe-2" href="#">
           <img
-            src="{{ poem.avatar }}"
+            src="{{ currentUser.avatar.imageUrl }}"
             class="rounded-circle"
             alt="Generic placeholder image"
             height="31"
@@ -160,7 +178,7 @@
               class="form-control border-0 form-control-sm"
               placeholder="Yorum Yap"
             />
-            <button  *ngIf="commentLoading" class="btn btn-primary" type="button" disabled>
+            <button  *ngIf="commentLoading && addCommentForm.valid" class="btn btn-primary" type="button" disabled>
               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
               Yorum yapılıyor...
             </button>
