@@ -1,48 +1,55 @@
-<link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+
 <!-- left Column-->
 <div class="container">
 <div class="row"> 
-  <div class="col-12 col-lg-2" style="margin-top: 2%;">
-    <!--left -->
+  <div class="col-12 col-lg-2" >
+    <!--left end-->
     </div>
     <!-- Dashboard Start-->
-	<div class="col-12 col-lg-8" style="margin-top: 2%;">
+	<div class="col-12 col-lg-8" >
     <!-- Add Poem-->
-		<div class="card">
+		<div class="card" id="addPoemCard">
 			<div class="card-body">				
         <form action="#" class="row g-3" [formGroup]="addPoemForm" (ngSubmit)="addPoem()">
 
-          <div class="col-md-6">
+          <div class="col-md-7">
               <label for="poemTitle" class="form-label">Şiir Başlığı</label>
               <input type="text" class="form-control" formControlName="poemTitle" id="poemTitle">
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
               <label for="categoryTitle" class="form-label">Kategori</label>
               <select type="" class="form-select" formControlName="categoryTitle" id="categoryTitle">
                   <option selected>Seçiniz...</option>
                   <option *ngFor="let category of categories" value={{category.categoryTitle}} >{{category.categoryTitle}}</option> </select>
             </div>                            
-          <angular-editor formControlName="poemContent" [placeholder]="'Şiirinizi buraya yazabilirsiniz...'" ></angular-editor>
+          <angular-editor formControlName="poemContent" [config]="editorConfig"></angular-editor>
          
-                  <button type="submit" class="btn btn-sm btn-dark waves-effect waves-light">Şiirini Paylaş</button>
+                  <button type="submit" [disabled]="addPoemForm.invalid" class="btn btn-sm btn-dark waves-effect waves-light">Şiirini Paylaş</button>
         </form>     
 				
 			</div>
 		</div>
     <!-- See Poem from followings -->
-    <div class="card" >
-			<div class="card-body" *ngFor="let poemBox of followingsPoems">		
+ 
+    
+
+    <div class="card" id="poemBoxCard" *ngFor="let poemBox of followingsPoems">
+			<div class="card-body" >		
        <app-poem-box [poem]="poemBox"></app-poem-box>      
-	    </div>
-      <button *ngIf="followingsPoemsLoading" class="btn btn-primary" type="button" disabled>
-        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-        Yükleniyor
-      </button>
-      <button class="btn btn-primary" *ngIf="!followingsPoemsLoading&&followingsPoems.length>5" (click)="loadMorePoem()"> Devamını Gör</button>
-      <div *ngIf="followingsPoems.length==0" class="alert alert-info" role="alert">
-        Görünüşe göre takip ettiğin kimse şiir paylaşmamış. En beğenilen şiirleri buradan inceleyebilirsin-> <a href="/most-liked"> En Beğenilenler</a>
-      </div>
+	    </div>       
+      
+</div>
+<div class="card">
+  <button class="btn btn-primary" *ngIf="!followingsPoemsLoading && followingsPoems.length>=5" (click)="loadMorePoem()"> Devamını Gör</button>
+</div>
+<div class="card" *ngIf="followingsPoemsLoading" >			
+  <button class="btn btn-primary" type="button" disabled>
+    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+    Şiirler Yükleniyor
+  </button>
+      </div>     
+
+<div id="noPoemsInDashboard" *ngIf="followingsPoems.length<1 &&!followingsPoemsLoading" class="alert alert-info" role="alert">
+  Görünüşe göre takip ettiğin kimse şiir paylaşmamış. En beğenilen şiirleri buradan inceleyebilirsin-> <a href="/most-liked"> En Beğenilenler</a>
 </div>
 </div>

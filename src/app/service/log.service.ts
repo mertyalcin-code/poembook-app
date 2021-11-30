@@ -14,7 +14,10 @@ export class LogService {
   public allLogs(): Observable<DataResult> {
     return this.http.get<DataResult>(`${this.host}/log/logs`);
   }
-  public test(): Observable<DataResult> {
-    return this.http.get<DataResult>(`${this.host}/test/test`);
+  public getLogWithLogType(type:string): Observable<DataResult> {
+    return this.http.get<DataResult>(`${this.host}/log/logs/${type}`);
+  }
+  public getLogTypes(): Observable<DataResult> {
+    return this.http.get<DataResult>(`${this.host}/log/types`);
   }
 }

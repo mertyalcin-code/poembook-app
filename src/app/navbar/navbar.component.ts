@@ -74,7 +74,7 @@ export class NavbarComponent implements OnInit,OnDestroy{
     );
   }
   public deleteNotice(noticeId:number): void {
-    this.deleteLoading=true;
+    // this.deleteLoading=true;
     this.subscriptions.push();
     this.noticeService.delete(this.noticeService.deleteNoticeData(this.user.username,noticeId)).subscribe(
       (response: Result) => {
@@ -104,6 +104,7 @@ export class NavbarComponent implements OnInit,OnDestroy{
         if (response.success) {         
           this.loading=false;
           this.getAllNotices();
+          document.getElementById("closeNotice").click();
           this.sendNotification(NotificationType.SUCCESS, response.message);
         } else {
           this.sendNotification(NotificationType.ERROR, response.message);

@@ -25,8 +25,8 @@ export class CategoryComponent implements OnInit,OnDestroy {
   public currentUsername: string;
   poemLoading: boolean;
   categoryPoemsLoading: boolean;
-  categories: Category[];
-  categoryPoems: PoemBox[];
+  categories: Category[]=[];
+  categoryPoems: PoemBox[]=[];
  
   likeButtonLoading=false;
   private subscriptions: Subscription[] = [];
@@ -78,7 +78,7 @@ export class CategoryComponent implements OnInit,OnDestroy {
         if (response.success) {
           this.categoryPoems = response.data;
           this.categoryPoemsLoading=false;
-          console.log(response.data);
+          
 
         } else {
           this.sendNotification(NotificationType.ERROR, response.message);

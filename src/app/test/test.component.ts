@@ -24,7 +24,7 @@ export class TestComponent implements OnInit {
   getpoem():void{    
  
     this.subscriptions.push(
-      this.logService.test().subscribe(
+      this.logService.allLogs().subscribe(
         (response: DataResult) => {
           if (response.success) {         
             console.log(response.data)

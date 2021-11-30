@@ -21,6 +21,7 @@ import { EditorService } from '../service/editor.service';
 })
 export class PoemManagementComponent implements OnInit,OnDestroy {
   private titleSubject = new BehaviorSubject<string>('Poems');
+  searchPoem:string;  
   public titleAction$ = this.titleSubject.asObservable();
   public poems: Poem [];
   public poem: Poem;
@@ -44,9 +45,10 @@ export class PoemManagementComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     this.currentUsername =  this.authenticationService.getUserFromLocalCache().username;
-   this.getCategories();
-   this.getAllCategories();
+    this.getCategories();
+    this.getAllCategories();
     this.getPoems();
+    document.getElementById("loadAllCategories").click();
   }
 
   changeTitle(title: string): void {
@@ -99,21 +101,7 @@ export class PoemManagementComponent implements OnInit,OnDestroy {
       )
     );
   }
-  
-  // public searchPoems(searchTerm: string): void {
-  //   const results: Poem[] = [];
-  //   for (const user of this.userService.getUsersFromLocalCache()) {
-  //     if (user.firstName.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
-  //         user.lastName.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
-  //         user.username.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ) {
-  //         results.push(user);
-  //     }
-  //   }
-  //   this.users = results;
-  //   if (results.length === 0 || !searchTerm) {
-  //     this.users = this.userService.getUsersFromLocalCache();
-  //   }
-  // }
+
 
   public onUpdatePoem(): void {
     const formData = this.updatePoemFormData();

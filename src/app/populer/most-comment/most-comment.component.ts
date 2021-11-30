@@ -18,16 +18,11 @@ import { UserService } from 'src/app/service/user.service';
   styleUrls: ['./most-comment.component.css']
 })
 export class MostCommentComponent implements OnInit,OnDestroy {
-  public profileUsername: string =
-  this.router.snapshot.paramMap.get('username');
-  public profileUser: ProfileUser;
   public currentUsername: string;
-  public isFollowing: boolean;
-  public followLoading: boolean;
   private subscriptions: Subscription[] = [];
   public poems: PoemBox[]=[];
-  public profilePoemsLoading: boolean;
   public next=5;
+  public loading=false;
   constructor(
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,  
@@ -43,14 +38,17 @@ export class MostCommentComponent implements OnInit,OnDestroy {
   }
 
   list20MostCommentsPoems(): void {
+    this.loading=true;
     this.subscriptions.push();
     this.poemService.list20MostCommentsPoems().subscribe(
       (response: DataResult) => {
         if (response.success) {
           this.poems = response.data;
+          this.loading=false;
           this.sendNotification(NotificationType.SUCCESS, response.message);
         } else {
           this.sendNotification(NotificationType.ERROR, response.message);
+          this.loading=false;
         }
       },
       (errorResponse: HttpErrorResponse) => {
@@ -58,6 +56,7 @@ export class MostCommentComponent implements OnInit,OnDestroy {
           NotificationType.ERROR,
           errorResponse.error.message
         );
+        this.loading=false;
       }
     );
   }

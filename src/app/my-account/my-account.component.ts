@@ -268,6 +268,9 @@ export class MyAccountComponent implements OnInit,OnDestroy {
   isEditor():boolean{
     return this.authenticationService.isAdminOrSuperAdminorOrEditor;
   }
+  isSuperAdmin():boolean{
+    return this.authenticationService.isSuperAdmin;
+  }
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }

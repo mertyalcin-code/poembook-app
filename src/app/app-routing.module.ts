@@ -21,6 +21,8 @@ import { PoemPageComponent } from './poem-page/poem-page.component';
 import { PrivateMessageComponent } from './private-message/private-message.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { PasswordResetComponent } from './forget-password/password-reset/password-reset.component';
+import { LogManagementComponent } from './log-management/log-management.component';
+import { SuperAdminGuard } from './guard/super-admin.guard';
 
 const routes: Routes = [
   {path: 'login',component:LoginComponent},
@@ -42,6 +44,7 @@ const routes: Routes = [
   {path: 'myaccount',component:MyAccountComponent,canActivate: [AuthenticationGuard] },
   {path: 'admin/user/management',component:UserManagementComponent,canActivate: [AdminGuard] }, 
   {path: 'admin/poem/management',component:PoemManagementComponent,canActivate: [EditorGuard] }, 
+  {path: 'admin/log/management',component:LogManagementComponent,canActivate: [SuperAdminGuard] },
   {path: '', redirectTo : 'login',pathMatch:'full'}
 ];
 

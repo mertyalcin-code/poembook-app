@@ -41,10 +41,10 @@ export class SearchPoemsComponent implements OnInit,OnDestroy {
       this.poemService.searchPoems(this.search).subscribe(
         (response: DataResult) => {
           if (response.success) {
-            this.sendNotification(NotificationType.SUCCESS, response.message);
+          //  this.sendNotification(NotificationType.SUCCESS, response.message);
             this.poems=response.data;
             this.poemsLoading=false;
-            console.log(response.data)
+            
            
           } else {
             this.sendNotification(NotificationType.ERROR, response.message);

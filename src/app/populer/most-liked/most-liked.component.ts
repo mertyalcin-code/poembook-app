@@ -18,23 +18,15 @@ import { UserService } from 'src/app/service/user.service';
   styleUrls: ['./most-liked.component.css']
 })
 export class MostLikedComponent implements OnInit,OnDestroy {
-  public profileUsername: string =
-  this.router.snapshot.paramMap.get('username');
-  public profileUser: ProfileUser;
-  public currentUsername: string;
-  public isFollowing: boolean;
-  public followLoading: boolean;
+  public loading= false;
+  public currentUsername: string; 
   private subscriptions: Subscription[] = [];
   public poems: PoemBox[]=[];
-  public profilePoemsLoading: boolean;
   public next=5;
   constructor(
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,  
-    private router: ActivatedRoute,
     private poemService: PoemService,
-    private userService: UserService,
-    private followerService: FollowService, 
   ) { }
   ngOnInit() {
     this.currentUsername =this.authenticationService.getUserFromLocalCache().username;  
@@ -43,21 +35,26 @@ export class MostLikedComponent implements OnInit,OnDestroy {
   }
 
   list20MostLikedPoems(): void {
+    this.loading=true;
     this.subscriptions.push();
     this.poemService.list20MostLikedPoems().subscribe(
       (response: DataResult) => {
         if (response.success) {
           this.poems = response.data;
+          this.loading=false;
           this.sendNotification(NotificationType.SUCCESS, response.message);
         } else {
           this.sendNotification(NotificationType.ERROR, response.message);
+          this.loading=false;
         }
       },
       (errorResponse: HttpErrorResponse) => {
         this.sendNotification(
           NotificationType.ERROR,
           errorResponse.error.message
+          
         );
+        this.loading=false;
       }
     );
   }

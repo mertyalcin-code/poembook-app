@@ -12,6 +12,7 @@ import { AuthenticationService } from '../service/authentication.service';
 import { CategoryService } from '../service/category.service';
 import { NotificationService } from '../service/notification.service';
 import { PoemService } from '../service/poem.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 
 @Component({
@@ -24,9 +25,9 @@ export class DashboardComponent implements OnInit,OnDestroy {
   public currentUsername: string;
   poemLoading: boolean;
   followingsPoemsLoading: boolean;
-  followingUsers: User[];
-  categories: Category[];
-  followingsPoems: PoemBox[]; 
+  followingUsers: User[]=[];
+  categories: Category[]=[];
+  followingsPoems: PoemBox[]=[]; 
   private subscriptions: Subscription[] = [];
   indexStart=0
   indexEnd=5
@@ -41,6 +42,7 @@ export class DashboardComponent implements OnInit,OnDestroy {
     this.getCategories();
     this.currentUsername =this.authenticationService.getUserFromLocalCache().username;
     this.getFollowingsPoems();
+    console.log(this.followingsPoems.length)
   }
 
   addPoemForm = new FormGroup({
@@ -174,6 +176,40 @@ export class DashboardComponent implements OnInit,OnDestroy {
     formData.append('indexEnd', JSON.stringify(this.indexEnd));
     return formData;
   }
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '150px',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '100px',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Şiirinizi Buraya Yazabilirsiniz...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      {class: 'arial', name: 'Arial'},
+      {class: 'times-new-roman', name: 'Times New Roman'},
+      {class: 'calibri', name: 'Calibri'},
+      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+    ],
+    sanitize: true,
+    toolbarPosition: 'top',
+    toolbarHiddenButtons: [
+     
+      ['insertImage'],
+      ['insertVideo'],
+      ['backgroundColor'],
+    
+
+    ],
+    
+
+};
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }

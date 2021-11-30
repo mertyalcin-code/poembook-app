@@ -1,0 +1,41 @@
+<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+  <button type="button" class="btn btn-primary" (click)="getAllLogs()">Tüm Loglar</button>
+  <div class="btn-group" role="group">
+    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Tür
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+      <div  *ngFor="let type of logTypes">
+        <a class="dropdown-item" (click)="changeLogType(type)" >{{type}}</a>  
+      </div>
+    
+    </div>    
+  </div> 
+</div>
+<!-- Search starts-->
+<form class="form" style="width: 20%;margin: 2%;">
+  <input class="form-control mr-sm-2" type="search" name="search" placeholder="Ara" aria-label="Search" [(ngModel)]="searchText" autocomplete="off">  
+</form>
+<!-- Search ends-->
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Log Türü</th>
+      <th scope="col">Log Zamanı</th>
+      <th scope="col">Mesaj</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="!loading">
+    <tr *ngFor="let log of logs | filter: searchText" >
+      <th scope="row">{{log.logId}}</th>
+      <td>{{log.logType}}</td>
+      <td>{{log.logTime}}</td>
+      <td>{{log.message}}</td>
+    </tr>
+  </tbody>
+  <button *ngIf="loading" class="btn btn-primary" type="button" disabled>
+    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+    Loading...
+  </button>
+</table>

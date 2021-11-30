@@ -38,7 +38,7 @@
           <a class="nameLink" href="{{'/user/'+poem.username}}">{{poem.firstName+" "+poem.lastName}}</a>
           <small *ngIf="poem.creationDateInMinute<60" class="text-muted">{{"  " +poem.creationDateInMinute + " dk önce" }}</small >
           <small *ngIf="poem.creationDateInMinute>=60 && poem.creationDateInMinute<1440" class="text-muted">{{" "+float2int(poem.creationDateInMinute/60)  + " saat önce" }}</small >
-            <small *ngIf="poem.creationDateInMinute>=1440" class="text-muted">{{poem.creationDate |date }}</small >
+            <small *ngIf="poem.creationDateInMinute>=1440" class="text-muted">{{poem.creationDate |date:'shortDate' }}</small >
       </h5>
 
         <h3 style="text-align: center">
@@ -150,10 +150,7 @@
             </div>
             <small *ngIf="comment.commentTimeInMinute<60" class="text-muted">{{ comment.commentTimeInMinute + " dk önce" }}</small >
               <small *ngIf="comment.commentTimeInMinute>=60 && comment.commentTimeInMinute<1440" class="text-muted">{{" "+float2int(comment.commentTimeInMinute/60)  + " saat önce" }}</small >
-                <small *ngIf="comment.commentTimeInMinute>=1440" class="text-muted">{{comment.commentTimeInMinute |date }}</small >
-
-
-          </h5>
+                <small *ngIf="comment.commentTimeInMinute>=1440" class="text-muted">{{comment.commentTimeInMinute |date:'short' }}</small ></h5>
         <p > {{ comment.poemCommentText }}</p> 
         <div class="w-100">
           <form  *ngIf="editCommentStatus && editCommentId==comment.poemCommentId"

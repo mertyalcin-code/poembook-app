@@ -354,9 +354,6 @@ private clickButton(buttonId: string): void {
   document.getElementById(buttonId).click();
 }
 
-public onSortFirstName():void{
-  this.users=this.users.sort(); //araştır geliştir
-}
 
 
 

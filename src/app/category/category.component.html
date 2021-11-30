@@ -1,9 +1,4 @@
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css"
-  integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc="
-  crossorigin="anonymous"
-/>
+  <!-- category list start-->
 <ul class="nav justify-content-center">
   <li class="nav-item" *ngFor="let category of categories">
     <a *ngIf="selectedCategory!=category.categoryTitle" class="nav-link " aria-current="page" href="{{'/categories/'+category.categoryTitle}}">{{category.categoryTitle}}</a>
@@ -11,25 +6,25 @@
   </li>
 
 </ul>
-<div style="text-align: center;margin-bottom: 5%;">
+<div id="categoryList" >
   <button class="btn btn-primary" type="button" *ngIf="categoryPoemsLoading" >
     <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
     Yükleniyor...
   </button>
 </div>
-
+  <!-- category list end--> 
+  <!-- poems start-->
 <div class="container" >
-  <!-- category list start-->
-  <div class="row align-items-start">
-    <div class="col-6" >
-      <div class="card" style="margin-bottom: 5%;" >
-        <div class="card-body"*ngFor="let poem of categoryPoems">
+  <div class="row">
+    <div class="col-12 col-lg-2" style="margin-top: 2%;"></div>
+    <div class="col-6 col-lg-8" >
+      <div class="card" id="poemBoxCard" *ngFor="let poem of categoryPoems" >
+        <div class="card-body">
         <app-poem-box [poem]="poem"></app-poem-box>
       </div>
       <button *ngIf="!categoryPoemsLoading&&categoryPoems.length>5"class="btn btn-success" (click)="loadMorePoem()">Daha Fazla Gör</button>
     </div>
+  </div>     
   </div>
-     
-  </div>
-  <!-- category list end--> 
 </div>
+ <!-- poems end-->

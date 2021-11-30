@@ -32,13 +32,14 @@ import { PoemPageComponent } from './poem-page/poem-page.component';
 import { PrivateMessageComponent } from './private-message/private-message.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { PasswordResetComponent } from './forget-password/password-reset/password-reset.component';
-
+import { LogManagementComponent } from './log-management/log-management.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 
 
 @NgModule({
-  declarations: [																								
+  declarations: [																									
     AppComponent,
       LoginComponent,
       UserComponent,
@@ -63,6 +64,7 @@ import { PasswordResetComponent } from './forget-password/password-reset/passwor
       PrivateMessageComponent,
       ForgetPasswordComponent,
       PasswordResetComponent,
+      LogManagementComponent
    ],
   imports: [
     BrowserModule,
@@ -71,7 +73,8 @@ import { PasswordResetComponent } from './forget-password/password-reset/passwor
     FormsModule,
     NotificationModule,
     ReactiveFormsModule,
-    AngularEditorModule,    
+    AngularEditorModule, 
+    Ng2SearchPipeModule,   
 
   ],
   providers: [
