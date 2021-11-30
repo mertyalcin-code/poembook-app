@@ -14,6 +14,7 @@ import { NotificationService } from 'src/app/service/notification.service';
 export class PasswordResetComponent implements OnInit {
 code:string;
 message:String;
+loading=false;
   constructor(
     private authenticationService:AuthenticationService,
     private router: ActivatedRoute,
@@ -22,26 +23,29 @@ message:String;
 
   ngOnInit() {
     this.code=this.router.snapshot.paramMap.get('code');
-
+    this.onResetPasswordWithCode();
   }
  onResetPasswordWithCode(): void {
-    
+    this.loading==true;
     this.authenticationService.resetPasswordWithCode(this.code).subscribe(
       (response: Result) => {
         if (response.success) {
           this.message="Yeni şifreniz mail adresinize gönderildi";
           this.sendNotification(NotificationType.SUCCESS, response.message);
+          this.loading==false;
         } else {
           this.message="Geçersiz kod";
           this.sendNotification(NotificationType.ERROR, response.message);
+          this.loading==false;
         }
       },
       (errorResponse: HttpErrorResponse) => {
         this.sendNotification(
           NotificationType.ERROR,
-          errorResponse.error.message
+          errorResponse.error.message          
         );
-        this.message="Hata";
+        this.message="Sistemse hata"
+        this.loading==false;
       }
     );
   }
