@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DataResult } from '../model/result/data-result';
 import { PoemBox } from '../model/result/poemBox';
+import { LogService } from '../service/log.service';
 import { PoemService } from '../service/poem.service';
 
 @Component({
@@ -11,11 +12,11 @@ import { PoemService } from '../service/poem.service';
   styleUrls: ['./test.component.css']
 })
 export class TestComponent implements OnInit {
-  poem :PoemBox;
+ 
   private subscriptions: Subscription[] = []; 
 
 
-  constructor(private poemService:PoemService) { }
+  constructor(private logService:LogService) { }
 
   ngOnInit() {
     this.getpoem()
@@ -23,10 +24,9 @@ export class TestComponent implements OnInit {
   getpoem():void{    
  
     this.subscriptions.push(
-      this.poemService.getPoemWithPoemBox(1).subscribe(
+      this.logService.test().subscribe(
         (response: DataResult) => {
-          if (response.success) {
-            this.poem=response.data;
+          if (response.success) {         
             console.log(response.data)
    
           //  this.sendNotification(NotificationType.SUCCESS, response.message);            

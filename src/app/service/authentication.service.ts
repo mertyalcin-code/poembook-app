@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Role } from '../enum/role.enum';
 import { UserService } from './user.service';
 import { LocalService } from './local.service';
+import { Result } from '../model/result/result';
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +23,16 @@ constructor(private http: HttpClient,private userService:UserService,private loc
 public login(formData: FormData): Observable<HttpResponse<User>> { 
   return this.http.post<User>(`${this.host}/user/login`, formData, { observe: 'response' });
 }
-
 public register(user: User): Observable<User> {
   return this.http.post<User>(`${this.host}/user/register`, user);
 } 
+public forgetPassword(formData: FormData): Observable<Result> {
+  return this.http.post<Result>(`${this.host}/user/forget-password`,formData);
+} 
+public resetPasswordWithCode(code:string): Observable<Result> {
+  return this.http.get<Result>(`${this.host}/user/forget-password/code/${code}`);
+} 
+
 public logOut(): void {
   this.token = null;
   this.localService.clearToken();

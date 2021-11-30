@@ -6,11 +6,14 @@
         src="{{ poem.avatar }}"
         alt="Generic placeholder image"
       />
-      <div class="w-100">
+      
+      <div class="w-100">        
         <div
           class="dropdown float-end"
           *ngIf="poem.username === currentUsername"
         >
+       
+        
           <a
             href="#"
             class="dropdown-toggle arrow-none card-drop"
@@ -69,10 +72,7 @@
                   </button>
         </form>     
         <div>
-
-
-
-          <div class="mt-2">
+           <div class="mt-2">
             <div *ngIf="likeButtonLoading == true"
               class="spinner-border text-primary"
               role="status"
@@ -102,7 +102,9 @@
               > Beğen{{
                 "(" + poem.howManyLikes + ")"
               }}
-            </a>           
+            </a>  
+            <span> {{poem.categoryTitle}}</span>      
+            <span  style="position:absolute;right: 3%;"><button type="button" class="btn btn-primary" routerLink="{{'/poem/'+poem.poemId}}"><i class="fas fa-external-link-square-alt"></i></button></span>   
           </div>
         </div>
       </div>
@@ -120,7 +122,8 @@
         />
         <div class="w-100">
           <h5 class="mt-0">
-            {{ comment.userFirstName + " " + comment.userLastName }}
+            <a href="{{'/user/'+comment.username}}">      {{ comment.userFirstName + " " + comment.userLastName }}</a>
+       
             <div
               class="dropdown float-end"
               *ngIf="comment.username === currentUsername"

@@ -18,13 +18,20 @@ import { MostCommentComponent } from './populer/most-comment/most-comment.compon
 import { MostLikedComponent } from './populer/most-liked/most-liked.component';
 import { SearchPoemsComponent } from './search-poems/search-poems.component';
 import { PoemPageComponent } from './poem-page/poem-page.component';
+import { PrivateMessageComponent } from './private-message/private-message.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { PasswordResetComponent } from './forget-password/password-reset/password-reset.component';
 
 const routes: Routes = [
   {path: 'login',component:LoginComponent},
+  {path: 'forget-password',component:ForgetPasswordComponent},
+  {path: 'forget-password/code/:code',component:PasswordResetComponent},
   {path: 'register',component:RegisterComponent},
   {path: 'register-success',component:RegisterSuccessComponent},
   {path: 'test',component:TestComponent},
   {path: 'home',component:DashboardComponent,canActivate: [AuthenticationGuard] },
+  {path: 'message',component:PrivateMessageComponent,canActivate: [AuthenticationGuard]},
+  {path: 'message/:username',component:PrivateMessageComponent,canActivate: [AuthenticationGuard]},
   {path: 'random',component:RandomPoemComponent,canActivate: [AuthenticationGuard] },
   {path: 'most-comment',component:MostCommentComponent,canActivate: [AuthenticationGuard] },
   {path: 'most-liked',component:MostLikedComponent,canActivate: [AuthenticationGuard] },

@@ -6,7 +6,7 @@
 />
 <ul class="nav justify-content-center">
   <li class="nav-item" *ngFor="let category of categories">
-    <a *ngIf="selectedCategory!=category.categoryTitle" class="nav-link " aria-current="page"href="{{'/categories/'+category.categoryTitle}}">{{category.categoryTitle}}</a>
+    <a *ngIf="selectedCategory!=category.categoryTitle" class="nav-link " aria-current="page" href="{{'/categories/'+category.categoryTitle}}">{{category.categoryTitle}}</a>
     <a *ngIf="selectedCategory==category.categoryTitle" class="nav-link active " aria-current="page" href="{{'/categories/'+category.categoryTitle}}" >{{category.categoryTitle}}</a>
   </li>
 

@@ -24,8 +24,6 @@ export class NavbarComponent implements OnInit,OnDestroy{
   private subscriptions: Subscription[] = [];
   notices: Notice[] = [];
 
-
-
   constructor(
     private authenticationService: AuthenticationService,
     private userService: UserService,
@@ -134,7 +132,6 @@ export class NavbarComponent implements OnInit,OnDestroy{
       );
     }
   }
-
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }

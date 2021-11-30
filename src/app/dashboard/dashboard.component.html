@@ -3,20 +3,12 @@
 <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
 <!-- left Column-->
 <div class="container">
-<div class="row">
-    <div class="col-12 col-lg-3">
-		<div class="card">
-			<div class="card-body">				
-				<h5 class="my-3">Poembook</h5>
-				<div class="fm-menu">	         
-           		<!-- ne yazmalı buraya-->
-					
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="row"> 
+  <div class="col-12 col-lg-2" style="margin-top: 2%;">
+    <!--left -->
+    </div>
     <!-- Dashboard Start-->
-	<div class="col-12 col-lg-6">
+	<div class="col-12 col-lg-8" style="margin-top: 2%;">
     <!-- Add Poem-->
 		<div class="card">
 			<div class="card-body">				
@@ -32,7 +24,7 @@
                   <option selected>Seçiniz...</option>
                   <option *ngFor="let category of categories" value={{category.categoryTitle}} >{{category.categoryTitle}}</option> </select>
             </div>                            
-          <angular-editor formControlName="poemContent" [placeholder]="'Enter text here...'" ></angular-editor>
+          <angular-editor formControlName="poemContent" [placeholder]="'Şiirinizi buraya yazabilirsiniz...'" ></angular-editor>
          
                   <button type="submit" class="btn btn-sm btn-dark waves-effect waves-light">Şiirini Paylaş</button>
         </form>     

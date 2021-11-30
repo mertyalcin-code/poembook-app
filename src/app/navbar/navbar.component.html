@@ -1,3 +1,4 @@
+<!-- navbar starts-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><img src="https://res.cloudinary.com/mertyalcin/image/upload/v1637136345/poembook_1_ddutd3.png" alt="" width="200" height="53"></a>
@@ -5,32 +6,21 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li *ngIf="isLoggedIn()" class="nav-item">
-          <a  class="nav-link active" aria-current="page" href="#">Şiirler</a>
+      <!-- right menu starts-->
+      <ul class="navbar-nav" style="position: absolute;right: 3%;">
+        <li *ngIf="isLoggedIn()" style="margin-right: 3%;"><button type="button" class="btn btn-primary" routerLink="/poem/search"><i class="fas fa-search"></i></button> </li>
+        <li *ngIf="isLoggedIn()" style="margin-right: 3%;">
+          <button type="button" routerLink="/message" class="btn btn-primary" >
+            <i class="far fa-comment"></i>
+          </button>
         </li>
-        <li *ngIf="isLoggedIn()" class="nav-item">
-          <a  class="nav-link" href="/categories/Didaktik">Kategoriler</a>
-        </li>
-        <li *ngIf="isLoggedIn()" class="nav-item">
-          <a  class="nav-link" href="/most-liked">En Beğenilenler</a>
-        </li>     
-        <li *ngIf="isLoggedIn()" class="nav-item">
-          <a  class="nav-link" href="/most-comment">En Çok Yorum Alanlar</a>
-        </li>    
-        <li *ngIf="isLoggedIn()" class="nav-item">
-          <a  class="nav-link" href="/random">Rastgele Şiir</a>
-        </li>      
-        <li *ngIf="isLoggedIn()" class="nav-item">
-          <a  class="nav-link" href="/poem/search">Şiir Ara</a>
-        </li>   
- 
-        <li  *ngIf="isLoggedIn()" class="nav-item" style="position: relative;   left:10%">
+      
+        <li  *ngIf="isLoggedIn()" class="nav-item" >
           <button *ngIf="notices.length>0" type="button" class="btn btn-primary" data-toggle="modal" data-target="#noticeModel">
-            Bildirimler <span class="badge badge-light">{{notices.length}}</span>
+            <i class="fas fa-bell"></i> <span class="badge badge-light">{{notices.length}}</span>
           </button>
           <button *ngIf="notices.length==0" type="button" class="btn btn-primary" data-toggle="modal" data-target="#noticeModel">
-            Bildirimler <span class="badge badge-light"></span>
+            <i class="fas fa-bell"></i> <span class="badge badge-light"></span>
           </button>
         </li>
         <li class="nav-item dropdown" id="navbarDropdownMenu" *ngIf="isLoggedIn()">
@@ -47,7 +37,33 @@
     </div>
   </div>
 </nav>
-
+<!-- right menu ends-->
+<!-- bottom menu starts -->
+<div class="col-12 col-lg-12" *ngIf="isLoggedIn()" >
+	<ul class="nav justify-content-center">
+    <li class="nav-item">
+      <a class="nav-link " href="#">Ana Sayfa</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/categories/Didaktik">Kategoriler</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/most-liked">En Beğenilenler</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/most-comment">En Çok Yorum Alanlar</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/random">Rastgele Şiir</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/poem/search">Şiir Ara</a>
+    </li>
+  </ul>
+	</div>
+  <!-- bottom menu ends -->
+<!-- navbar ends-->
+<!--Notice starts-->
 <div class="modal" tabindex="-1" role="dialog" id="noticeModel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -76,7 +92,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-        <button *ngIf="loading" (click)="deleteAllNotices()" type="button" class="btn btn-primary">Tümünü Temizle</button>
+        <button *ngIf="!loading" (click)="deleteAllNotices()" type="button" class="btn btn-primary">Tümünü Temizle</button>
         <div *ngIf="loading" class="spinner-border text-danger" role="status">
           <span class="sr-only">Loading...</span>
         </div>
@@ -84,3 +100,4 @@
     </div>
   </div>
 </div>
+<!--Notice ends-->

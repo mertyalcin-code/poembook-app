@@ -47,6 +47,19 @@
                   role="status"
                 ></div>
               </button>
+              
+              <button              
+                (click)="routeMessagePage()"
+                type="button"
+                class="btn btn-success"
+              >
+                <span >Mesaj Gönder</span>
+                <div
+                  *ngIf="followLoading"
+                  class="spinner-grow text-primary"
+                  role="status"
+                ></div>
+              </button>
             </div>
           </div>
           <div class="mt-3">

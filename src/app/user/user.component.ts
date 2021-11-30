@@ -46,6 +46,7 @@ export class UserComponent implements OnInit,OnDestroy{
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,  
     private router: ActivatedRoute,
+    private urlRouter:Router,
     private poemService: PoemService,
     private userService: UserService,
     private followerService: FollowService, 
@@ -210,6 +211,9 @@ export class UserComponent implements OnInit,OnDestroy{
     formData.append('indexStart', JSON.stringify(this.indexStart));
     formData.append('indexEnd', JSON.stringify(this.indexEnd));
     return formData;
+  }
+  routeMessagePage(){
+    this.urlRouter.navigateByUrl('/message/'+this.profileUser.username) 
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());

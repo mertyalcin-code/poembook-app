@@ -1,0 +1,111 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+
+    <!-- Page header start -->
+    <div class="page-title">
+        <div class="row gutters">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                <h5 class="title">Özel Mesajlar</h5>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"> </div>
+        </div>
+    </div>
+    <!-- Page header end -->
+
+    <!-- Content wrapper start -->
+    <div class="content-wrapper">
+
+        <!-- Row start -->
+        <div class="row gutters">
+
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+
+                <div class="card m-0">
+
+                    <!-- Row start -->
+                    <div class="row no-gutters">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3">
+                            <div class="users-container">
+                                <div class="chat-search-box">
+                                    <div class="input-group">
+                                        <input class="form-control" placeholder="Search">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-info">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="users" *ngFor="let user of messageList">
+                                    <li class="person" data-chat="person1">
+                                        <div class="user" >
+                                            <img src="{{user.avatar.imageUrl}}" alt="message icon" (click)="onSelectUser(user)">
+                                           
+                                        </div>
+                                        <p class="name-time">
+                                            <span class="name" (click)="onSelectUser(user)">{{user.username}}</span>                                           
+                                        </p>
+                                    </li>                                    
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9">
+                            <div class="selected-user">
+                                <span>Kime: <span class="name">{{toUsername}}</span></span>
+                            </div>
+                            <div class="chat-container">
+                                <div *ngFor="let message of allMessages">
+                                <ul class="chat-box chatContainerScroll">
+                                     <li class="chat-left" *ngIf="message.from.username!=currentUser.username">
+                                        <div class="chat-avatar">
+                                            <img src="{{message.from.avatar.imageUrl}}" alt="Avatar">
+                                            <div class="chat-name">{{toUsername}}</div>
+                                        </div>
+                                        <div class="chat-text" style="background-color: greenyellow;"> {{message.message}}
+                                        </div>
+                                        <div class="chat-hour">{{message.pmTime}} <span class="fa fa-check-circle"></span></div>
+                                    </li>
+                                    <li class="chat-right" *ngIf="message.from.username==currentUser.username">
+                                        <div class="chat-hour">{{message.pmTime }}<span class="fa fa-check-circle"></span></div>
+                                        <div class="chat-text">{{message.message}}</div>
+                                        <div class="chat-avatar">
+                                            <img src="{{message.from.avatar.imageUrl}}" alt="Avatar">
+                                            <div class="chat-name">{{message.from.username}}</div>
+                                        </div>
+                                    </li>
+                                   
+                                </ul>
+                            </div>
+                            <form *ngIf="toUsername!=null"
+                            [formGroup]="sendMessageForm"
+                            (ngSubmit)="sendMessage()"
+                            style="margin-top: 3%;"
+                          >
+                            <input
+                              *ngIf="!sendLoading"
+                              type="text"
+                              id="message"
+                              formControlName="message"
+                              class="form-control border-0 form-control-sm"
+                              placeholder="Mesaj Gönder"
+                            />
+                            <button  *ngIf="sendLoading && sendMessageForm.valid" class="btn btn-primary" type="button" disabled>
+                              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                              Mesaj Gönderiliyor
+                            </button>
+                          </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Row end -->
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Row end -->
+
+    </div>
+    <!-- Content wrapper end -->
+
+</div>

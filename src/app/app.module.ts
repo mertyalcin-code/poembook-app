@@ -29,13 +29,16 @@ import { MostLikedComponent } from './populer/most-liked/most-liked.component';
 import { MostCommentComponent } from './populer/most-comment/most-comment.component';
 import { SearchPoemsComponent } from './search-poems/search-poems.component';
 import { PoemPageComponent } from './poem-page/poem-page.component';
+import { PrivateMessageComponent } from './private-message/private-message.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { PasswordResetComponent } from './forget-password/password-reset/password-reset.component';
 
 
 
 
 
 @NgModule({
-  declarations: [																				
+  declarations: [																								
     AppComponent,
       LoginComponent,
       UserComponent,
@@ -56,7 +59,10 @@ import { PoemPageComponent } from './poem-page/poem-page.component';
       MostLikedComponent,
       MostCommentComponent,
       SearchPoemsComponent,
-      PoemPageComponent
+      PoemPageComponent,     
+      PrivateMessageComponent,
+      ForgetPasswordComponent,
+      PasswordResetComponent,
    ],
   imports: [
     BrowserModule,
