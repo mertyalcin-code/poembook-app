@@ -5,6 +5,7 @@ import { DataResult } from '../model/result/data-result';
 import { PoemBox } from '../model/result/poemBox';
 import { LogService } from '../service/log.service';
 import { PoemService } from '../service/poem.service';
+import { TestService } from '../service/test.service';
 
 @Component({
   selector: 'app-test',
@@ -16,27 +17,27 @@ export class TestComponent implements OnInit {
   private subscriptions: Subscription[] = []; 
 
 
-  constructor(private logService:LogService) { }
+  constructor(private testService:TestService) { }
 
   ngOnInit() {
-    this.getpoem()
+    this.test()
   }
-  getpoem():void{    
+  test():void{    
  
     this.subscriptions.push(
-      this.logService.allLogs().subscribe(
-        (response: DataResult) => {
-          if (response.success) {         
-            console.log(response.data)
+      this.testService.test().subscribe(
+        (response: Date) => {
+                
+            console.log(response)
    
           //  this.sendNotification(NotificationType.SUCCESS, response.message);            
-          } else {
+     
 
        
-          }
+    
         },
         (errorResponse: HttpErrorResponse) => {
-         
+         console.log(errorResponse.message)
         }
       )
     );

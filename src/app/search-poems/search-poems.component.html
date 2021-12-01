@@ -1,26 +1,26 @@
-<div class=container style="position: relative;margin-bottom: 8%;">
+<div class=container>
   <div class=row> 
-    <div class="col-12 col-lg-6">     
+    <div class="col-12 col-lg-2">
+    </div>
+    <div class="col-12 col-lg-8">     <!-- Neden çalışmıyor ???-->
       <form #searchForm="ngForm" class="d-flex" >
         <input class="form-control me-2" name="search"  [(ngModel)]="search" type="search" style="margin-bottom: 6%;" placeholder="Şiir başlığı veya içeriği" aria-label="Search">
         <button class="btn btn-outline-success" (click)="searchPoems()" style="margin-bottom: 6%;" type="submit">Ara</button>
       </form> 
-      <div class="card" >        
-        <div class="card-body" *ngIf="poems.length>0" >
-          <!-- Story Box-->          
-          <button *ngIf="poemsLoading" class="btn btn-primary" type="button" disabled>
-            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-            Şiirler Yükleniyor
-          </button>
-            <div *ngFor="let poem of poems" >
-              <app-poem-box *ngIf="!poemsLoading" [poem]="poem"></app-poem-box>
-            </div>
+      <div class="card" *ngFor="let poem of poems">     
+        <button *ngIf="poemsLoading" class="btn btn-primary" type="button" disabled>
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Şiirler Yükleniyor
+        </button>
+        <div class="card-body">     
+          <app-poem-box *ngIf="!poemsLoading" [poem]="poem"></app-poem-box>
+        
 
         </div>  
         <div class="card-body" *ngIf="poems.length==0 && searchForm.touched">
             <p> Şiir bulunamadı</p>
         </div>
-        <!-- Story Box-->
+   
       </div>
     </div>
    

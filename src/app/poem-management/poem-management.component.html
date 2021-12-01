@@ -71,10 +71,10 @@
             <td (click)="onSelectPoem(poemApp)">{{ poemApp?.poemId }}</td>
             <td (click)="onSelectPoem(poemApp)">{{ poemApp?.poemTitle }}</td>
             <td (click)="onSelectPoem(poemApp)">
-              {{ poemApp?.creationDate | date: "mediumDate" }}
+              {{ poemApp?.creationDate | date: "short" }}
             </td>
             <td (click)="onSelectPoem(poemApp)">
-              {{ poemApp?.lastUpdateDate | date: "mediumDate" }}
+              {{ poemApp?.lastUpdateDate | date: "short" }}
             </td>
             <td (click)="onSelectPoem(poemApp)">{{ poemApp?.commentCount }}</td>
             <td (click)="onSelectPoem(poemApp)">{{ poemApp?.howManyLikes }}</td>
