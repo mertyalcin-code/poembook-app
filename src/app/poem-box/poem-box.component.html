@@ -38,9 +38,9 @@
           <a class="nameLink" href="{{'/user/'+poem.username}}">{{poem.firstName+" "+poem.lastName}}</a>
           <small *ngIf="poem.creationDateInMinute<60" class="text-muted">{{"  " +poem.creationDateInMinute + " dk önce" }}</small >
           <small *ngIf="poem.creationDateInMinute>=60 && poem.creationDateInMinute<1440" class="text-muted">{{" "+float2int(poem.creationDateInMinute/60)  + " saat önce" }}</small >
-            <small *ngIf="poem.creationDateInMinute>=1440" class="text-muted">{{poem.creationDate |date:'shortDate' }}</small >
+            <small *ngIf="poem.creationDateInMinute>=1440" class="text-muted">{{poem.creationDate |date:'short' }}</small >
       </h5>
-      {{poem.creationDate}}
+      
 
         <h3 style="text-align: center">
           {{ poem.poemTitle }}

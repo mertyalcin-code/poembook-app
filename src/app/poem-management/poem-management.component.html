@@ -156,8 +156,8 @@
                         justify-content-between
                       "
                     >
-                      <div class="text-center text-sm-left mb-sm-0">
-                        <h3 class="pt-sm-2 pb-1 mb-0 text-nowrap">
+                      <div >
+                        <h3 >
                           {{ selectedPoem?.poemTitle }}
                         </h3>                       
                         <p class="e2e-inner-html-bound" [innerHTML]="selectedPoem?.poemContent"></p>  
@@ -174,28 +174,8 @@
                             >Pasif</span
                           >
                         </div>
-                        <div
-                          *ngIf="selectedPoem?.lastUpdateDate"
-                          class="text-muted"
-                        >
-                          <small
-                            >Son Düzenlenme:
-                            {{
-                              selectedPoem?.lastUpdateDate | date: "mediumDate"
-                            }}</small
-                          >
-                        </div>
-                      </div>
-                      <div class="text-center text-sm-right">
-                        <div class="text-muted">
-                          <small
-                            >Oluşturulma Tarihi
-                            {{
-                              selectedPoem?.creationDate | date: "mediumDate"
-                            }}</small
-                          >
-                        </div>
-                      </div>
+                  
+                      </div>                 
                     </div>
                   </div>
                 </div>
@@ -210,11 +190,17 @@
                     >{{ selectedPoem?.category?.categoryTitle }}
                   </li>
                   <li
+                  *ngIf="selectedPoem?.creationDate"
+                  class="list-group-item"
+                >
+                  <i class="fas fa-sign-in-alt fa-pull-right fa-2x"></i
+                  >{{ selectedPoem?.creationDate | date: "medium" }}
+                </li>
+                  <li
                     *ngIf="selectedPoem?.lastUpdateDate"
                     class="list-group-item"
                   >
-                    <i class="fas fa-sign-in-alt fa-pull-right fa-2x"></i
-                    >{{ selectedPoem?.lastUpdateDate | date: "medium" }}
+                  <i class="fas fa-user-edit fa-pull-right fa-2x"></i>{{ selectedPoem?.lastUpdateDate | date: "medium" }}
                   </li>
                 </ul>
               </div>
