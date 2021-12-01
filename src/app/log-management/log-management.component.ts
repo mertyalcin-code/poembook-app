@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { NotificationType } from '../enum/notification-type.enum';
 import { Log } from '../model/log';
 import { DataResult } from '../model/result/data-result';
+import { Result } from '../model/result/result';
 import { AuthenticationService } from '../service/authentication.service';
 import { LogService } from '../service/log.service';
 import { NotificationService } from '../service/notification.service';
@@ -114,5 +115,61 @@ export class LogManagementComponent implements OnInit,OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
+  deleteAllLogs():void{
 
+    this.subscriptions.push(
+      this.logService.deleteAllLogs().subscribe(
+        (response: Result) => {
+          if (response.success) { 
+         this.sendNotification(NotificationType.SUCCESS, response.message);  
+         this.getAllLogs();          
+          } else {
+            this.sendNotification(NotificationType.ERROR, response.message);   
+                      }
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.sendNotification(NotificationType.ERROR, errorResponse.error.message);   
+   
+        }
+      )
+    );
+  }
+  deleteByType(logType:string):void{
+
+    this.subscriptions.push(
+      this.logService.deleteByType(logType).subscribe(
+        (response: Result) => {
+          if (response.success) { 
+            this.getAllLogs();  
+         this.sendNotification(NotificationType.SUCCESS, response.message);            
+          } else {
+            this.sendNotification(NotificationType.ERROR, response.message);   
+                      }
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.sendNotification(NotificationType.ERROR, errorResponse.error.message);   
+   
+        }
+      )
+    );
+  }
+  deleteAllLogsExceptThisWeek():void{
+
+    this.subscriptions.push(
+      this.logService.deleteAllLogsExceptThisWeek().subscribe(
+        (response: Result) => {
+          if (response.success) { 
+            this.getAllLogs();  
+         this.sendNotification(NotificationType.SUCCESS, response.message);            
+          } else {
+            this.sendNotification(NotificationType.ERROR, response.message);   
+                      }
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.sendNotification(NotificationType.ERROR, errorResponse.error.message);   
+   
+        }
+      )
+    );
+  }
 }
