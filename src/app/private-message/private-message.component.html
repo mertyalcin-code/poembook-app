@@ -1,4 +1,4 @@
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
 <div class="container">
 
     <!-- Page header start -->
@@ -28,33 +28,34 @@
                             <div class="users-container">
                                 <div class="chat-search-box">
                                     <div class="input-group">
-                                        <input class="form-control" placeholder="Search">
-                                        <div class="input-group-btn">
-                                            <button type="button" class="btn btn-info">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </div>
+                                        <input class="form-control" placeholder="Kullanıcı Ara" [(ngModel)]="searchUser" autocomplete="off">
+                                      
                                     </div>
                                 </div>
-                                <ul class="users" *ngFor="let user of messageList">
-                                    <li class="person" data-chat="person1">
+                                <ul class="users" *ngFor="let user of messageList | filter:searchUser">
+                                    <li class="person" data-chat="person1" (click)="onSelectUser(user)">
                                         <div class="user" >
                                             <img src="{{user.avatar.imageUrl}}" alt="message icon" (click)="onSelectUser(user)">
                                            
                                         </div>
                                         <p class="name-time">
-                                            <span class="name" (click)="onSelectUser(user)">{{user.username}}</span>                                           
-                                        </p>
+                                            <span class="name" (click)="onSelectUser(user)">{{user.firstName+" "+user.lastName}}</span> 
+                                         </p>
                                     </li>                                    
                                 </ul>
                             </div>
                         </div>
                         <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9">
                             <div class="selected-user">
-                                <span>Kime: <span class="name">{{toUsername}}</span></span>
+                                <span>Kime: <span class="name"><a href="{{'/user/'+toUsername}}">{{toUsername}}</a></span></span>
+                            </div>
+                            <div class="chat-search-box" *ngIf="toUsername!=null">
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="Mesajlarda Ara" [(ngModel)]="searchMessage" autocomplete="off">                                  
+                                </div>
                             </div>
                             <div class="chat-container">
-                                <div *ngFor="let message of allMessages">
+                                <div *ngFor="let message of allMessages | filter:searchMessage">
                                 <ul class="chat-box chatContainerScroll">
                                      <li class="chat-left" *ngIf="message.from.username!=currentUser.username">
                                         <div class="chat-avatar">

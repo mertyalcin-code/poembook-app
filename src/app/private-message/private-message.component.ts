@@ -19,6 +19,8 @@ import { PrivateMessageService } from '../service/private-message.service';
   styleUrls: ['./private-message.component.css']
 })
 export class PrivateMessageComponent implements OnInit {
+  searchUser:any;
+  searchMessage:any;
   messagesLoading=false;
   sendLoading=false;
   currentUser:User;
@@ -34,11 +36,10 @@ export class PrivateMessageComponent implements OnInit {
 
   ngOnInit() {
    this.currentUser= this.authenticationService.getUserFromLocalCache();
-   this. usersAllMessagesWith();
+   this.setToUser();
+   this.usersAllMessagesWith();
    this.usersMessageList();
-   if(this.route.snapshot.paramMap.get('username')!=null){
-    this.toUsername=this.route.snapshot.paramMap.get('username');
-   }
+  
   }
   sendMessageForm = new FormGroup({
     message: new FormControl('', [
@@ -63,8 +64,7 @@ export class PrivateMessageComponent implements OnInit {
         (response: DataResult) => {
           if (response.success) {
             this.messagesLoading = false;
-         this.allMessages= response.data;
-         console.log(response.data);
+         this.allMessages= response.data;         
           //  this.sendNotification(NotificationType.SUCCESS, response.message);
          
           } else {
@@ -89,9 +89,8 @@ export class PrivateMessageComponent implements OnInit {
         (response: DataResult) => {
           if (response.success) {
             this.messagesLoading = false;
-            this.messageList= response.data;
-    
-          //  this.sendNotification(NotificationType.SUCCESS, response.message);
+            this.messageList= response.data;  
+             //  this.sendNotification(NotificationType.SUCCESS, response.message);
          
           } else {
             this.sendNotification(NotificationType.ERROR, response.message);
@@ -135,7 +134,12 @@ export class PrivateMessageComponent implements OnInit {
       )
     );
   }  
-
+  setToUser(){
+    if(this.route.snapshot.paramMap.get('username')!=null){  
+     this.toUsername=this.route.snapshot.paramMap.get('username');
+    }
+   
+  }
   private sendNotification(
     notificationType: NotificationType,
     message: string

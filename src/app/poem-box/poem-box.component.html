@@ -150,7 +150,7 @@
             </div>
             <small *ngIf="comment.commentTimeInMinute<60" class="text-muted">{{ comment.commentTimeInMinute + " dk önce" }}</small >
               <small *ngIf="comment.commentTimeInMinute>=60 && comment.commentTimeInMinute<1440" class="text-muted">{{" "+float2int(comment.commentTimeInMinute/60)  + " saat önce" }}</small >
-                <small *ngIf="comment.commentTimeInMinute>=1440" class="text-muted">{{comment.commentTimeInMinute |date:'short' }}</small ></h5>
+                <small *ngIf="comment.commentTimeInMinute>=1440" class="text-muted">{{comment.lastCommentUpdateTime |date:'short' }}</small ></h5>
         <p > {{ comment.poemCommentText }}</p> 
         <div class="w-100">
           <form  *ngIf="editCommentStatus && editCommentId==comment.poemCommentId"

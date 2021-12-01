@@ -45,11 +45,7 @@ body{margin-top:20px;}
     vertical-align: middle;
 }
 
-@media (max-width: 767px) {
-    .chat-search-box {
-        display: none;
-    }
-}
+
 
 
 /************************************************
@@ -90,8 +86,7 @@ body{margin-top:20px;}
 
 .users .person:hover {
     background-color: #ffffff;
-    /* Fallback Color */
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#e9eff5), to(#ffffff));
+    
     /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(right, #e9eff5, #ffffff);
     /* Chrome 10+, Saf5.1+, iOS 5+ */
@@ -107,7 +102,6 @@ body{margin-top:20px;}
 .users .person.active-user {
     background-color: #ffffff;
     /* Fallback Color */
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f9fb), to(#ffffff));
     /* Saf4+, Chrome */
     background-image: -webkit-linear-gradient(right, #f7f9fb, #ffffff);
     /* Chrome 10+, Saf5.1+, iOS 5+ */
@@ -136,34 +130,6 @@ body{margin-top:20px;}
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
     border-radius: 50px;
-}
-
-.users .person .user .status {
-    width: 10px;
-    height: 10px;
-    -webkit-border-radius: 100px;
-    -moz-border-radius: 100px;
-    border-radius: 100px;
-    background: #e6ecf3;
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-.users .person .user .status.online {
-    background: #9ec94a;
-}
-
-.users .person .user .status.offline {
-    background: #c4d2e2;
-}
-
-.users .person .user .status.away {
-    background: #f9be52;
-}
-
-.users .person .user .status.busy {
-    background: #fd7274;
 }
 
 .users .person p.name-time {
