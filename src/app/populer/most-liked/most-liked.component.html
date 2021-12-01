@@ -17,14 +17,15 @@
         <div class="card-body">
           <app-poem-box [poem]="poem"></app-poem-box>
         </div>
-        <button
-          class="btn btn-primary"
-          *ngIf="next < poems.length"
-          (click)="increaseNext()"
-        >
-          Devamını Gör
-        </button>
+     
       </div>
+      <button
+      class="btn btn-primary"
+      *ngIf="next < poems.length"
+      (click)="increaseNext()"
+    >
+      Devamını Gör
+    </button>
     </div>
   </div>
 </div>
