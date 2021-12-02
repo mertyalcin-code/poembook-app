@@ -1,24 +1,10 @@
 body{margin-top:20px;}
-/*************** 1.Variables ***************/
-
-
-/* ------------------ Color Pallet ------------------ */
-
-
-/*************** 2.Mixins ***************/
-
-
-/************************************************
-    ************************************************
-										Search Box
-	************************************************
-************************************************/
-
 .chat-search-box {
     -webkit-border-radius: 3px 0 0 0;
     -moz-border-radius: 3px 0 0 0;
     border-radius: 3px 0 0 0;
     padding: .75rem 1rem;
+    min-width: 50px;
 }
 
 .chat-search-box .input-group .form-control {
@@ -45,15 +31,6 @@ body{margin-top:20px;}
     vertical-align: middle;
 }
 
-
-
-
-/************************************************
-	************************************************
-									Users Container
-	************************************************
-************************************************/
-
 .users-container {
     position: relative;
     padding: 1rem 0;
@@ -64,13 +41,6 @@ body{margin-top:20px;}
     -ms-flex-direction: column;
     flex-direction: column;
 }
-
-
-/************************************************
-	************************************************
-											Users
-	************************************************
-************************************************/
 
 .users {
     padding: 0;
@@ -85,34 +55,11 @@ body{margin-top:20px;}
 }
 
 .users .person:hover {
-    background-color: #ffffff;
-    
-    /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(right, #e9eff5, #ffffff);
-    /* Chrome 10+, Saf5.1+, iOS 5+ */
-    background-image: -moz-linear-gradient(right, #e9eff5, #ffffff);
-    /* FF3.6 */
-    background-image: -ms-linear-gradient(right, #e9eff5, #ffffff);
-    /* IE10 */
-    background-image: -o-linear-gradient(right, #e9eff5, #ffffff);
-    /* Opera 11.10+ */
-    background-image: linear-gradient(right, #e9eff5, #ffffff);
+    background-color: #ffffff;    
+
 }
 
-.users .person.active-user {
-    background-color: #ffffff;
-    /* Fallback Color */
-    /* Saf4+, Chrome */
-    background-image: -webkit-linear-gradient(right, #f7f9fb, #ffffff);
-    /* Chrome 10+, Saf5.1+, iOS 5+ */
-    background-image: -moz-linear-gradient(right, #f7f9fb, #ffffff);
-    /* FF3.6 */
-    background-image: -ms-linear-gradient(right, #f7f9fb, #ffffff);
-    /* IE10 */
-    background-image: -o-linear-gradient(right, #f7f9fb, #ffffff);
-    /* Opera 11.10+ */
-    background-image: linear-gradient(right, #f7f9fb, #ffffff);
-}
+
 
 .users .person:last-child {
     border-bottom: 0;

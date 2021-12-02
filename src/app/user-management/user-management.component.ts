@@ -349,7 +349,29 @@ public getUser(username): any {
     )
   );
 }
-
+onMakeSuperAdmin(form:NgForm):void { 
+  const username = form.value['make-admin-username'];
+this.refreshing=true;
+  this.subscriptions.push(
+    this.adminService.makeSuperAdmin(username).subscribe(
+      (response: Result) => {
+        if(response.success){ 
+          this.sendNotification(NotificationType.SUCCESS, response.message);   
+          this.refreshing=false;          
+        }else{
+          this.sendNotification(NotificationType.ERROR, response.message);   
+          this.refreshing=false;
+        }
+        
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
+        this.refreshing=false;
+        
+      }
+    )
+  );
+}
 private clickButton(buttonId: string): void {
   document.getElementById(buttonId).click();
 }

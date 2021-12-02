@@ -22,9 +22,9 @@
           <i class="fa fa-cogs"></i>
           Şifre Sıfırla
         </a>
-        <a  class="nav-item nav-link ml-3" (click)="changeTitle('Loglar')" data-toggle="tab" href="logs">
-          <i class="fa fa-cogs"></i>
-          Loglar
+        <a  class="nav-item nav-link ml-3" (click)="changeTitle('Super Admin')" data-toggle="tab" href="#superAdmin">
+          <i class="fas fa-users-cog"></i>
+          Super Admin Yap
         </a>
         <a class="nav-item nav-link move-right mr-3" (click)="changeTitle('Profil')" data-toggle="tab" href="#profile">
           Merhaba, {{user?.firstName}}
@@ -106,7 +106,7 @@
     <button [hidden]="true" type="button" id="openUserEdit" data-toggle="modal" data-target="#editUserModal">
     </button>
 
-    <!-- change password  -->
+    <!-- reset password  -->
     <div [hidden]="!isAdmin" class="tab-pane fade" id="reset-password">
       <form #resetPasswordForm="ngForm" (ngSubmit)="onResetPassword(resetPasswordForm)">
         <fieldset>
@@ -356,7 +356,7 @@
     </div>
 
     <!-- model add user -->
-    <div [hidden]="!isAdmin" class="modal draggable fade bd-example-modal-lg" id="addUserModal" tabindex="-1" role="dialog"
+    <div class="modal draggable fade bd-example-modal-lg" id="addUserModal" tabindex="-1" role="dialog"
       aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -527,7 +527,26 @@
       </div>
     </div>
   </div>
+  <!--make super admin-->
+<div [hidden]="!isSuperAdmin" class="tab-pane fade" id="superAdmin">
+  <form #makeSuperAdminForm="ngForm" (ngSubmit)="onMakeSuperAdmin(makeSuperAdminForm)">
+    <fieldset>
+      <legend>Kullanıcı Süper Admin Yapma</legend>
+      <div class="form-group">
+        <label for="make-admin-username">Kullanıcı Adı</label>
+        <input type="text" name="make-admin-username" required ngModel class="form-control"
+          placeholder="Kullanıcı Adı giriniz">
+      </div>
+      <button type="submit" [disabled]="makeSuperAdminForm.invalid" class="btn btn-primary">
+        <i *ngIf="refreshing" class="fas fa-spinner fa-spin"></i>&nbsp;&nbsp;
+        <span *ngIf="refreshing">Yükleniyor...</span>
+        <span *ngIf="!refreshing">Süper Admin yap</span>
+      </button>
+    </fieldset>
+  </form>
 </div>
+</div>
+
 
 
     <!-- profile image change form -->
