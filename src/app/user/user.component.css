@@ -61,7 +61,7 @@ body{
     margin-top: 20px;
 }
 .simplebar-wrapper {
-    overflow: hidden;
+    overflow: auto;
     width: inherit;
     height: inherit;
     max-width: inherit;
@@ -75,7 +75,7 @@ body{
     position: relative;
     float: left;
     max-height: 1px;
-    overflow: visible;
+    overflow: auto;
     z-index: -1;
     padding: 0;
     margin: 0;

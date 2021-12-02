@@ -22,7 +22,7 @@
               <p class="text-muted">{{ "@" + profileUser.username }}</p>
 
               <button
-                *ngIf="!isFollowing"
+                *ngIf="!isFollowing &&profileUser.username!=currentUsername&&!followLoading"
                 (click)="follow(profileUser.username)"
                 type="submit"
                 class="btn btn-secondary"
@@ -35,7 +35,7 @@
                 ></div>
               </button>
               <button
-                *ngIf="isFollowing"
+                *ngIf="isFollowing &&profileUser.username!=currentUsername&&!followLoading"
                 (click)="unfollow(profileUser.username)"
                 type="submit"
                 class="btn btn-primary"
@@ -52,6 +52,7 @@
                 (click)="routeMessagePage()"
                 type="button"
                 class="btn btn-success"
+                *ngIf="profileUser.username!=currentUsername"
               >
                 <span >Mesaj Gönder</span>
                 <div
@@ -142,7 +143,7 @@
                 <div class="simplebar-offset" style="right: 0px; bottom: 0px">
                   <div
                     class="simplebar-content-wrapper"
-                    style="height: auto; overflow-y: scroll"
+                    
                   >
                     <div class="simplebar-content" style="padding: 0px">
                       <div
@@ -226,7 +227,7 @@
                 <div class="simplebar-offset" style="right: 0px; bottom: 0px">
                   <div
                     class="simplebar-content-wrapper"
-                    style="height: auto; overflow-y: scroll"
+           
                   >
                     <div class="simplebar-content" style="padding: 0px">
                       <div

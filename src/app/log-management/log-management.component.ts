@@ -44,6 +44,7 @@ export class LogManagementComponent implements OnInit,OnDestroy {
            this.loading=false;
           this.sendNotification(NotificationType.SUCCESS, response.message);            
           } else {
+            this.logs=[];
             this.sendNotification(NotificationType.ERROR, response.message);   
             this.loading=false;    
        
