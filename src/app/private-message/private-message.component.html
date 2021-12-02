@@ -28,8 +28,7 @@
                             <div class="users-container">
                                 <div class="chat-search-box">
                                     <div class="input-group">
-                                        <input class="form-control" placeholder="Kullanıcı Ara" [(ngModel)]="searchUser" autocomplete="off">
-                                      
+                                        <input class="form-control" placeholder="Kullanıcı Ara" [(ngModel)]="searchUser" autocomplete="off">                                      
                                     </div>
                                 </div>
                                 <ul class="users" *ngFor="let user of messageList | filter:searchUser">

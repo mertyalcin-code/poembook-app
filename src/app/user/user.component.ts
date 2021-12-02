@@ -30,8 +30,9 @@ import { UserService } from '../service/user.service';
 })
 export class UserComponent implements OnInit,OnDestroy{ 
 
-  public profileUsername: string =
-  this.router.snapshot.paramMap.get('username');
+  public profileUsername: string;
+  public followerSearch:any;
+  public followingSearch:any;
   public profileUser=new ProfileUser;
   public currentUsername: string;
   public isFollowing: boolean;

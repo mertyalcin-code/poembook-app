@@ -6,24 +6,15 @@ body{
 .card {
     box-shadow: 0 0 2px 0 rgb(0 0 0 / 10%);
     margin-bottom: 24px;
+    max-height: 100%;
 }
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 0 solid #ecf2f5;
-    border-radius: .25rem;
-}
+
 .avatar-lg {
     height: 4.5rem;
     width: 4.5rem;
 }
 .rounded-circle {
-    border-radius: 50%!important;
+    border-radius: 50%;
 }
 .img-thumbnail {
     padding: .25rem;
@@ -38,21 +29,21 @@ body{
     width: 2.25rem;
 }
 .rounded-circle {
-    border-radius: 50%!important;
+    border-radius: 50%;
 }
 .me-2 {
-    margin-right: .75rem!important;
+    margin-right: .75rem;
 }
 .avatar-md {
     height: 3.5rem;
     width: 3.5rem;
 }
 .rounded-circle {
-    border-radius: 50%!important;
+    border-radius: 50%;
 }
 .bg-transparent {
     --bs-bg-opacity: 1;
-    background-color: transparent!important;
+    background-color: transparent;
 }
 .post-user-comment-box {
     background-color: #f2f8fb;
@@ -63,29 +54,13 @@ body{
 .simplebar-wrapper {
     overflow: auto;
     width: inherit;
-    height: inherit;
+    height: 300px;
     max-width: inherit;
-    max-height: inherit;
+    max-height: 300px;
 }
-.simplebar-height-auto-observer-wrapper {
-    box-sizing: inherit!important;
-    height: 100%;
-    width: 100%;
-    max-width: 1px;
-    position: relative;
-    float: left;
-    max-height: 1px;
-    overflow: auto;
-    z-index: -1;
-    padding: 0;
-    margin: 0;
-    pointer-events: none;
-    flex-grow: inherit;
-    flex-shrink: 0;
-    flex-basis: 0;
-}
+
 .font-13 {
-    font-size: 13px!important;
+    font-size: 13px;
 }
 .btn-soft-info {
     color: #45bbe0;
