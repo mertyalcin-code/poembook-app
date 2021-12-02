@@ -1,0 +1,55 @@
+<div class="text-center">
+  <main class="form-signin">
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+      <img class="mb-1" src="https://res.cloudinary.com/mertyalcin/image/upload/v1636739442/poembookbig_wcg7xb.png" alt="" width="200" height="113">
+      <h1 class="h3 mb-2 fw-normal">İletişim Formu</h1>  
+      <div class="form-floating">
+        <input type="text" class="form-control" name="firstName"  formControlName="firstName"  placeholder="isim"         
+         >
+        <label for="floatingFirstName">İsim</label>
+      </div>
+      <div class="alert alert-danger" *ngIf="firstName.invalid && firstName.touched">
+        <p *ngIf="firstName.errors.required"> Gerekli Alan </p>
+        <p *ngIf="firstName.errors.minlength">En az 3 karakter girmelisiniz.</p>
+        <p *ngIf="firstName.errors.maxlength">En fazla 30 karakter girebilirsiniz.</p>
+      </div>
+      <div class="form-floating">
+        <input type="text" class="form-control" name="lastName" formControlName="lastName" placeholder="Soyisim"       
+        >
+        <label for="floatingLastName">Soyisim</label>
+      </div>
+      <div class="alert alert-danger" *ngIf="lastName.invalid && lastName.touched">
+        <p *ngIf="lastName.errors.required">Gerekli Alan</p>
+        <p *ngIf="lastName.errors.minlength">En az 3 karakter girmelisiniz.</p>
+        <p *ngIf="lastName.errors.maxlength">En fazla 30 karakter girebilirsiniz.</p>
+      </div>
+      <div class="form-floating">
+        <input type="email" class="form-control" name="email" formControlName="email" placeholder="email"       
+        >
+        <label for="floatingEmail">Email</label>
+      </div>
+      <div class="alert alert-danger" *ngIf="email.invalid &&email.touched">
+        <p *ngIf="email.errors.required">Gerekli Alan</p>
+        <p *ngIf="email.errors.email">Geçerli email giriniz</p>
+      </div>
+      <div class="form-floating">
+        <textarea  type="text" class="form-control" style="min-height: 250px;" name="text" formControlName="text" placeholder="Buraya görüşünüzü yazabilirsiniz" 
+           
+        ></textarea>
+        <label for="floatingText">Form</label>
+      </div>
+      <div class="alert alert-danger" *ngIf="text.invalid && text.touched">
+        <p *ngIf="text.errors.required">Gerekli Alan</p>
+        <p *ngIf="text.errors.minlength">En az 3 karakter girmelisiniz.</p>
+        <p *ngIf="text.errors.maxlength">En fazla 30 karakter girebilirsiniz.</p>
+      </div>
+      
+      <button class="w-100 btn btn-lg btn-primary" name="button" type="submit" [disabled]="contactForm.invalid">
+        <span *ngIf="!loading">Gönder</span>
+        <div *ngIf="loading">
+          <div  class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></div>
+          Form Gönderiliyor
+        </div>  </button>      
+    </form> 
+  </main>
+</div>

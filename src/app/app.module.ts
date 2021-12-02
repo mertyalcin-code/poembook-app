@@ -34,12 +34,14 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import { PasswordResetComponent } from './forget-password/password-reset/password-reset.component';
 import { LogManagementComponent } from './log-management/log-management.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { ContactComponent } from './contact/contact.component';
 
 
 
 
 @NgModule({
-  declarations: [																									
+  declarations: [																											
     AppComponent,
       LoginComponent,
       UserComponent,
@@ -64,7 +66,9 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
       PrivateMessageComponent,
       ForgetPasswordComponent,
       PasswordResetComponent,
-      LogManagementComponent
+      LogManagementComponent,
+      AboutUsComponent,
+      ContactComponent
    ],
   imports: [
     BrowserModule,

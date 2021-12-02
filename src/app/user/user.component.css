@@ -2,13 +2,11 @@ body{
     background-color:#ecf2f5;
     margin-top:20px;
 }
-
 .card {
     box-shadow: 0 0 2px 0 rgb(0 0 0 / 10%);
     margin-bottom: 24px;
     max-height: 100%;
 }
-
 .avatar-lg {
     height: 4.5rem;
     width: 4.5rem;
@@ -16,20 +14,10 @@ body{
 .rounded-circle {
     border-radius: 50%;
 }
-.img-thumbnail {
-    padding: .25rem;
-    background-color: #ecf2f5;
-    border: 1px solid #dee2e6;
-    border-radius: .25rem;
-    max-width: 100%;
-    height: auto;
-}
+
 .avatar-sm {
     height: 2.25rem;
     width: 2.25rem;
-}
-.rounded-circle {
-    border-radius: 50%;
 }
 .me-2 {
     margin-right: .75rem;
@@ -45,27 +33,10 @@ body{
     --bs-bg-opacity: 1;
     background-color: transparent;
 }
-.post-user-comment-box {
-    background-color: #f2f8fb;
-    margin: 0 -.75rem;
-    padding: 1rem;
-    margin-top: 20px;
-}
-.simplebar-wrapper {
-    overflow: auto;
-    width: inherit;
-    height: 300px;
-    max-width: inherit;
-    max-height: 300px;
-}
+
 
 .font-13 {
     font-size: 13px;
-}
-.btn-soft-info {
-    color: #45bbe0;
-    background-color: rgba(69,187,224,.18);
-    border-color: rgba(69,187,224,.12);
 }
 .social-list-item {
     height: 2rem;
@@ -76,10 +47,14 @@ body{
     border-radius: 50%;
     color: #adb5bd;
 }
-.comment-area-box .comment-area-btn {
-    background-color: #f2f8fb;
-    padding: 10px;
-    border: 1px solid #dee2e6;
-    border-top: none;
-    border-radius: 0 0 .2rem .2rem;
+.search{
+    margin-right: 10%;
+    margin-bottom: 5%;
+}
+.follower-following{
+    max-height: 350px;
+    overflow: auto;
+    width: inherit;
+    height: 300px;
+    max-width: inherit;
 }

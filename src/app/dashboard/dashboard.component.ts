@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit,OnDestroy {
 
   public getFollowingsPoems() {
     this.followingsPoemsLoading = true;
-    this.subscriptions.push();
+    this.subscriptions.push(
     this.poemService.getFollowingsPoems(this.requestPoemData()).subscribe(
       (response: DataResult) => {
         if (response.success) {
@@ -95,7 +95,7 @@ export class DashboardComponent implements OnInit,OnDestroy {
         );
         this.followingsPoemsLoading = false;
       }
-    );
+    ));
   }
   public getCategories(): void {
     this.subscriptions.push();

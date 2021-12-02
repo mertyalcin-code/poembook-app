@@ -1,66 +1,11 @@
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-
-<footer class="footer_area section_padding_130_0">
-      <div class="container">
-        <div class="row">
-          <!-- Single Widget-->
-          <div class="col-12 col-sm-6 col-lg-4">
-            <div class="single-footer-widget section_padding_0_130">
-              <!-- Footer Logo-->
-              <div class="footer-logo mb-3"></div>
-              <p>Şiirlerini insanlarla paylaşmanın en güzel yolu</p>
-              <!-- Copywrite Text-->
-              <div class="copywrite-text mb-5">
-                
-              </div>
-              <!-- Footer Social Area-->
-              <div class="footer_social_area"><a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Facebook"><i class="fa fa-facebook"></i></a><a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Pinterest"><i class="fa fa-pinterest"></i></a><a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Skype"><i class="fa fa-skype"></i></a><a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Twitter"><i class="fa fa-twitter"></i></a></div>
-            </div>
-          </div>
-          <!-- Single Widget-->
-          <div class="col-12 col-sm-6 col-lg">
-            <div class="single-footer-widget section_padding_0_130">
-              <!-- Widget Title-->
-              <h5 class="widget-title">About</h5>
-              <!-- Footer Menu-->
-              <div class="footer_menu">
-                <ul>
-                  <li><a href="#">Hakkımızda</a></li>         
-                  <li><a href="#">Terms &amp; Policy</a></li>
-                  <li><a href="#">Topluluk</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <!-- Single Widget-->
-          <div class="col-12 col-sm-6 col-lg">
-            <div class="single-footer-widget section_padding_0_130">
-              <!-- Widget Title-->
-              <h5 class="widget-title">Destek</h5>
-              <!-- Footer Menu-->
-              <div class="footer_menu">
-                <ul>
-                  <li><a href="#">Yardım Merkezi</a></li>
-                  <li><a href="#">Gizlilik Politikası</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <!-- Single Widget-->
-          <div class="col-12 col-sm-6 col-lg">
-            <div class="single-footer-widget section_padding_0_130">
-              <!-- Widget Title-->
-              <h5 class="widget-title">İletişim</h5>
-              <!-- Footer Menu-->
-              <div class="footer_menu">
-                <ul>
-                  <li><a href="#">Çağrı Merkezi</a></li>
-                  <li><a href="#">Email </a></li>
-                  <li><a href="#">İletişim Formu</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+<div class="container">
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <p class="col-md-4 mb-0 text-muted">&copy; 2021 Poembook, Inc</p>
+    <ul class="nav col-md-4 justify-content-end">
+      <li *ngIf="isLoggedIn" class="nav-item"><a href="#" class="nav-link px-2 text-muted">Ana Sayfa</a></li>
+      <li *ngIf="isLoggedIn" class="nav-item"><a href="/myaccount" class="nav-link px-2 text-muted">Hesabım</a></li>
+      <li class="nav-item"><a href="/about-us" class="nav-link px-2 text-muted">Hakkımızda</a></li>
+      <li class="nav-item"><a href="/contact" class="nav-link px-2 text-muted">İletişim</a></li>
+    </ul>
+  </footer>
+</div>

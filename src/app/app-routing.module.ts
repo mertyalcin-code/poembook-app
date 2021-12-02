@@ -23,6 +23,8 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import { PasswordResetComponent } from './forget-password/password-reset/password-reset.component';
 import { LogManagementComponent } from './log-management/log-management.component';
 import { SuperAdminGuard } from './guard/super-admin.guard';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { ContactComponent } from './contact/contact.component';
 
 const routes: Routes = [
   {path: 'login',component:LoginComponent},
@@ -31,6 +33,8 @@ const routes: Routes = [
   {path: 'register',component:RegisterComponent},
   {path: 'register-success',component:RegisterSuccessComponent},
   {path: 'test',component:TestComponent},
+  {path: 'about-us',component:AboutUsComponent},
+  {path: 'contact',component:ContactComponent},
   {path: 'home',component:DashboardComponent,canActivate: [AuthenticationGuard] },
   {path: 'message',component:PrivateMessageComponent,canActivate: [AuthenticationGuard]},
   {path: 'message/:username',component:PrivateMessageComponent,canActivate: [AuthenticationGuard]},

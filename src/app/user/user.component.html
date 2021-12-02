@@ -1,12 +1,14 @@
+
 <div class="container">
   <div class="row">
     <div class="col-xl-5">
+      <!-- user info-->
       <div class="card">
         <div class="card-body">
           <div class="d-flex align-items-start">
             <img
               src="{{ profileUser.imageUrl }}"
-              class="rounded-circle avatar-lg img-thumbnail"
+              class="rounded-circle avatar-lg"
               alt="profile-image"
             />
             <div class="w-100 ms-3">
@@ -16,7 +18,11 @@
               <p class="text-muted">{{ "@" + profileUser.username }}</p>
 
               <button
-                *ngIf="!isFollowing &&profileUser.username!=currentUsername&&!followLoading"
+                *ngIf="
+                  !isFollowing &&
+                  profileUser.username != currentUsername &&
+                  !followLoading
+                "
                 (click)="follow(profileUser.username)"
                 type="submit"
                 class="btn btn-secondary"
@@ -29,7 +35,11 @@
                 ></div>
               </button>
               <button
-                *ngIf="isFollowing &&profileUser.username!=currentUsername&&!followLoading"
+                *ngIf="
+                  isFollowing &&
+                  profileUser.username != currentUsername &&
+                  !followLoading
+                "
                 (click)="unfollow(profileUser.username)"
                 type="submit"
                 class="btn btn-primary"
@@ -41,14 +51,14 @@
                   role="status"
                 ></div>
               </button>
-              
-              <button              
+
+              <button
                 (click)="routeMessagePage()"
                 type="button"
                 class="btn btn-success"
-                *ngIf="profileUser.username!=currentUsername"
+                *ngIf="profileUser.username != currentUsername"
               >
-                <span >Mesaj Gönder</span>
+                <span>Mesaj Gönder</span>
                 <div
                   *ngIf="followLoading"
                   class="spinner-grow text-primary"
@@ -58,7 +68,7 @@
             </div>
           </div>
           <div class="mt-3">
-            <h4 class="font-13 text-uppercase">Hakkımda :</h4>
+            <h4 class="font-13">Hakkımda :</h4>
             <p class="text-muted font-13 mb-3">
               {{ profileUser.aboutMe }}
             </p>
@@ -69,8 +79,11 @@
               }}</span>
             </p>
 
-            <ul class="social-list list-inline mt-3 mb-0">
-              <li *ngIf="profileUser.facebookAccount!=null" class="list-inline-item">
+            <ul class="list-inline mt-3 mb-0">
+              <li
+                *ngIf="profileUser.facebookAccount != null"
+                class="list-inline-item"
+              >
                 <a
                   href="{{ profileUser.facebookAccount }}"
                   class="
@@ -79,28 +92,34 @@
                     border-primary
                     text-primary
                   "
-                  ><i class="mdi mdi-facebook"></i
+                  ><i class="fab fa-facebook"></i
                 ></a>
-              </li >
-              <li *ngIf="profileUser.instagramAccount!=null" class="list-inline-item">
+              </li>
+              <li
+                *ngIf="profileUser.instagramAccount != null"
+                class="list-inline-item"
+              >
                 <a
                   href="{{ profileUser.instagramAccount }}"
                   class="social-list-item text-center border-danger text-danger"
-                  ><i class="mdi mdi-instagram"></i
+                  ><i class="fab fa-instagram"></i
                 ></a>
               </li>
-              <li *ngIf="profileUser.twitterAccount!=null" class="list-inline-item">
+              <li
+                *ngIf="profileUser.twitterAccount != null"
+                class="list-inline-item"
+              >
                 <a
                   href="{{ profileUser.twitterAccount }}"
                   class="social-list-item text-center border-info text-info"
-                  ><i class="mdi mdi-twitter"></i
+                  ><i class="fab fa-twitter"></i
                 ></a>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <!-- end card -->
+      <!-- statistic info-->
       <div class="card">
         <div class="card-body text-center">
           <div class="row">
@@ -119,205 +138,139 @@
           </div>
         </div>
       </div>
-
+       <!-- follower -->
       <div class="card">
         <div class="card-body">
           <h4 class="header-title mb-3">Takipçiler</h4>
-          <form class="form" style="margin: 2%;">
-            <input class="form-control mr-sm-2" type="search" name="search" placeholder="Kullanıcı Adı ile Ara" aria-label="Search" [(ngModel)]="followerSearch">  
+          <form class="form search">
+            <input
+              class="form-control mr-sm-2"
+              type="search"
+              name="search"
+              placeholder="Kullanıcı Adı ile Ara"
+              aria-label="Search"
+              [(ngModel)]="followerSearch"
+            />
           </form>
 
-          <div
-            class="inbox-widget"
-            data-simplebar="init"
-            style="max-height: 350px"
-          >
-            <div class="simplebar-wrapper" style="margin: 0px">
-              <div class="simplebar-height-auto-observer-wrapper">
-                <div class="simplebar-height-auto-observer"></div>
-              </div>
-              <div class="simplebar-mask">
-                <div class="simplebar-offset" style="right: 0px; bottom: 0px">
-                  <div
-                    class="simplebar-content-wrapper"
-                    
-                  >
-                    <div class="simplebar-content" style="padding: 0px">
-                      <div
-                        *ngFor="let follower of profileUser.followers | filter:followerSearch"
-                        class="d-flex align-items-center pb-1"
-                        id="tooltips-container"
-                      >
-                        <img
-                          src="{{ follower.imageUrl }}"
-                          class="
-                            rounded-circle
-                            img-fluid
-                            avatar-md
-                            img-thumbnail
-                            bg-transparent
-                          "
-                          alt=""
-                        />
-                        <div class="w-100 ms-3">
-                          <a href="{{ '/user/' + follower.username }}">
-                            <h5 class="mb-1">
-                              {{ follower.firstName }}{{" "}}{{follower.lastName }} 
-                            </h5>
-                          </a>
-                          <p class="mb-0 font-13">
-                            {{ "@" + follower.username }}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="follower-following">
+   
               <div
-                class="simplebar-placeholder"
-                style="width: auto; height: 532px"
-              ></div>
-            </div>
-            <div
-              class="simplebar-track simplebar-horizontal"
-              style="visibility: hidden"
-            >
-              <div
-                class="simplebar-scrollbar"
-                style="width: 0px; display: none"
-              ></div>
-            </div>
-            <div
-              class="simplebar-track simplebar-vertical"
-              style="visibility: visible"
-            >
-              <div
-                class="simplebar-scrollbar"
-                style="
-                  height: 230px;
-                  transform: translate3d(0px, 0px, 0px);
-                  display: block;
+                *ngFor="
+                  let follower of profileUser.followers | filter: followerSearch
                 "
-              ></div>
+                class="d-flex align-items-center pb-1"
+                id="tooltips-container"
+              >
+                <img
+                  src="{{ follower.imageUrl }}"
+                  class="
+                    rounded-circle
+                    img-fluid
+                    avatar-md
+                    img-thumbnail
+                    bg-transparent
+                  "
+                  alt=""
+                />
+                <div class="w-100 ms-3">
+                  <a href="{{ '/user/' + follower.username }}">
+                    <h5 class="mb-1">
+                      {{ follower.firstName }}{{ " " }}{{ follower.lastName }}
+                    </h5>
+                  </a>
+                  <p class="mb-0 font-13">
+                    {{ "@" + follower.username }}
+                  </p>
+                </div>
+        
             </div>
+           
           </div>
-          <!-- end inbox-widget -->
         </div>
       </div>
-      <!-- end card-->
+      <!-- followings-->
       <div class="card">
         <div class="card-body">
           <h4 class="header-title mb-3">Takip Ettikleri</h4>
-          <form class="form" style="margin: 2%;">
-            <input class="form-control mr-sm-2" type="search" name="search" placeholder="Kullanıcı Adı ile Ara" aria-label="Search" [(ngModel)]="followingSearch">  
+          <form class="form search">
+            <input
+              class="form-control mr-sm-2"
+              type="search"
+              name="search"
+              placeholder="Kullanıcı Adı ile Ara"
+              aria-label="Search"
+              [(ngModel)]="followingSearch"
+            />
           </form>
-          <div
-            class="inbox-widget"
-            data-simplebar="init"
-            style="max-height: 350px"
-          >
-            <div class="simplebar-wrapper" style="margin: 0px">
-              <div class="simplebar-height-auto-observer-wrapper">
-                <div class="simplebar-height-auto-observer"></div>
-              </div>
-              <div class="simplebar-mask">
-                <div class="simplebar-offset" style="right: 0px; bottom: 0px">
-                  <div
-                    class="simplebar-content-wrapper"
-           
-                  >
-                    <div class="simplebar-content" style="padding: 0px">
-                      <div
-                        *ngFor="let following of profileUser.followings | filter:followingSearch"
-                        class="d-flex align-items-center pb-1"
-                        id="tooltips-container"
-                      >
-                        <img
-                          src="{{ following.imageUrl }}"
-                          class="
-                            rounded-circle
-                            img-fluid
-                            avatar-md
-                            img-thumbnail
-                            bg-transparent
-                          "
-                          alt=""
-                        />
-                        <div class="w-100 ms-3">
-                          <a href="{{ '/user/' + following.username }}">
-                            <h5 class="mb-1">
-                              {{ following.firstName }}{{" "}}{{following.lastName }} 
-                            </h5></a
-                          >
-
-                          <p class="mb-0 font-13">
-                            {{ "@" + following.username }}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="follower-following">
+            
               <div
-                class="simplebar-placeholder"
-                style="width: auto; height: 532px"
-              ></div>
-            </div>
-            <div
-              class="simplebar-track simplebar-horizontal"
-              style="visibility: hidden"
-            >
-              <div
-                class="simplebar-scrollbar"
-                style="width: 0px; display: none"
-              ></div>
-            </div>
-            <div
-              class="simplebar-track simplebar-vertical"
-              style="visibility: visible"
-            >
-              <div
-                class="simplebar-scrollbar"
-                style="
-                  height: 230px;
-                  transform: translate3d(0px, 0px, 0px);
-                  display: block;
+                *ngFor="
+                  let following of profileUser.followings
+                    | filter: followingSearch
                 "
-              ></div>
+                class="d-flex align-items-center pb-1"
+                id="tooltips-container"
+              >
+                <img
+                  src="{{ following.imageUrl }}"
+                  class="
+                    rounded-circle
+                    img-fluid
+                    avatar-md
+                    img-thumbnail
+                    bg-transparent
+                  "
+                  alt=""
+                />
+                <div class="w-100 ms-3">
+                  <a href="{{ '/user/' + following.username }}">
+                    <h5 class="mb-1">
+                      {{ following.firstName }}{{ " " }}{{ following.lastName }}
+                    </h5></a
+                  >
+
+                  <p class="mb-0 font-13">
+                    {{ "@" + following.username }}
+                  </p>
+                </div>
+      
             </div>
           </div>
           <!-- end inbox-widget -->
         </div>
       </div>
     </div>
-
-    <!-- end col-->
-
+    <!-- end left col-->
     <div class="col-xl-7">
-      <div class="card" >
-        <div class="card-body" *ngFor="let poem of profilePoems">
-          <!-- Story Box-->     
-          
-            <app-poem-box [poem]="poem"></app-poem-box>
-         
-     
-
-        </div>
-        <button *ngIf="profilePoemsLoading" class="btn btn-primary" type="button" disabled>
-          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-          Yükleniyor
-        </button>
-        <button class="btn btn-primary" *ngIf="!profilePoemsLoading&& profilePoems.length>5"> Devamını Gör</button>  
-
-      </div> 
-     
-    
-   
-    
-    
-    
+      <div class="card" *ngFor="let poem of profilePoems">
+        <div class="card-body" >
+          <!-- Poems-->
+          <app-poem-box [poem]="poem"></app-poem-box>
+        </div>    
+      </div>
+      <button
+      class="btn btn-primary"
+      type="button"
+      *ngIf="!profilePoemsLoading && profilePoems.length<profileUser.poemCount"
+      (click)="loadMorePoem()"
+    >
+      Devamını Gör
+    </button>
+      <button
+      *ngIf="profilePoemsLoading"
+      class="btn btn-primary"
+      type="button"
+      disabled
+    >
+      <span
+        class="spinner-grow spinner-grow-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
+      Kullanıcıya ait şiirler yükleniyor
+    </button>
     </div>
     <!-- end row-->
   </div>
