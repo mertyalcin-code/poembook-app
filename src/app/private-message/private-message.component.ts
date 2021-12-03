@@ -25,6 +25,7 @@ export class PrivateMessageComponent implements OnInit {
   sendLoading=false;
   currentUser:User;
   toUsername:string;
+  newMessageUser:string;
   messageList:User[]=[];
   allMessages:PrivateMessage[]=[];
   private subscriptions: Subscription[] = []; 
@@ -69,6 +70,7 @@ export class PrivateMessageComponent implements OnInit {
          
           } else {
           //  this.sendNotification(NotificationType.ERROR, response.message);
+          this.allMessages=[];
             this.messagesLoading = false;
           }
         },
@@ -138,7 +140,10 @@ export class PrivateMessageComponent implements OnInit {
     if(this.route.snapshot.paramMap.get('username')!=null){  
      this.toUsername=this.route.snapshot.paramMap.get('username');
     }
-   
+  }
+  onSendToNewUser():void{
+    this.toUsername=this.newMessageUser;
+    this.usersAllMessagesWith();
   }
   private sendNotification(
     notificationType: NotificationType,

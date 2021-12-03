@@ -7,12 +7,7 @@ import { DataResult } from '../model/result/data-result';
 import { Result } from '../model/result/result';
 import { User } from '../model/user';
 import { AuthenticationService } from '../service/authentication.service';
-import { CategoryService } from '../service/category.service';
-import { FollowService } from '../service/follow.service';
 import { NotificationService } from '../service/notification.service';
-import { PoemCommentService } from '../service/poem-comment.service';
-import { PoemLikeService } from '../service/poem-like.service';
-import { PoemService } from '../service/poem.service';
 import { UserService } from '../service/user.service';
 
 @Component({
@@ -23,7 +18,6 @@ import { UserService } from '../service/user.service';
 export class MyAccountComponent implements OnInit,OnDestroy { 
   public currentUser: User;
   public editUser=new User();
-  private currentUsername:string
   public isFollowing: boolean;
   public newPassword: string;
   public loading= false;
@@ -40,7 +34,6 @@ export class MyAccountComponent implements OnInit,OnDestroy {
  ) { }
   ngOnInit() {    
     this.currentUser=this.authenticationService.getUserFromLocalCache();
-    this.currentUsername=this.currentUser.username;
     this.getCurrentUserInfo();
   }
   onSelectEditProfile(): void {      
@@ -70,11 +63,10 @@ export class MyAccountComponent implements OnInit,OnDestroy {
   }
   private getCurrentUserInfo(){
     this.subscriptions.push(    
-      this.userService.getUser(this.currentUsername).subscribe(
+      this.userService.getUser(this.currentUser.username).subscribe(
         (response: DataResult) => {
           if (response.success) {
-            this.editUser=response.data;
-           // this.sendNotification(NotificationType.SUCCESS, response.message);          
+            this.editUser=response.data;         
           } else {
             this.sendNotification(NotificationType.ERROR, response.message);          }
         },
@@ -180,16 +172,17 @@ export class MyAccountComponent implements OnInit,OnDestroy {
     this.loading=true;
     const formData = new FormData();
     formData.append('avatar', this.newAvatar);
-    formData.append('username', this.currentUsername);
+    formData.append('username', this.currentUser.username);
     this.subscriptions.push(
       this.userService.updateAvatar(formData).subscribe(
         (response: Result) => {
           if(response.success){     
-            this.updateLoggedInUser();
-            location.reload()
+            this.updateLoggedInUser();                     
             this.loading=false;
             this.sendNotification(NotificationType.SUCCESS, response.message);
-            this.clickButton("closeChangeAvatar");
+            this.clickButton("closeChangeAvatar");  
+            this.ngOnInit();     
+ 
           }
           else{
             this.loading=false;
@@ -205,27 +198,22 @@ export class MyAccountComponent implements OnInit,OnDestroy {
     );
   }
 
-  private updateLoggedInUser():User{
+  private updateLoggedInUser():void{
     this.subscriptions.push(
-      this.userService.getUser(this.currentUsername).subscribe(
+      this.userService.getUser(this.currentUser.username).subscribe(
         (response: DataResult) => {
           if(response.success){            
             this.authenticationService.updateLoggedInUser(response.data)
           }
-          else{
-       
-            this.sendNotification(NotificationType.ERROR, response.message);
-           
-          }
-          
+          else{       
+            this.sendNotification(NotificationType.ERROR, response.message);           
+          }          
         },
         (errorResponse: HttpErrorResponse) => {        
-          this.sendNotification(NotificationType.ERROR, errorResponse.error.message);   
-          
+          this.sendNotification(NotificationType.ERROR, errorResponse.error.message);             
         }
       )
     );
-    return null;
   }
   private sendNotification(
     notificationType: NotificationType,

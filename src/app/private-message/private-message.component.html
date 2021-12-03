@@ -21,16 +21,24 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
                 <div class="card m-0">
-
+                    <div class="chat-search-box" style="min-width:250px ;">
+                        <div class="input-group">
+                            <input class="form-control" placeholder="Kullanıcı Ara" [(ngModel)]="searchUser" autocomplete="off">                                      
+                        </div>
+                    </div>
+                    <div class="input-group mb-3" style="min-width:250px ;max-width: 30%;">
+                     
+                        <input type="text" class="form-control"  placeholder="Yeni kişiye mesaj" [(ngModel)]="newMessageUser"                                
+                        > 
+                        <span><button class="btn btn-primary" (click)="onSendToNewUser()"><i class="fas fa-paper-plane"></i></button></span>
+                
+                </div> 
                     <!-- Row start -->
                     <div class="row no-gutters">
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3">
-                            <div class="users-container">
-                                <div class="chat-search-box">
-                                    <div class="input-group">
-                                        <input class="form-control" placeholder="Kullanıcı Ara" [(ngModel)]="searchUser" autocomplete="off">                                      
-                                    </div>
-                                </div>
+                            <div class="users-container">                              
+                                
+                             
                                 <ul class="users" *ngFor="let user of messageList | filter:searchUser">
                                     <li class="person" data-chat="person1" (click)="onSelectUser(user)">
                                         <div class="user" >
@@ -46,11 +54,18 @@
                         </div>
                         <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9">
                             <div class="selected-user">
-                                <span>Kime: <span class="name"><a href="{{'/user/'+toUsername}}">{{toUsername}}</a></span></span>
+                                <span>Kime: <span class="name">
+
+                                    <a href="{{'/user/'+toUsername}}">{{toUsername}}</a>
+                                
+                                </span></span>
                             </div>
-                            <div class="chat-search-box" *ngIf="toUsername!=null">
+                            <div class="search" *ngIf="toUsername!=null">
                                 <div class="input-group">
-                                    <input class="form-control" placeholder="Mesajlarda Ara" [(ngModel)]="searchMessage" autocomplete="off">                                  
+                                    <input class="form-control" placeholder="Mesajlarda Ara" [(ngModel)]="searchMessage" autocomplete="off"
+                                    style="max-width: 30%;"
+                                    >  
+                                   <span><button class="btn btn-primary"><i class="fas fa-search"></i> </button></span>                                
                                 </div>
                             </div>
                             <div class="chat-container">
