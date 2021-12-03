@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { NotificationType } from '../enum/notification-type.enum';
 import { Result } from '../model/result/result';
 import { AuthenticationService } from '../service/authentication.service';
@@ -18,6 +19,7 @@ export class ForgetPasswordComponent implements OnInit {
 
   public showLoading=false;
   private subscriptions: Subscription[] = [];
+  public siteKey=environment.siteKey;
 
   constructor(private userService: UserService,
     private authenticationService: AuthenticationService,
@@ -34,7 +36,8 @@ export class ForgetPasswordComponent implements OnInit {
     }
   }
   forgetPasswordForm = new FormGroup({
-    email: new FormControl("",[Validators.required,Validators.email,])
+    email: new FormControl("",[Validators.required,Validators.email,]),
+    recaptcha: new FormControl("",[Validators.required]),
   }) 
   get email(){
     return this.forgetPasswordForm.get("email")
