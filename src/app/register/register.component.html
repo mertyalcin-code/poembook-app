@@ -38,6 +38,10 @@
           
         </div> 
       </div>
+      <ngx-recaptcha2 #captchaElem
+      [siteKey]='siteKey' 
+    formControlName="recaptcha">
+      </ngx-recaptcha2>
       <button class="w-100 btn btn-lg btn-primary" name="button" type="submit" [disabled]="registerForm.invalid || showLoading"
        >
         <span *ngIf="!showLoading">Kayıt Ol</span>

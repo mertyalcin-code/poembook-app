@@ -81,7 +81,7 @@
 
             <ul class="list-inline mt-3 mb-0">
               <li
-                *ngIf="profileUser.facebookAccount != null"
+                *ngIf="profileUser.facebookAccount"
                 class="list-inline-item"
               >
                 <a
@@ -96,7 +96,7 @@
                 ></a>
               </li>
               <li
-                *ngIf="profileUser.instagramAccount != null"
+                *ngIf="profileUser.instagramAccount"
                 class="list-inline-item"
               >
                 <a
@@ -106,7 +106,7 @@
                 ></a>
               </li>
               <li
-                *ngIf="profileUser.twitterAccount != null"
+                *ngIf="profileUser.twitterAccount"
                 class="list-inline-item"
               >
                 <a

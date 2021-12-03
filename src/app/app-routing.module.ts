@@ -49,7 +49,7 @@ const routes: Routes = [
   {path: 'admin/user/management',component:UserManagementComponent,canActivate: [AdminGuard] }, 
   {path: 'admin/poem/management',component:PoemManagementComponent,canActivate: [EditorGuard] }, 
   {path: 'admin/log/management',component:LogManagementComponent,canActivate: [SuperAdminGuard] },
-  {path: '', redirectTo : 'login',pathMatch:'full'}
+  {path: '', redirectTo : 'home',pathMatch:'full'}
 ];
 
 @NgModule({

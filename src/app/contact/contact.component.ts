@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { NotificationType } from '../enum/notification-type.enum';
 import { Result } from '../model/result/result';
 import { User } from '../model/user';
@@ -17,6 +18,7 @@ import { NotificationService } from '../service/notification.service';
 export class ContactComponent implements OnInit,OnDestroy{
   public loading: boolean;
   private subscriptions: Subscription[] = [];
+  public siteKey=environment.siteKey
   currentUser:User;
   constructor(    
     private notificationService: NotificationService,
@@ -39,8 +41,8 @@ export class ContactComponent implements OnInit,OnDestroy{
     firstName: new FormControl("",[Validators.required,Validators.minLength(3),Validators.maxLength(30)]),
     lastName: new FormControl("",[Validators.required,Validators.minLength(3),Validators.maxLength(30)]),
     email: new FormControl("",[Validators.required,Validators.email]),
-    text: new FormControl("",[Validators.required,Validators.minLength(20),Validators.maxLength(3000)])
-
+    text: new FormControl("",[Validators.required,Validators.minLength(20),Validators.maxLength(3000)]),
+    recaptcha: new FormControl("",[Validators.required]),
   })
   get firstName(){
     return this.contactForm.get("firstName")

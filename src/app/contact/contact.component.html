@@ -40,10 +40,13 @@
       </div>
       <div class="alert alert-danger" *ngIf="text.invalid && text.touched">
         <p *ngIf="text.errors.required">Gerekli Alan</p>
-        <p *ngIf="text.errors.minlength">En az 3 karakter girmelisiniz.</p>
-        <p *ngIf="text.errors.maxlength">En fazla 30 karakter girebilirsiniz.</p>
+        <p *ngIf="text.errors.minlength">En az 30 karakter girmelisiniz.</p>
+        <p *ngIf="text.errors.maxlength">En fazla 3000 karakter girebilirsiniz.</p>
       </div>
-      
+      <ngx-recaptcha2 #captchaElem
+      [siteKey]='siteKey' 
+    formControlName="recaptcha">
+      </ngx-recaptcha2>
       <button class="w-100 btn btn-lg btn-primary" name="button" type="submit" [disabled]="contactForm.invalid">
         <span *ngIf="!loading">Gönder</span>
         <div *ngIf="loading">

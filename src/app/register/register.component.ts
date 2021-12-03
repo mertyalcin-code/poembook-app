@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { NotificationType } from '../enum/notification-type.enum';
 import { Result } from '../model/result/result';
 import { AuthenticationService } from '../service/authentication.service';
@@ -17,7 +18,7 @@ import { UserService } from '../service/user.service';
 export class RegisterComponent implements OnInit,OnDestroy {
   public showLoading=false;
   private subscriptions: Subscription[] = [];
-
+  siteKey=environment.siteKey;
   constructor(private userService: UserService,
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
@@ -37,6 +38,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
     lastName: new FormControl("",[Validators.required]),
     username: new FormControl("",[Validators.required,Validators.minLength(6),Validators.maxLength(20)]),
     email: new FormControl("",[Validators.required,Validators.email,]),
+    recaptcha: new FormControl("",[Validators.required]),
   })
   
   get firstName(){

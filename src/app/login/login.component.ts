@@ -8,6 +8,8 @@ import { AuthenticationService } from '../service/authentication.service';
 import { NotificationService } from '../service/notification.service';
 import { HeaderType } from '../enum/header-type.enum';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -19,13 +21,15 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit,OnDestroy{
   showLoading: boolean;
   private subscriptions: Subscription[] = [];
+  siteKey=environment.siteKey;
 
   constructor(
     private router: Router,
     private authenticationService:AuthenticationService,
-    private notificationService: NotificationService            
+    private notificationService: NotificationService,       
       ) { }
 
+   
   ngOnInit():void {
     if (this.authenticationService.isUserLoggedIn()){
       this.router.navigateByUrl('/home')
@@ -37,7 +41,8 @@ export class LoginComponent implements OnInit,OnDestroy{
   
   loginForm = new FormGroup({
     username: new FormControl("",[Validators.required,Validators.minLength(5),Validators.maxLength(20)]),
-    password: new FormControl("",[Validators.required,Validators.minLength(6),Validators.maxLength(20)])
+    password: new FormControl("",[Validators.required,Validators.minLength(6),Validators.maxLength(20)]),
+    recaptcha: new FormControl("",[Validators.required]),
   })
   
   get username(){
@@ -71,6 +76,7 @@ export class LoginComponent implements OnInit,OnDestroy{
           this.sendErrorNotification(NotificationType.ERROR, errorResponse.error.message);
           this.showLoading = false;         
           this.clearForm();
+          this.loginForm.markAsUntouched();
         }
       )
     );

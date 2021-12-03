@@ -36,7 +36,7 @@ import { LogManagementComponent } from './log-management/log-management.componen
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactComponent } from './contact/contact.component';
-
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 
 
@@ -79,6 +79,7 @@ import { ContactComponent } from './contact/contact.component';
     ReactiveFormsModule,
     AngularEditorModule, 
     Ng2SearchPipeModule,   
+    NgxCaptchaModule 
 
   ],
   providers: [
@@ -86,7 +87,7 @@ import { ContactComponent } from './contact/contact.component';
     UserService,
     {provide: HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},
     AuthenticationGuard,
-    NotificationService
+    NotificationService,
 
   ],
   bootstrap: [AppComponent]
