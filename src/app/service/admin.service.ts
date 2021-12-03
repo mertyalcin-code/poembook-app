@@ -11,9 +11,9 @@ import { LocalService } from './local.service';
   providedIn: 'root'
 })
 export class AdminService {
-  private host = environment.apiUrl+"/admin";
+  private host = environment.apiUrl + "/admin";
 
-  constructor(private http: HttpClient,private localService:LocalService) {}
+  constructor(private http: HttpClient, private localService: LocalService) { }
 
   public getUsers(): Observable<DataResult> {
     return this.http.get<DataResult>(`${this.host}/list`);
@@ -24,16 +24,16 @@ export class AdminService {
 
   public addUser(formData: FormData): Observable<Result> {
     return this.http.post<Result>(`${this.host}/add`, formData);
-  } 
+  }
 
   public updateUser(formData: FormData): Observable<Result> {
     return this.http.post<Result>(`${this.host}/update`, formData);
-  }  
+  }
 
   public resetPassword(email: string): Observable<Result> {
     return this.http.get<Result>(`${this.host}/reset-password/${email}`);
   }
- 
+
   public getAllPoets(): Observable<DataResult> {
     return this.http.get<DataResult>(`${this.host}/list/poets`);
   }
@@ -48,14 +48,14 @@ export class AdminService {
   }
 
 
-//super admin
+  //super admin
 
-public deleteUser(username: string): Observable<Result> {
-  return this.http.delete<Result>(`${this.host}/delete/${username}`);
-}
-public makeSuperAdmin(username: string): Observable<Result> {
-  return this.http.get<Result>(`${this.host}/make-super-admin/${username}`);
-}
+  public deleteUser(username: string): Observable<Result> {
+    return this.http.delete<Result>(`${this.host}/delete/${username}`);
+  }
+  public makeSuperAdmin(username: string): Observable<Result> {
+    return this.http.get<Result>(`${this.host}/make-super-admin/${username}`);
+  }
 
 
 
@@ -63,18 +63,18 @@ public makeSuperAdmin(username: string): Observable<Result> {
 
 
   public addUsersToLocalCache(users: User[]): void {
-    this.localService.setJsonValue('users',users);    
-   }
- 
+    this.localService.setJsonValue('users', users);
+  }
+
   public getUsersFromLocalCache(): User[] {
     if (this.localService.getJsonValue('users')) {
-        return this.localService.getJsonValue('users');
+      return this.localService.getJsonValue('users');
     }
     return null;
   }
 
   public createUserFormData(loggedInUsername: string, user: User): FormData {
-    const formData = new FormData();   
+    const formData = new FormData();
     formData.append('currentUsername', loggedInUsername);
     formData.append('firstName', user.firstName);
     formData.append('lastName', user.lastName);
@@ -85,8 +85,8 @@ public makeSuperAdmin(username: string): Observable<Result> {
     formData.append('isNonLocked', JSON.stringify(user.notLocked));
     return formData;
   }
-  public updateUserFormData(username:string,user: User): FormData {
-    const formData = new FormData();    
+  public updateUserFormData(username: string, user: User): FormData {
+    const formData = new FormData();
     formData.append('userUsername', username);
     formData.append('firstName', user.firstName);
     formData.append('lastName', user.lastName);

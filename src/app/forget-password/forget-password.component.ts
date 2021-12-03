@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -15,13 +15,13 @@ import { UserService } from '../service/user.service';
   templateUrl: './forget-password.component.html',
   styleUrls: ['./forget-password.component.css']
 })
-export class ForgetPasswordComponent implements OnInit {
+export class ForgetPasswordComponent implements OnInit,OnDestroy {
 
   public showLoading=false;
   private subscriptions: Subscription[] = [];
   public siteKey=environment.siteKey;
 
-  constructor(private userService: UserService,
+  constructor(
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
     private router: Router
@@ -82,6 +82,9 @@ export class ForgetPasswordComponent implements OnInit {
         'bir şeyler ters gitti.'
       );
     }
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
 }

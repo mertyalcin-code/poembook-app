@@ -19,28 +19,28 @@ import { PrivateMessageService } from '../service/private-message.service';
   styleUrls: ['./private-message.component.css']
 })
 export class PrivateMessageComponent implements OnInit {
-  searchUser:any;
-  searchMessage:any;
-  messagesLoading=false;
-  sendLoading=false;
-  currentUser:User;
-  toUsername:string;
-  newMessageUser:string;
-  messageList:User[]=[];
-  allMessages:PrivateMessage[]=[];
-  private subscriptions: Subscription[] = []; 
-  constructor(private authenticationService:AuthenticationService,
-    private  privateMessageService:PrivateMessageService,
-    private  notificationService:NotificationService,
-    private route:ActivatedRoute,
-    ) { }
+  searchUser: any;
+  searchMessage: any;
+  messagesLoading = false;
+  sendLoading = false;
+  currentUser: User;
+  toUsername: string;
+  newMessageUser: string;
+  messageList: User[] = [];
+  allMessages: PrivateMessage[] = [];
+  private subscriptions: Subscription[] = [];
+  constructor(private authenticationService: AuthenticationService,
+    private privateMessageService: PrivateMessageService,
+    private notificationService: NotificationService,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
-   this.currentUser= this.authenticationService.getUserFromLocalCache();
-   this.setToUser();
-   this.usersAllMessagesWith();
-   this.usersMessageList();
-  
+    this.currentUser = this.authenticationService.getUserFromLocalCache();
+    this.setToUser();
+    this.usersAllMessagesWith();
+    this.usersMessageList();
+
   }
   sendMessageForm = new FormGroup({
     message: new FormControl('', [
@@ -53,24 +53,24 @@ export class PrivateMessageComponent implements OnInit {
       message: '',
     });
   }
-  onSelectUser(user:User){
-    this.toUsername=user.username;
+  onSelectUser(user: User) {
+    this.toUsername = user.username;
     this.usersAllMessagesWith();
     this.usersMessageList();
   }
-  usersAllMessagesWith(){    
+  usersAllMessagesWith() {
     this.messagesLoading = true;
     this.subscriptions.push(
-      this.privateMessageService.usersAllMessagesWith(this.privateMessageService.requestMessagesFormData(this.currentUser.username,this.toUsername)).subscribe(
+      this.privateMessageService.usersAllMessagesWith(this.privateMessageService.requestMessagesFormData(this.currentUser.username, this.toUsername)).subscribe(
         (response: DataResult) => {
           if (response.success) {
             this.messagesLoading = false;
-         this.allMessages= response.data;         
-          //  this.sendNotification(NotificationType.SUCCESS, response.message);
-         
+            this.allMessages = response.data;
+            //  this.sendNotification(NotificationType.SUCCESS, response.message);
+
           } else {
-          //  this.sendNotification(NotificationType.ERROR, response.message);
-          this.allMessages=[];
+            //  this.sendNotification(NotificationType.ERROR, response.message);
+            this.allMessages = [];
             this.messagesLoading = false;
           }
         },
@@ -84,16 +84,16 @@ export class PrivateMessageComponent implements OnInit {
       )
     );
   }
-  usersMessageList(){    
+  usersMessageList() {
     this.messagesLoading = true;
     this.subscriptions.push(
       this.privateMessageService.usersMessageList(this.currentUser.username).subscribe(
         (response: DataResult) => {
           if (response.success) {
             this.messagesLoading = false;
-            this.messageList= response.data;  
-             //  this.sendNotification(NotificationType.SUCCESS, response.message);
-         
+            this.messageList = response.data;
+            //  this.sendNotification(NotificationType.SUCCESS, response.message);
+
           } else {
             this.sendNotification(NotificationType.ERROR, response.message);
             this.messagesLoading = false;
@@ -109,18 +109,18 @@ export class PrivateMessageComponent implements OnInit {
       )
     );
   }
-  sendMessage(){    
+  sendMessage() {
     this.sendLoading = true;
     this.subscriptions.push(
-      this.privateMessageService.sendMessage(this.privateMessageService.createUserFormData(this.currentUser.username,this.toUsername,this.sendMessageForm.value.message)).subscribe(
+      this.privateMessageService.sendMessage(this.privateMessageService.createUserFormData(this.currentUser.username, this.toUsername, this.sendMessageForm.value.message)).subscribe(
         (response: Result) => {
           if (response.success) {
             this.sendLoading = false;
             this.clearSendMessageForm()
             this.usersAllMessagesWith();
             this.usersMessageList();
-          //  this.sendNotification(NotificationType.SUCCESS, response.message);
-          this.usersAllMessagesWith()
+            //  this.sendNotification(NotificationType.SUCCESS, response.message);
+            this.usersAllMessagesWith()
           } else {
             this.sendNotification(NotificationType.ERROR, response.message);
             this.sendLoading = false;
@@ -135,14 +135,14 @@ export class PrivateMessageComponent implements OnInit {
         }
       )
     );
-  }  
-  setToUser(){
-    if(this.route.snapshot.paramMap.get('username')!=null){  
-     this.toUsername=this.route.snapshot.paramMap.get('username');
+  }
+  setToUser() {
+    if (this.route.snapshot.paramMap.get('username') != null) {
+      this.toUsername = this.route.snapshot.paramMap.get('username');
     }
   }
-  onSendToNewUser():void{
-    this.toUsername=this.newMessageUser;
+  onSendToNewUser(): void {
+    this.toUsername = this.newMessageUser;
     this.usersAllMessagesWith();
   }
   private sendNotification(

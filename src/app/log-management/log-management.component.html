@@ -1,33 +1,36 @@
 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
   <button type="button" class="btn btn-primary" (click)="getAllLogs()">Tüm Loglar</button>
   <div class="btn-group" role="group">
-    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
       Tür
     </button>
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-      <div  *ngFor="let type of logTypes">
-        <a class="dropdown-item" (click)="changeLogType(type)" >{{type}}</a>  
+      <div *ngFor="let type of logTypes">
+        <a class="dropdown-item" (click)="changeLogType(type)">{{type}}</a>
       </div>
     </div>
-    </div>
-    <div class="btn-group" role="group">
-    <button id="btnGroupDrop2" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  </div>
+  <div class="btn-group" role="group">
+    <button id="btnGroupDrop2" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
       Sil
     </button>
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
-     <a class="dropdown-item" (click)="deleteAllLogs()" >Hepsini Sil</a>
-      <a class="dropdown-item" (click)="deleteAllLogsExceptThisWeek()" >Bu hafta Hariç Sil</a>  
+      <a class="dropdown-item" (click)="deleteAllLogs()">Hepsini Sil</a>
+      <a class="dropdown-item" (click)="deleteAllLogsExceptThisWeek()">Bu hafta Hariç Sil</a>
       <div class="dropdown-divider"></div>
-      <div  *ngFor="let type of logTypes">
-        <a class="dropdown-item" (click)="deleteByType(type)" >Bunu sil:{{type}}</a>  
-      </div>    
-    </div>  
-    
-  </div> 
+      <div *ngFor="let type of logTypes">
+        <a class="dropdown-item" (click)="deleteByType(type)">Bunu sil:{{type}}</a>
+      </div>
+    </div>
+
+  </div>
 </div>
 <!-- Search starts-->
 <form class="form" style="width: 20%;margin: 2%;">
-  <input class="form-control mr-sm-2" type="search" name="search" placeholder="Ara" aria-label="Search" [(ngModel)]="searchText" autocomplete="off">  
+  <input class="form-control mr-sm-2" type="search" name="search" placeholder="Ara" aria-label="Search"
+    [(ngModel)]="searchText" autocomplete="off">
 </form>
 <!-- Search ends-->
 <table class="table">
@@ -40,7 +43,7 @@
     </tr>
   </thead>
   <tbody *ngIf="!loading">
-    <tr *ngFor="let log of logs | filter: searchText" >
+    <tr *ngFor="let log of logs | filter: searchText">
       <th scope="row">{{log.logId}}</th>
       <td>{{log.logType}}</td>
       <td>{{log.logTime}}</td>

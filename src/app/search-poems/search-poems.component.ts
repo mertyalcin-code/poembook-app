@@ -16,18 +16,14 @@ import { UserService } from '../service/user.service';
   templateUrl: './search-poems.component.html',
   styleUrls: ['./search-poems.component.css']
 })
-export class SearchPoemsComponent implements OnInit,OnDestroy {
-  poems:PoemBox[]=[];
-  poemsLoading=false;
+export class SearchPoemsComponent implements OnInit, OnDestroy {
+  poems: PoemBox[] = [];
+  poemsLoading = false;
   private subscriptions: Subscription[] = [];
-  search:string;
+  search: string;
   constructor(
-    private userService: UserService,
     private poemService: PoemService,
-    private router: Router,
-    private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
-    private categoryService:CategoryService,
   ) { }
 
   ngOnInit() {
@@ -35,24 +31,23 @@ export class SearchPoemsComponent implements OnInit,OnDestroy {
   }
 
   searchPoems(): void {
-    this.poemsLoading=true;
+    this.poemsLoading = true;
 
     this.subscriptions.push(
       this.poemService.searchPoems(this.search).subscribe(
         (response: DataResult) => {
           if (response.success) {
-          //  this.sendNotification(NotificationType.SUCCESS, response.message);
-            this.poems=response.data;
-            this.poemsLoading=false;
-            
-           
+            this.poems = response.data;
+            this.poemsLoading = false;
+
+
           } else {
             this.sendNotification(NotificationType.ERROR, response.message);
           }
         },
         (error: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, error.error.message);
-          this.poemsLoading=false;
+          this.poemsLoading = false;
         }
       )
     );

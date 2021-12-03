@@ -1,27 +1,26 @@
 <div class="text-center">
   <main class="form-register">
     <form [formGroup]="registerForm" (ngSubmit)="onRegister(registerForm.value)">
-      <img class="mb-4" src="https://res.cloudinary.com/mertyalcin/image/upload/v1636739442/poembookbig_wcg7xb.png" alt="" width="200" height="113">
+      <img class="mb-4" src="https://res.cloudinary.com/mertyalcin/image/upload/v1636739442/poembookbig_wcg7xb.png"
+        alt="" width="200" height="113">
       <h1 class="h3 mb-3 fw-normal">Kayıt Ol</h1>
       <div class="form-floating">
-        <input type="email" class="form-control" name="firstName" formControlName="firstName" placeholder="Ad"        
-         >
+        <input type="email" class="form-control" name="firstName" formControlName="firstName" placeholder="Ad">
         <label for="floatingInput">Ad</label>
         <div class="alert alert-danger" *ngIf="firstName.invalid && firstName.touched">
           <p *ngIf="firstName.errors.required">Gerekli Alan</p>
         </div>
       </div>
       <div class="form-floating">
-        <input type="email" class="form-control" name="lastName" formControlName="lastName" placeholder="Soyad"       
-         >
+        <input type="email" class="form-control" name="lastName" formControlName="lastName" placeholder="Soyad">
         <label for="floatingInput">Soyad</label>
         <div class="alert alert-danger" *ngIf="lastName.invalid && lastName.touched">
           <p *ngIf="lastName.errors.required">Gerekli Alan</p>
-        </div>  
+        </div>
       </div>
-      <div class="form-floating">        
-        <input type="username" class="form-control" name="username" formControlName="username" placeholder="Kullanıcı Adı"         
-         >
+      <div class="form-floating">
+        <input type="username" class="form-control" name="username" formControlName="username"
+          placeholder="Kullanıcı Adı">
         <label for="floatingInput">Kullanıcı Adı</label>
         <div class="alert alert-danger" *ngIf="username.invalid && username.touched">
           <p *ngIf="username.errors.required">Gerekli Alan</p>
@@ -30,29 +29,27 @@
         </div>
       </div>
       <div class="form-floating">
-        <input type="email" class="form-control" name="email" formControlName="email" placeholder="Email"       
-         >
+        <input type="email" class="form-control" name="email" formControlName="email" placeholder="Email">
         <label for="floatingInput">Email</label>
         <div class="alert alert-danger" *ngIf="email.invalid && email.touched">
           <p *ngIf="email.errors.email">Geçersiz Mail Adresi</p>
-          
-        </div> 
+
+        </div>
       </div>
-      <ngx-recaptcha2 #captchaElem
-      [siteKey]='siteKey' 
-    formControlName="recaptcha">
+      <ngx-recaptcha2 #captchaElem [siteKey]='siteKey' formControlName="recaptcha">
       </ngx-recaptcha2>
-      <button class="w-100 btn btn-lg btn-primary" name="button" type="submit" [disabled]="registerForm.invalid || showLoading"
-       >
+      <button class="w-100 btn btn-lg btn-primary" name="button" type="submit"
+        [disabled]="registerForm.invalid || showLoading">
         <span *ngIf="!showLoading">Kayıt Ol</span>
         <div *ngIf="showLoading">
-          <div  class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></div>
+          <div class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></div>
           Kayıt olunuyor
-        </div> </button>           
+        </div>
+      </button>
     </form>
     <div class="mt-4">
       <div class="d-flex justify-content-center links">
-        Zaten hesabın var mı  ><p> <a routerLink="/login" class="ml-2" style="color: #2C3E50;">   Giriş Yap</a>
+        Zaten hesabın var mı ><p> <a routerLink="/login" class="ml-2" style="color: #2C3E50;"> Giriş Yap</a>
       </div>
     </div>
   </main>

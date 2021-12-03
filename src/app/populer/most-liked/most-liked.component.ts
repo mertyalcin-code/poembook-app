@@ -17,46 +17,46 @@ import { UserService } from 'src/app/service/user.service';
   templateUrl: './most-liked.component.html',
   styleUrls: ['./most-liked.component.css']
 })
-export class MostLikedComponent implements OnInit,OnDestroy {
-  public loading= false;
-  public currentUsername: string; 
+export class MostLikedComponent implements OnInit, OnDestroy {
+  public loading = false;
+  public currentUsername: string;
   private subscriptions: Subscription[] = [];
-  public poems: PoemBox[]=[];
-  public next=5;
+  public poems: PoemBox[] = [];
+  public next = 5;
   constructor(
     private authenticationService: AuthenticationService,
-    private notificationService: NotificationService,  
+    private notificationService: NotificationService,
     private poemService: PoemService,
   ) { }
   ngOnInit() {
-    this.currentUsername =this.authenticationService.getUserFromLocalCache().username;  
-    this.list20MostLikedPoems();   
-    
+    this.currentUsername = this.authenticationService.getUserFromLocalCache().username;
+    this.list20MostLikedPoems();
+
   }
 
   list20MostLikedPoems(): void {
-    this.loading=true;
-    this.subscriptions.push();
+    this.loading = true;
+    this.subscriptions.push(
     this.poemService.list20MostLikedPoems().subscribe(
       (response: DataResult) => {
         if (response.success) {
           this.poems = response.data;
-          this.loading=false;
+          this.loading = false;
           this.sendNotification(NotificationType.SUCCESS, response.message);
         } else {
           this.sendNotification(NotificationType.ERROR, response.message);
-          this.loading=false;
+          this.loading = false;
         }
       },
       (errorResponse: HttpErrorResponse) => {
         this.sendNotification(
           NotificationType.ERROR,
           errorResponse.error.message
-          
+
         );
-        this.loading=false;
+        this.loading = false;
       }
-    );
+    ));
   }
   private sendNotification(
     notificationType: NotificationType,
@@ -71,19 +71,19 @@ export class MostLikedComponent implements OnInit,OnDestroy {
       );
     }
   }
-  public showPopulerPoems(min:number,next:number){
-    
-    return this.poems.slice(min,next)
-   }
-   public increaseNext(){
-     if(this.next<(this.poems.length-5)){
-       this.next=this.next+5;
-     }
-     else{
-       this.next=this.poems.length;
-     }
-     
+  public showPopulerPoems(min: number, next: number) {
+
+    return this.poems.slice(min, next)
+  }
+  public increaseNext() {
+    if (this.next < (this.poems.length - 5)) {
+      this.next = this.next + 5;
     }
+    else {
+      this.next = this.poems.length;
+    }
+
+  }
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }

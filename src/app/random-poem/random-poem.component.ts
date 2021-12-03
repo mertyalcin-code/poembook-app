@@ -20,30 +20,30 @@ import { PoemService } from '../service/poem.service';
   templateUrl: './random-poem.component.html',
   styleUrls: ['./random-poem.component.css']
 })
-export class RandomPoemComponent implements OnInit,OnDestroy{
+export class RandomPoemComponent implements OnInit, OnDestroy {
   public currentUsername: string;
   randomPoemLoading: boolean;
   randomPoem: PoemBox;
-  private subscriptions: Subscription[] = []; 
-  constructor( private authenticationService: AuthenticationService,
-    private notificationService: NotificationService,  
+  private subscriptions: Subscription[] = [];
+  constructor(private authenticationService: AuthenticationService,
+    private notificationService: NotificationService,
     private poemService: PoemService,
-) { }
+  ) { }
 
   ngOnInit() {
-    this.currentUsername= this.authenticationService.getUserFromLocalCache().username;
+    this.currentUsername = this.authenticationService.getUserFromLocalCache().username;
     this.getRandomPoem();
   }
-  
-  getRandomPoem():void{    
+
+  getRandomPoem(): void {
     this.randomPoemLoading = true;
     this.subscriptions.push(
       this.poemService.getRandomPoem().subscribe(
         (response: DataResult) => {
           if (response.success) {
-            this.randomPoem=response.data;           
+            this.randomPoem = response.data;
             this.randomPoemLoading = false;
-          //  this.sendNotification(NotificationType.SUCCESS, response.message);            
+            //  this.sendNotification(NotificationType.SUCCESS, response.message);            
           } else {
             this.sendNotification(NotificationType.ERROR, response.message);
             this.randomPoemLoading = false;
@@ -58,27 +58,27 @@ export class RandomPoemComponent implements OnInit,OnDestroy{
         }
       )
     );
-  }  
-
-refresh(){
-  window.location.reload();
-
-}
-
-private sendNotification(
-  notificationType: NotificationType,
-  message: string
-): void {
-  if (message) {
-    this.notificationService.notify(notificationType, message);
-  } else {
-    this.notificationService.notify(
-      NotificationType.ERROR,
-      'bir şeyler ters gitti.'
-    );
   }
-}
-ngOnDestroy(): void {
-  this.subscriptions.forEach(sub => sub.unsubscribe());
-}
+
+  refresh() {
+    window.location.reload();
+
+  }
+
+  private sendNotification(
+    notificationType: NotificationType,
+    message: string
+  ): void {
+    if (message) {
+      this.notificationService.notify(notificationType, message);
+    } else {
+      this.notificationService.notify(
+        NotificationType.ERROR,
+        'bir şeyler ters gitti.'
+      );
+    }
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
 }

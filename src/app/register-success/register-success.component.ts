@@ -7,11 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterSuccessComponent implements OnInit {
 
-  message ="Kayıt olduğun için teşekkürler. Şifren için mail adresini kontrol edebilirsin."
+  message = "Kayıt olduğun için teşekkürler. Şifren için mail adresini kontrol edebilirsin. Spam klasörüne bakmayı unutma"
   constructor() { }
 
   ngOnInit() {
-    
+
   }
 
 }

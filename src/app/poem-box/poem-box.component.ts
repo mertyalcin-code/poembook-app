@@ -45,7 +45,7 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
     private poemCommentService: PoemCommentService,
     private poemLikeService: PoemLikeService,
     private categoryService: CategoryService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.currentUsername =
@@ -88,7 +88,7 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
         } else {
         }
       },
-      (errorResponse: HttpErrorResponse) => {}
+      (errorResponse: HttpErrorResponse) => { }
     );
   }
 
@@ -220,7 +220,7 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
         .addComment(this.poemCommentService.createCommentData(
           poemId,
           this.addCommentForm.get('comment').value
-          ))
+        ))
         .subscribe(
           (response: Result) => {
             if (response.success) {
@@ -280,9 +280,9 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
       this.poemService.updatePoem(this.poemService.updatePoemData(
         poemId,
         this.editCommentForm.get('poemTitle').value,
-        this.editCommentForm.get('poemContent').value, 
-        this.editCommentForm.get('categoryTitle').value,        
-        )).subscribe(
+        this.editCommentForm.get('poemContent').value,
+        this.editCommentForm.get('categoryTitle').value,
+      )).subscribe(
         (response: Result) => {
           if (response.success) {
             this.loading = false;

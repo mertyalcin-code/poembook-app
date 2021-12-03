@@ -19,18 +19,18 @@ import { EditorService } from '../service/editor.service';
   templateUrl: './poem-management.component.html',
   styleUrls: ['./poem-management.component.css'],
 })
-export class PoemManagementComponent implements OnInit,OnDestroy {
+export class PoemManagementComponent implements OnInit, OnDestroy {
   private titleSubject = new BehaviorSubject<string>('Poems');
-  searchPoem:string;  
+  searchPoem: string;
   public titleAction$ = this.titleSubject.asObservable();
-  public poems: Poem [];
+  public poems: Poem[];
   public poem: Poem;
   private currentUsername: string;
   public refreshing: boolean;
   public selectedPoem: Poem;
   public editPoem = new Poem();
-  public categories:Category[];
-  public allCategories:Category[];
+  public categories: Category[];
+  public allCategories: Category[];
   private subscriptions: Subscription[] = [];
   editCategory = new Category();
   constructor(
@@ -39,12 +39,12 @@ export class PoemManagementComponent implements OnInit,OnDestroy {
     private router: Router,
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
-    private categoryService:CategoryService,
-    private editorService:EditorService
-  ) {}
+    private categoryService: CategoryService,
+    private editorService: EditorService
+  ) { }
 
   ngOnInit(): void {
-    this.currentUsername =  this.authenticationService.getUserFromLocalCache().username;
+    this.currentUsername = this.authenticationService.getUserFromLocalCache().username;
     this.getCategories();
     this.getAllCategories();
     this.getPoems();
@@ -84,9 +84,9 @@ export class PoemManagementComponent implements OnInit,OnDestroy {
     this.editCategory = editCategory;
     this.clickButton('openCategoryEdit');
   }
-  onDeleteCategory(category:Category): void {
-    this.subscriptions.push(    
-      this.editorService.deleteCategory( this.editorService.deleteCategoryData(this.currentUsername,category.categoryTitle)).subscribe(
+  onDeleteCategory(category: Category): void {
+    this.subscriptions.push(
+      this.editorService.deleteCategory(this.editorService.deleteCategoryData(this.currentUsername, category.categoryTitle)).subscribe(
         (response: Result) => {
           if (response.success) {
             this.sendNotification(NotificationType.SUCCESS, response.message);
@@ -131,13 +131,13 @@ export class PoemManagementComponent implements OnInit,OnDestroy {
     );
   }
   public onUpdateCategory(): void {
-    const formData = this.editorService.updateCategoryData(this.currentUsername,this.editCategory);
+    const formData = this.editorService.updateCategoryData(this.currentUsername, this.editCategory);
     this.subscriptions.push(
       this.editorService.updateCategory(formData).subscribe(
         (response: Result) => {
           if (response.success) {
             this.clickButton('closeEditCategoryModalButton');
-           
+
             this.sendNotification(NotificationType.SUCCESS, response.message);
           } else {
             this.sendNotification(NotificationType.ERROR, response.message);
@@ -152,13 +152,13 @@ export class PoemManagementComponent implements OnInit,OnDestroy {
       )
     );
   }
- 
+
 
   private clickButton(buttonId: string): void {
     document.getElementById(buttonId).click();
   }
 
-  public getPoems(): void {   
+  public getPoems(): void {
     this.refreshing = true;
     this.subscriptions.push();
     this.editorService.getAllPoems().subscribe(
@@ -182,17 +182,17 @@ export class PoemManagementComponent implements OnInit,OnDestroy {
       }
     );
   }
-  public getCategories(): void {     
+  public getCategories(): void {
     this.subscriptions.push();
     this.categoryService.getActiveCategories().subscribe(
       (response: DataResult) => {
         if (response.success) {
-          this.categories = response.data; 
-  
-        //  this.sendNotification(NotificationType.SUCCESS, response.message);
+          this.categories = response.data;
+
+          //  this.sendNotification(NotificationType.SUCCESS, response.message);
         } else {
           this.sendNotification(NotificationType.ERROR, response.message);
-  
+
         }
       },
       (errorResponse: HttpErrorResponse) => {
@@ -203,17 +203,17 @@ export class PoemManagementComponent implements OnInit,OnDestroy {
       }
     );
   }
-  public getAllCategories(): void {     
+  public getAllCategories(): void {
     this.subscriptions.push();
     this.categoryService.getCategories().subscribe(
       (response: DataResult) => {
         if (response.success) {
-          this.allCategories = response.data; 
-  
-        //  this.sendNotification(NotificationType.SUCCESS, response.message);
+          this.allCategories = response.data;
+
+          //  this.sendNotification(NotificationType.SUCCESS, response.message);
         } else {
           this.sendNotification(NotificationType.ERROR, response.message);
-  
+
         }
       },
       (errorResponse: HttpErrorResponse) => {
@@ -224,40 +224,40 @@ export class PoemManagementComponent implements OnInit,OnDestroy {
       }
     );
   }
-  public addCategories():void {
+  public addCategories(): void {
   }
-  public editCategories():void{
+  public editCategories(): void {
   }
-  public onCreateCategory(ngForm:NgForm):void{
-    this.refreshing=true;
-    const formData = this.editorService.createCategoryData(this.currentUsername,ngForm.value);
+  public onCreateCategory(ngForm: NgForm): void {
+    this.refreshing = true;
+    const formData = this.editorService.createCategoryData(this.currentUsername, ngForm.value);
     this.subscriptions.push(
       this.editorService.addCategory(formData).subscribe(
         (response: Result) => {
-          if(response.success){
+          if (response.success) {
             this.clickButton('create-category-close');
-            this.getAllCategories();           
-            this.refreshing=false;
+            this.getAllCategories();
+            this.refreshing = false;
             ngForm.reset();
             this.sendNotification(NotificationType.SUCCESS, response.message);
           }
-          else{
+          else {
             this.sendNotification(NotificationType.ERROR, response.message);
-            this.refreshing=false;
+            this.refreshing = false;
           }
-        
+
         },
         (errorResponse: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, errorResponse.message);
-          this.refreshing=false;
+          this.refreshing = false;
         }
       )
-      );
+    );
   }
-  public saveNewCategory():void{
+  public saveNewCategory(): void {
     this.clickButton('create-category-save');
   }
-  
+
   private sendNotification(
     notificationType: NotificationType,
     message: string

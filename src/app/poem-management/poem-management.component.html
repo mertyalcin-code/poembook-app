@@ -13,28 +13,19 @@
   <nav class="navbar navbar-expand-md breadcrumb">
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <div class="nav nav-pills">
-        <a id="loadAllPoem"
-          class="nav-item nav-link active  ml-1" 
-          (click)="changeTitle('Şiirler')"
-          data-toggle="tab"
-          href="#poems"
-        >
+        <a id="loadAllPoem" class="nav-item nav-link active  ml-1" (click)="changeTitle('Şiirler')" data-toggle="tab"
+          href="#poems">
           <i class="fa fa-users"></i>
           Şiirler
         </a>
-        <a id="loadAllCategories"
-          class="nav-item nav-link ml-3"
-          (click)="changeTitle('Kategoriler')"
-          data-toggle="tab"
-          href="#categories"
-        >
+        <a id="loadAllCategories" class="nav-item nav-link ml-3" (click)="changeTitle('Kategoriler')" data-toggle="tab"
+          href="#categories">
           <i class="fa fa-users"></i>
           Kategoriler
         </a>
         <div class="btn-group">
           <button type="button" (click)="getPoems()" class="btn btn-info">
-            <i *ngIf="refreshing" class="fas fa-sync fa-spin"></i
-            ><i *ngIf="!refreshing" class="fas fa-sync"></i>
+            <i *ngIf="refreshing" class="fas fa-sync fa-spin"></i><i *ngIf="!refreshing" class="fas fa-sync"></i>
           </button>
         </div>
       </div>
@@ -44,11 +35,12 @@
   <!-- main content -->
   <div class="tab-content mt-3" id="myTabContent">
     <!-- poem table -->
-    <div class="tab-pane fade show active" id="poems">  
+    <div class="tab-pane fade show active" id="poems">
       <div class="mb-3 float-right">
         <div class="btn-group mr-2">
           <form class="form" style="margin: 2%;">
-            <input class="form-control mr-sm-2" type="search" name="search" placeholder="Ara" aria-label="Search" [(ngModel)]="searchPoem" autocomplete="off">  
+            <input class="form-control mr-sm-2" type="search" name="search" placeholder="Ara" aria-label="Search"
+              [(ngModel)]="searchPoem" autocomplete="off">
           </form>
         </div>
       </div>
@@ -81,25 +73,15 @@
               {{ poemApp?.category?.categoryTitle }}
             </td>
             <td (click)="onSelectPoem(poemApp)">
-              <span [hidden]="!poemApp?.active" class="badge bg-success"
-                >Aktif</span
-              >
-              <span [hidden]="poemApp?.active" class="badge bg-danger"
-                >Pasif</span
-              >
+              <span [hidden]="!poemApp?.active" class="badge bg-success">Aktif</span>
+              <span [hidden]="poemApp?.active" class="badge bg-danger">Pasif</span>
             </td>
             <td class="">
               <div class="btn-group">
-                <button
-                  class="btn btn-outline-info"
-                  (click)="onEditPoem(poemApp)"
-                >
+                <button class="btn btn-outline-info" (click)="onEditPoem(poemApp)">
                   <i class="fas fa-edit"></i>
                 </button>
-                <button
-                  class="btn btn-outline-danger"
-                  (click)="onDeletePoem(poemApp?.poemId)"
-                >
+                <button class="btn btn-outline-danger" (click)="onDeletePoem(poemApp?.poemId)">
                   <i class="fas fa-trash"></i>
                 </button>
               </div>
@@ -108,17 +90,11 @@
         </tbody>
       </table>
     </div>
- 
+
 
     <!-- modal poem info -->
-    <div
-      class="modal fade bd-example-modal-lg"
-      id="viewPoemModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby=""
-      aria-hidden="true"
-    >
+    <div class="modal fade bd-example-modal-lg" id="viewPoemModal" tabindex="-1" role="dialog" aria-labelledby=""
+      aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -134,71 +110,49 @@
                     <div class="col-12 col-sm-auto">
                       <div class="mx-auto" style="width: 120px"></div>
                     </div>
-                    <div
-                      class="
+                    <div class="
                         col
                         d-flex
                         flex-column flex-sm-row
                         justify-content-between
-                      "
-                    >
-                      <div >
-                        <h3 >
+                      ">
+                      <div>
+                        <h3>
                           {{ selectedPoem?.poemTitle }}
-                        </h3>                       
-                        <p class="e2e-inner-html-bound" [innerHTML]="selectedPoem?.poemContent"></p>  
+                        </h3>
+                        <p class="e2e-inner-html-bound" [innerHTML]="selectedPoem?.poemContent"></p>
                         <div class="">
                           Durum:
-                          <span
-                            [hidden]="!selectedPoem?.active"
-                            class="badge bg-success"
-                            >Aktif</span
-                          >
-                          <span
-                            [hidden]="selectedPoem?.active"
-                            class="badge bg-danger"
-                            >Pasif</span
-                          >
+                          <span [hidden]="!selectedPoem?.active" class="badge bg-success">Aktif</span>
+                          <span [hidden]="selectedPoem?.active" class="badge bg-danger">Pasif</span>
                         </div>
-                  
-                      </div>                 
+
+                      </div>
                     </div>
                   </div>
                 </div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item"></li>
                   <li class="list-group-item">
-                    <i class="fas fa-id-badge fa-pull-right fa-2x"></i
-                    >{{ selectedPoem?.poemId }}
+                    <i class="fas fa-id-badge fa-pull-right fa-2x"></i>{{ selectedPoem?.poemId }}
                   </li>
                   <li class="list-group-item">
-                    <i class="fas fa-envelope fa-pull-right fa-2x"></i
-                    >{{ selectedPoem?.category?.categoryTitle }}
+                    <i class="fas fa-envelope fa-pull-right fa-2x"></i>{{ selectedPoem?.category?.categoryTitle }}
                   </li>
-                  <li
-                  *ngIf="selectedPoem?.creationDate"
-                  class="list-group-item"
-                >
-                  <i class="fas fa-sign-in-alt fa-pull-right fa-2x"></i
-                  >{{ selectedPoem?.creationDate | date: "medium" }}
-                </li>
-                  <li
-                    *ngIf="selectedPoem?.lastUpdateDate"
-                    class="list-group-item"
-                  >
-                  <i class="fas fa-user-edit fa-pull-right fa-2x"></i>{{ selectedPoem?.lastUpdateDate | date: "medium" }}
+                  <li *ngIf="selectedPoem?.creationDate" class="list-group-item">
+                    <i class="fas fa-sign-in-alt fa-pull-right fa-2x"></i>{{ selectedPoem?.creationDate | date: "medium"
+                    }}
+                  </li>
+                  <li *ngIf="selectedPoem?.lastUpdateDate" class="list-group-item">
+                    <i class="fas fa-user-edit fa-pull-right fa-2x"></i>{{ selectedPoem?.lastUpdateDate | date: "medium"
+                    }}
                   </li>
                 </ul>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              (click)="getPoems()"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
+            <button type="button" (click)="getPoems()" class="btn btn-secondary" data-dismiss="modal">
               Kapat
             </button>
           </div>
@@ -207,24 +161,13 @@
     </div>
 
     <!-- modal edit poem -->
-    <div
-      class="modal draggable fade bd-example-modal-lg"
-      id="editPoemModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true"
-    >
+    <div class="modal draggable fade bd-example-modal-lg" id="editPoemModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title text-center">Düzenle</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -233,35 +176,18 @@
               <form #editPoemForm="ngForm">
                 <div class="form-group">
                   <label for="poemTitle">Başlık</label>
-                  <input
-                    type="text"
-                    name="poemTitle"
-                    required
-                    [(ngModel)]="editPoem.poemTitle"
-                    class="form-control"
-                  />
+                  <input type="text" name="poemTitle" required [(ngModel)]="editPoem.poemTitle" class="form-control" />
                 </div>
                 <div class="form-group">
                   <label for="poemContent">İçerik</label>
-                  <angular-editor
-                    name="poemContent"
-                    [(ngModel)]="editPoem.poemContent"
-                  ></angular-editor>
+                  <angular-editor name="poemContent" [(ngModel)]="editPoem.poemContent"></angular-editor>
                 </div>
                 <div class="col-md-6">
                   <label for="categoryTitle" class="form-label">Kategori</label>
-                  <select
-                    type=""
-                    class="form-select"
-                    name="categoryTitle"
-                    [(ngModel)]="editPoem.category.categoryTitle"
-                    id="categoryTitle"
-                  >
+                  <select type="" class="form-select" name="categoryTitle" [(ngModel)]="editPoem.category.categoryTitle"
+                    id="categoryTitle">
                     <option selected>Seçiniz...</option>
-                    <option
-                      *ngFor="let category of categories"
-                      value="{{ category.categoryTitle }}"
-                    >
+                    <option *ngFor="let category of categories" value="{{ category.categoryTitle }}">
                       {{ category.categoryTitle }}
                     </option>
                   </select>
@@ -269,12 +195,7 @@
                 <fieldset class="form-group">
                   <div class="form-check">
                     <label class="form-check-label">
-                      <input
-                        name="active"
-                        type="checkbox"
-                        [(ngModel)]="editPoem.active"
-                        class="form-check-input"
-                      />
+                      <input name="active" type="checkbox" [(ngModel)]="editPoem.active" class="form-check-input" />
                       Aktif
                     </label>
                   </div>
@@ -283,233 +204,157 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              (click)="getPoems()"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-              id="closeEditPoemModalButton"
-            >
+            <button type="button" (click)="getPoems()" class="btn btn-secondary" data-dismiss="modal"
+              id="closeEditPoemModalButton">
               Kapat
             </button>
-            <button
-              type="button"
-              (click)="onUpdatePoem()"
-              class="btn btn-primary"
-            >
+            <button type="button" (click)="onUpdatePoem()" class="btn btn-primary">
               Değişiklikleri Kaydet
             </button>
           </div>
         </div>
       </div>
-    </div> 
-      <!-- category List -->   
-   <div class="tab-pane fade show active" id="categories">
-    <div class="mb-3 float-right">
-      <div class="btn-group mr-2">     
-         <button  type="button" class="btn btn-info" data-toggle="modal" data-target="#createCategoryModal">
-          <i class="fa fa-plus"></i>Yeni Kategori
-        </button>
-      </div>
     </div>
-    <table class="table table-hover">
-      <thead class="table-borderless">
-        <tr class="text-center">
-          <th>Kategori ID</th>
-          <th>Kategori</th>
-          <th>Oluşturulma tarihi</th>         
-          <th>Oluşturan Kullanıcı</th>        
-          <th>Statü</th>
-        </tr>
-      </thead>
-      <tbody *ngFor="let categoryApp of allCategories">
-        <tr class="text-center">
-          <td >{{ categoryApp?.categoryId }}</td>
-          <td >{{ categoryApp?.categoryTitle }}</td>
-          <td >
-            {{ categoryApp?.creationDate | date: "mediumDate" }}
-          </td> 
-          <td >
-            {{ categoryApp?.creatorUsername }}
-          </td>
-          <td >
-            <span [hidden]="!categoryApp?.active" class="badge bg-success"
-              >Aktif</span
-            >
-            <span [hidden]="categoryApp?.active" class="badge bg-danger"
-              >Pasif</span
-            >
-          </td>
-          <td class="">
-            <div class="btn-group">
-              <button
-                class="btn btn-outline-info"
-                (click)="onEditCategory(categoryApp)"
-              >
-                <i class="fas fa-edit"></i>
-              </button>
-              <button
-                class="btn btn-outline-danger"
-                (click)="onDeleteCategory(categoryApp)"
-              >
-                <i class="fas fa-trash"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <!--category edit-->
-  <div
-  class="modal draggable fade bd-example-modal-lg"
-  id="editCategoryModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-center">Düzenle</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="">
-          <form #editPoemForm="ngForm">
-            <div class="form-group">
-              <label for="poemTitle">Kategori</label>
-              <input
-                type="text"
-                name="poemTitle"
-                required
-                [(ngModel)]="editCategory.categoryTitle"
-                class="form-control"
-              />
-            </div>
-         
-            <fieldset class="form-group">
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    name="active"
-                    type="checkbox"
-                    [(ngModel)]="editCategory.active"
-                    class="form-check-input"
-                  />
-                  Aktif
-                </label>
-              </div>
-            </fieldset>
-          </form>
+    <!-- category List -->
+    <div class="tab-pane fade show active" id="categories">
+      <div class="mb-3 float-right">
+        <div class="btn-group mr-2">
+          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#createCategoryModal">
+            <i class="fa fa-plus"></i>Yeni Kategori
+          </button>
         </div>
       </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          (click)="getAllCategories()"
-          class="btn btn-secondary"
-          data-dismiss="modal"
-          id="closeEditCategoryModalButton"
-        >
-          Kapat
-        </button>
-        <button
-          type="button"
-          (click)="onUpdateCategory()"
-          class="btn btn-primary"
-        >
-          Değişiklikleri Kaydet
-        </button>
+      <table class="table table-hover">
+        <thead class="table-borderless">
+          <tr class="text-center">
+            <th>Kategori ID</th>
+            <th>Kategori</th>
+            <th>Oluşturulma tarihi</th>
+            <th>Oluşturan Kullanıcı</th>
+            <th>Statü</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let categoryApp of allCategories">
+          <tr class="text-center">
+            <td>{{ categoryApp?.categoryId }}</td>
+            <td>{{ categoryApp?.categoryTitle }}</td>
+            <td>
+              {{ categoryApp?.creationDate | date: "mediumDate" }}
+            </td>
+            <td>
+              {{ categoryApp?.creatorUsername }}
+            </td>
+            <td>
+              <span [hidden]="!categoryApp?.active" class="badge bg-success">Aktif</span>
+              <span [hidden]="categoryApp?.active" class="badge bg-danger">Pasif</span>
+            </td>
+            <td class="">
+              <div class="btn-group">
+                <button class="btn btn-outline-info" (click)="onEditCategory(categoryApp)">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-outline-danger" (click)="onDeleteCategory(categoryApp)">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--category edit-->
+    <div class="modal draggable fade bd-example-modal-lg" id="editCategoryModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center">Düzenle</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="">
+              <form #editPoemForm="ngForm">
+                <div class="form-group">
+                  <label for="poemTitle">Kategori</label>
+                  <input type="text" name="poemTitle" required [(ngModel)]="editCategory.categoryTitle"
+                    class="form-control" />
+                </div>
+
+                <fieldset class="form-group">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input name="active" type="checkbox" [(ngModel)]="editCategory.active" class="form-check-input" />
+                      Aktif
+                    </label>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" (click)="getAllCategories()" class="btn btn-secondary" data-dismiss="modal"
+              id="closeEditCategoryModalButton">
+              Kapat
+            </button>
+            <button type="button" (click)="onUpdateCategory()" class="btn btn-primary">
+              Değişiklikleri Kaydet
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div> 
- <!-- model create category -->
- <div class="modal draggable fade bd-example-modal-lg" id="createCategoryModal" tabindex="-1" role="dialog"
- aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
- <div class="modal-dialog" role="document">
-   <div class="modal-content">
-     <div class="modal-header">
-       <h5 class="modal-title text-center">Yeni Kategori</h5>
-       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-         <span aria-hidden="true">&times;</span>
-       </button>
-     </div>
-     <div class="modal-body">
-       <div>
-         <form #newCategoryForm="ngForm" (ngSubmit)="onCreateCategory(newCategoryForm)">
-           <div class="form-group">
-             <label for="categoryTitle">Kategori</label>
-             <input type="text" name="categoryTitle" required ngModel class="form-control">
-           </div>         
-           <fieldset class="form-group">
-             <div class="form-check">
-               <label class="form-check-label">
-                 <input type="checkbox" name="active" ngModel class="form-check-input" >
-                 Aktif
-               </label>
-             </div>           
-           </fieldset>
-           <button type="submit" style="display: none;" id="create-category-save"></button>
-         </form>
-       </div>
-     </div>
-     <div class="modal-footer">
-       <button type="button" class="btn btn-secondary" data-dismiss="modal" id="create-category-close">Kapat</button>
-       <button *ngIf="!refreshing" type="button" (click)="saveNewCategory()" [disabled]="newCategoryForm.invalid" class="btn btn-primary">Değişiklikleri Kaydet</button>
-       <button *ngIf="refreshing" class="btn btn-primary" type="button" disabled>
-         <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-         Kaydediliyor...
-       </button>
-     </div>
-   </div>
- </div>
-</div>
-  <!-- end of category area-->
-  <button
-    [hidden]="true"
-    type="button"
-    id="openPoemInfo"
-    data-toggle="modal"
-    data-target="#viewPoemModal"
-  ></button>
-  <button
-    [hidden]="true"
-    type="button"
-    id="openPoemEdit"
-    data-toggle="modal"
-    data-target="#editPoemModal"
-  ></button>
-  <button
-  [hidden]="true"
-  type="button"
-  id="openCategoryEdit"
-  data-toggle="modal"
-  data-target="#editCategoryModal"
-></button>
-<button
-[hidden]="true"
-type="button"
-id="openPoemInfo"
-data-toggle="modal"
-data-target="#viewPoemModal"
-></button>
-<button
-[hidden]="true"
-type="button"
-id="openPoemEdit"
-data-toggle="modal"
-data-target="#editPoemModal"
-></button>
+    <!-- model create category -->
+    <div class="modal draggable fade bd-example-modal-lg" id="createCategoryModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center">Yeni Kategori</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>
+              <form #newCategoryForm="ngForm" (ngSubmit)="onCreateCategory(newCategoryForm)">
+                <div class="form-group">
+                  <label for="categoryTitle">Kategori</label>
+                  <input type="text" name="categoryTitle" required ngModel class="form-control">
+                </div>
+                <fieldset class="form-group">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" name="active" ngModel class="form-check-input">
+                      Aktif
+                    </label>
+                  </div>
+                </fieldset>
+                <button type="submit" style="display: none;" id="create-category-save"></button>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+              id="create-category-close">Kapat</button>
+            <button *ngIf="!refreshing" type="button" (click)="saveNewCategory()" [disabled]="newCategoryForm.invalid"
+              class="btn btn-primary">Değişiklikleri Kaydet</button>
+            <button *ngIf="refreshing" class="btn btn-primary" type="button" disabled>
+              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              Kaydediliyor...
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end of category area-->
+    <button [hidden]="true" type="button" id="openPoemInfo" data-toggle="modal" data-target="#viewPoemModal"></button>
+    <button [hidden]="true" type="button" id="openPoemEdit" data-toggle="modal" data-target="#editPoemModal"></button>
+    <button [hidden]="true" type="button" id="openCategoryEdit" data-toggle="modal"
+      data-target="#editCategoryModal"></button>
+    <button [hidden]="true" type="button" id="openPoemInfo" data-toggle="modal" data-target="#viewPoemModal"></button>
+    <button [hidden]="true" type="button" id="openPoemEdit" data-toggle="modal" data-target="#editPoemModal"></button>
 
-  </div>  
+  </div>
 </div>

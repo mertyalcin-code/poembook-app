@@ -1,20 +1,20 @@
 <div class=container style="position: relative;margin-bottom: 6%;">
-  <div class=row>    
+  <div class=row>
     <div class="col-12 col-lg-2"> </div>
-    <div class="col-12 col-lg-8">   
-      <a (click)="refresh()" type="button" class="btn btn-secondary btn-lg" id="dice"><i class="fas fa-dice"></i></a>   
-      <div class="card" >        
-        <div class="card-body">        
-      
+    <div class="col-12 col-lg-8">
+      <a (click)="refresh()" type="button" class="btn btn-secondary btn-lg" id="dice"><i class="fas fa-dice"></i></a>
+      <div class="card">
+        <div class="card-body">
+
           <button *ngIf="randomPoemLoading" class="btn btn-primary" type="button" disabled>
             <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
             Rastgele bir şiir getiriliyor
           </button>
-            <app-poem-box *ngIf="!randomPoemLoading" [poem]="randomPoem"></app-poem-box>
-        </div>  
-  
+          <app-poem-box *ngIf="!randomPoemLoading" [poem]="randomPoem"></app-poem-box>
+        </div>
+
       </div>
     </div>
-   
+
   </div>
 </div>

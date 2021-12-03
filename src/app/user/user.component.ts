@@ -28,169 +28,169 @@ import { UserService } from '../service/user.service';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
 })
-export class UserComponent implements OnInit,OnDestroy{ 
+export class UserComponent implements OnInit, OnDestroy {
 
   public profileUsername: string;
-  public followerSearch:any;
-  public followingSearch:any;
-  public profileUser=new ProfileUser;
+  public followerSearch: any;
+  public followingSearch: any;
+  public profileUser = new ProfileUser;
   public currentUsername: string;
   public isFollowing: boolean;
   public followLoading: boolean;
   private subscriptions: Subscription[] = [];
-  public profilePoems: PoemBox[]=[];
+  public profilePoems: PoemBox[] = [];
   public profilePoemsLoading: boolean;
-  public indexStart=0;
-  public indexEnd=5;
+  public indexStart = 0;
+  public indexEnd = 5;
 
   constructor(
     private authenticationService: AuthenticationService,
-    private notificationService: NotificationService,  
+    private notificationService: NotificationService,
     private router: ActivatedRoute,
-    private urlRouter:Router,
+    private urlRouter: Router,
     private poemService: PoemService,
     private userService: UserService,
-    private followerService: FollowService, 
-  ) {}
+    private followerService: FollowService,
+  ) { }
 
   ngOnInit() {
-    this.currentUsername =this.authenticationService.getUserFromLocalCache().username;
+    this.currentUsername = this.authenticationService.getUserFromLocalCache().username;
     this.profileUsername = this.router.snapshot.paramMap.get('username');
     this.getUserProfile(this.profileUsername);
     this.checkFollowing();
-    this.getProfilePoems();   
-    
+    this.getProfilePoems();
+
   }
 
   getUserProfile(username: string): void {
-    this.subscriptions.push();
-    this.userService.getUserProfile(username).subscribe(
-      (response: DataResult) => {
-        if (response.success) {
-          this.profileUser = response.data;
-          this.sendNotification(NotificationType.SUCCESS, response.message);
-        } else {
-          this.sendNotification(NotificationType.ERROR, response.message);
+    this.subscriptions.push(
+      this.userService.getUserProfile(username).subscribe(
+        (response: DataResult) => {
+          if (response.success) {
+            this.profileUser = response.data;
+            this.sendNotification(NotificationType.SUCCESS, response.message);
+          } else {
+            this.sendNotification(NotificationType.ERROR, response.message);
+          }
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.sendNotification(
+            NotificationType.ERROR,
+            errorResponse.error.message
+          );
         }
-      },
-      (errorResponse: HttpErrorResponse) => {
-        this.sendNotification(
-          NotificationType.ERROR,
-          errorResponse.error.message
-        );
-      }
-    );
+      ));
   }
   getProfilePoems() {
     this.profilePoemsLoading = true;
-    this.subscriptions.push();
-    this.poemService.getProfilePoemsByUsername(this.poemService.requestPoemData(
-      this.profileUsername,
-      this.indexStart,
-      this.indexEnd
-    )).subscribe(
-      (response: DataResult) => {
-        if (response.success) {
-         // this.sendNotification(NotificationType.SUCCESS, response.message);
-          this.profilePoems = response.data;      
-    
-          this.profilePoemsLoading = false;
-        } else {
-          this.sendNotification(NotificationType.ERROR, response.message);
+    this.subscriptions.push(
+      this.poemService.getProfilePoemsByUsername(this.poemService.requestPoemData(
+        this.profileUsername,
+        this.indexStart,
+        this.indexEnd
+      )).subscribe(
+        (response: DataResult) => {
+          if (response.success) {
+            // this.sendNotification(NotificationType.SUCCESS, response.message);
+            this.profilePoems = response.data;
+
+            this.profilePoemsLoading = false;
+          } else {
+            this.sendNotification(NotificationType.ERROR, response.message);
+            this.profilePoemsLoading = false;
+          }
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.sendNotification(
+            NotificationType.ERROR,
+            errorResponse.error.message
+          );
           this.profilePoemsLoading = false;
         }
-      },
-      (errorResponse: HttpErrorResponse) => {
-        this.sendNotification(
-          NotificationType.ERROR,
-          errorResponse.error.message
-        );
-        this.profilePoemsLoading = false;
-      }
-    );
+      ));
   }
   follow(username: string): void {
-    this.followLoading=true;
-    this.subscriptions.push();
-    this.followerService
-      .follow(
-        this.followerService.createFollowFormData(
-          this.currentUsername,
-          username
+    this.followLoading = true;
+    this.subscriptions.push(
+      this.followerService
+        .follow(
+          this.followerService.createFollowFormData(
+            this.currentUsername,
+            username
+          )
         )
-      )
-      .subscribe(
-        (response: Result) => {
-          if (response.success) {
-            this.checkFollowing();
-            this.followLoading=false;
-            this.sendNotification(NotificationType.SUCCESS, response.message);
-          } else {
-            this.sendNotification(NotificationType.ERROR, response.message);
-            this.followLoading=false;
+        .subscribe(
+          (response: Result) => {
+            if (response.success) {
+              this.checkFollowing();
+              this.followLoading = false;
+              this.sendNotification(NotificationType.SUCCESS, response.message);
+            } else {
+              this.sendNotification(NotificationType.ERROR, response.message);
+              this.followLoading = false;
+            }
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.sendNotification(
+              NotificationType.ERROR,
+              errorResponse.error.message
+            );
+            this.followLoading = false;
           }
-        },
-        (errorResponse: HttpErrorResponse) => {
-          this.sendNotification(
-            NotificationType.ERROR,
-            errorResponse.error.message
-          );
-          this.followLoading=false;
-        }
-      );
+        ));
   }
   unfollow(username: string): void {
-    this.followLoading=true;
-    this.subscriptions.push();
-    this.followerService
-      .unfollow(
-        this.followerService.createUnfollowFormData(
-          this.currentUsername,
-          username
+    this.followLoading = true;
+    this.subscriptions.push(
+      this.followerService
+        .unfollow(
+          this.followerService.createUnfollowFormData(
+            this.currentUsername,
+            username
+          )
         )
-      )
-      .subscribe(
-        (response: Result) => {
-          if (response.success) {
-            this.checkFollowing();
-            this.followLoading=false;
-            this.sendNotification(NotificationType.SUCCESS, response.message);
-          } else {
-            this.sendNotification(NotificationType.ERROR, response.message);
+        .subscribe(
+          (response: Result) => {
+            if (response.success) {
+              this.checkFollowing();
+              this.followLoading = false;
+              this.sendNotification(NotificationType.SUCCESS, response.message);
+            } else {
+              this.sendNotification(NotificationType.ERROR, response.message);
+            }
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.sendNotification(
+              NotificationType.ERROR,
+              errorResponse.error.message
+            );
+            this.followLoading = false;
           }
-        },
-        (errorResponse: HttpErrorResponse) => {
-          this.sendNotification(
-            NotificationType.ERROR,
-            errorResponse.error.message
-          );
-          this.followLoading=false;
-        }
-      );
+        ));
   }
   checkFollowing(): void {
-    this.subscriptions.push();
-    this.followerService
-      .isFollowing(
-        this.followerService.createIsFollowingFormData(
-          this.currentUsername,
-          this.profileUsername
+    this.subscriptions.push(
+      this.followerService
+        .isFollowing(
+          this.followerService.createIsFollowingFormData(
+            this.currentUsername,
+            this.profileUsername
+          )
         )
-      )
-      .subscribe(
-        (response: Result) => {
-          if (response.success) {
-            this.isFollowing = true;
-          } else {
+        .subscribe(
+          (response: Result) => {
+            if (response.success) {
+              this.isFollowing = true;
+            } else {
+              this.isFollowing = false;
+            }
+          },
+          (errorResponse: HttpErrorResponse) => {
             this.isFollowing = false;
           }
-        },
-        (errorResponse: HttpErrorResponse) => {
-          this.isFollowing = false;
-        }
-      );
+        ));
   }
-  
+
   private sendNotification(
     notificationType: NotificationType,
     message: string
@@ -204,14 +204,14 @@ export class UserComponent implements OnInit,OnDestroy{
       );
     }
   }
-  loadMorePoem(){
-    this.indexEnd=this.indexEnd+10;
+  loadMorePoem() {
+    this.indexEnd = this.indexEnd + 10;
     this.getProfilePoems();
   }
 
 
-  routeMessagePage(){
-    this.urlRouter.navigateByUrl('/message/'+this.profileUser.username) 
+  routeMessagePage() {
+    this.urlRouter.navigateByUrl('/message/' + this.profileUser.username)
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());

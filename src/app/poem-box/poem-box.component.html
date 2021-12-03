@@ -1,212 +1,150 @@
-   <!-- Story Box-->
-   <div class="border border-light p-2 mb-3">
-    <div class="d-flex align-items-start">
-      <img
-        class="me-2 avatar-sm rounded-circle"
-        src="{{ poem.avatar }}"
-        alt="Generic placeholder image"
-      />
-      
-      <div class="w-100">        
-        <div
-          class="dropdown float-end"
-          *ngIf="poem.username === currentUsername"
-        >
-       
-        
-          <a
-            href="#"
-            class="dropdown-toggle arrow-none card-drop"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i class="mdi mdi-dots-vertical"></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-end">
-            <a  (click)="onEditPoem(poem.poemId)" class="dropdown-item"
-              >Düzenle</a
-            >
+<!-- Story Box-->
+<div class="border border-light p-2 mb-3">
+  <div class="d-flex align-items-start">
+    <img class="me-2 avatar-sm rounded-circle" src="{{ poem.avatar }}" alt="Generic placeholder image" />
 
-            <a
-              (click)="deletePoem(poem.poemId)"
-              class="dropdown-item"
-              >Sil</a
-            >
-          </div>
+    <div class="w-100">
+      <div class="dropdown float-end" *ngIf="poem.username === currentUsername">
+
+
+        <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="mdi mdi-dots-vertical"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end">
+          <a (click)="onEditPoem(poem.poemId)" class="dropdown-item">Düzenle</a>
+
+          <a (click)="deletePoem(poem.poemId)" class="dropdown-item">Sil</a>
         </div>
-        <h5 class="">
-          <a class="nameLink" href="{{'/user/'+poem.username}}">{{poem.firstName+" "+poem.lastName}}</a>
-          <small *ngIf="poem.creationDateInMinute<60" class="text-muted">{{"  " +poem.creationDateInMinute + " dk önce" }}</small >
-          <small *ngIf="poem.creationDateInMinute>=60 && poem.creationDateInMinute<1440" class="text-muted">{{" "+float2int(poem.creationDateInMinute/60)  + " saat önce" }}</small >
-            <small *ngIf="poem.creationDateInMinute>=1440" class="text-muted">{{poem.creationDate |date:'medium' }}</small >
+      </div>
+      <h5 class="">
+        <a class="nameLink" href="{{'/user/'+poem.username}}">{{poem.firstName+" "+poem.lastName}}</a>
+        <small *ngIf="poem.creationDateInMinute<60" class="text-muted">{{" " +poem.creationDateInMinute + " dk önce"
+          }}</small>
+        <small *ngIf="poem.creationDateInMinute>=60 && poem.creationDateInMinute<1440" class="text-muted">{{"
+          "+float2int(poem.creationDateInMinute/60) + " saat önce" }}</small>
+        <small *ngIf="poem.creationDateInMinute>=1440" class="text-muted">{{poem.creationDate |date:'medium' }}</small>
       </h5>
       {{poem.creationDate|date:'medium'}}
 
-        <h3 style="text-align: center">
-          {{ poem.poemTitle }}
-        </h3>
-        <div *ngIf="!editPoemStatus">
-          <p
-            class="e2e-inner-html-bound"
-            style="text-align: center;overflow-y: auto;max-height: 500px;"
-            [innerHTML]="poem.poemContent"
-          ></p>          
-        </div>        
-        <form *ngIf="editPoemStatus" action="#" class="row g-3" [formGroup]="editPoemForm" (ngSubmit)="updatePoem(poem.poemId)">
+      <h3 style="text-align: center">
+        {{ poem.poemTitle }}
+      </h3>
+      <div *ngIf="!editPoemStatus">
+        <p class="e2e-inner-html-bound" style="text-align: center;overflow-y: auto;max-height: 500px;"
+          [innerHTML]="poem.poemContent"></p>
+      </div>
+      <form *ngIf="editPoemStatus" action="#" class="row g-3" [formGroup]="editPoemForm"
+        (ngSubmit)="updatePoem(poem.poemId)">
 
-          <div class="col-md-6">
-              <label for="poemTitle" class="form-label" >Şiir Başlığı</label>
-              <input type="text" class="form-control" formControlName="poemTitle" id="poemTitle" >
-            </div>
-            <div class="col-md-6">
-              <label for="categoryTitle" class="form-label">Kategori</label>
-              <select type="" class="form-select" formControlName="categoryTitle" id="categoryTitle">
-                  <option selected>Seçiniz...</option>
-                  <option *ngFor="let category of categories" value={{category.categoryTitle}} >{{category.categoryTitle}}</option> </select>
-            </div>                            
-          <angular-editor formControlName="poemContent" ></angular-editor>         
-                  
-                  <button *ngIf="!loading && editPoemForm.valid" type="submit" class="btn btn-sm btn-dark waves-effect waves-light">Şiirini Güncelle</button>
-                  <button *ngIf="loading" class="btn btn-primary" type="button" disabled>
-                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                    Güncelleniyor
-                  </button>
-        </form>     
-        <div>
-           <div class="mt-2">
-            <div *ngIf="likeButtonLoading == true"
-              class="spinner-border text-primary"
-              role="status"
-            >            
-            </div>             
-            <a
-              *ngIf="
+        <div class="col-md-6">
+          <label for="poemTitle" class="form-label">Şiir Başlığı</label>
+          <input type="text" class="form-control" formControlName="poemTitle" id="poemTitle">
+        </div>
+        <div class="col-md-6">
+          <label for="categoryTitle" class="form-label">Kategori</label>
+          <select type="" class="form-select" formControlName="categoryTitle" id="categoryTitle">
+            <option selected>Seçiniz...</option>
+            <option *ngFor="let category of categories" value={{category.categoryTitle}}>{{category.categoryTitle}}
+            </option>
+          </select>
+        </div>
+        <angular-editor formControlName="poemContent"></angular-editor>
+
+        <button *ngIf="!loading && editPoemForm.valid" type="submit"
+          class="btn btn-sm btn-dark waves-effect waves-light">Şiirini Güncelle</button>
+        <button *ngIf="loading" class="btn btn-primary" type="button" disabled>
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Güncelleniyor
+        </button>
+      </form>
+      <div>
+        <div class="mt-2">
+          <div *ngIf="likeButtonLoading == true" class="spinner-border text-primary" role="status">
+          </div>
+          <a *ngIf="
                 poem.whoLiked.indexOf(currentUsername) > -1 &&
                 likeButtonLoading == false
-              "
-              (click)="unlikePoem(poem.poemId)"
-              class="likeButton"
-              style=" color: blue;"
-              > Beğen{{
-                "(" + poem.howManyLikes + ")"
-              }}
-            </a>       
-                      
-            <a
-              *ngIf="
+              " (click)="unlikePoem(poem.poemId)" class="likeButton" style=" color: blue;"> Beğen{{
+            "(" + poem.howManyLikes + ")"
+            }}
+          </a>
+
+          <a *ngIf="
                 poem.whoLiked.indexOf(currentUsername) == -1 &&
                 likeButtonLoading == false
-              "
-              (click)="likePoem(poem.poemId)"
-              class="likeButton"
-              style="margin-right: 80px; color: grey;cursor: pointer;"
-              > Beğen{{
-                "(" + poem.howManyLikes + ")"
-              }}
-            </a>  
-            <span> {{poem.categoryTitle}}</span>      
-            <span  style="position:absolute;right: 3%;"><button type="button" class="btn btn-primary" routerLink="{{'/poem/'+poem.poemId}}"><i class="fas fa-external-link-square-alt"></i></button></span>   
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="post-user-comment-box">
-      <div
-        *ngFor="let comment of (poem.comments)"
-        class="d-flex align-items-start"
-      >
-        <img
-          class="me-2 avatar-sm rounded-circle"
-          src="{{ comment.userAvatar }}"
-          alt="avatar"
-        />
-        <div class="w-100">
-          <h5 class="mt-0">
-            <a href="{{'/user/'+comment.username}}">      {{ comment.userFirstName + " " + comment.userLastName }}</a>
-       
-            <div
-              class="dropdown float-end"
-              *ngIf="comment.username === currentUsername"
-            >
-              <a
-                href="#"
-                class="dropdown-toggle arrow-none card-drop"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <i class="mdi mdi-dots-vertical"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-end">
-                <a (click)="onEditComment(comment.poemCommentId,comment.poemCommentText)" class="dropdown-item"
-                  >Düzenle</a
-                >
-
-                <a
-                  (click)="deleteComment(comment.poemCommentId)"
-                  class="dropdown-item"
-                  >Sil</a
-                >
-              </div>
-            </div>
-            <small *ngIf="comment.commentTimeInMinute<60" class="text-muted">{{ comment.commentTimeInMinute + " dk önce" }}</small >
-              <small *ngIf="comment.commentTimeInMinute>=60 && comment.commentTimeInMinute<1440" class="text-muted">{{" "+float2int(comment.commentTimeInMinute/60)  + " saat önce" }}</small >
-                <small *ngIf="comment.commentTimeInMinute>=1440" class="text-muted">{{comment.lastCommentUpdateTime |date:'medium' }}</small ></h5>
-        <p > {{ comment.poemCommentText }}</p> 
-        <div class="w-100">
-          <form  *ngIf="editCommentStatus && editCommentId==comment.poemCommentId"
-            [formGroup]="editCommentForm"
-            (ngSubmit)="updateComment()"
-          >
-            <input
-              *ngIf="!updateCommentLoading"
-              type="text"
-              id="comment"
-              formControlName="comment"
-              class="form-control border-0 form-control-sm"
-              placeholder="Yorum Yap"
-            />
-            <button  *ngIf="updateCommentLoading && editCommentForm.valid" class="btn btn-primary" type="button" disabled>
-              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              Yorum yapılıyor...
-            </button>
-          </form>
-        </div>    
-          
-        </div>
-      </div>
-
-      <div class="d-flex align-items-start mt-2">
-        <a class="pe-2" href="#">
-          <img
-            src="{{ currentUser.avatar.imageUrl }}"
-            class="rounded-circle"
-            alt="Generic placeholder image"
-            height="31"
-          />
-        </a>
-        <div class="w-100">
-          <form
-            [formGroup]="addCommentForm"
-            (ngSubmit)="addComment(poem.poemId)"
-          >
-            <input
-              *ngIf="!commentLoading"
-              type="text"
-              id="comment"
-              formControlName="comment"
-              class="form-control border-0 form-control-sm"
-              placeholder="Yorum Yap"
-            />
-            <button  *ngIf="commentLoading && addCommentForm.valid" class="btn btn-primary" type="button" disabled>
-              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              Yorum yapılıyor...
-            </button>
-          </form>
+              " (click)="likePoem(poem.poemId)" class="likeButton"
+            style="margin-right: 80px; color: grey;cursor: pointer;"> Beğen{{
+            "(" + poem.howManyLikes + ")"
+            }}
+          </a>
+          <span> {{poem.categoryTitle}}</span>
+          <span style="position:absolute;right: 3%;"><button type="button" class="btn btn-primary"
+              routerLink="{{'/poem/'+poem.poemId}}"><i class="fas fa-external-link-square-alt"></i></button></span>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="post-user-comment-box">
+    <div *ngFor="let comment of (poem.comments)" class="d-flex align-items-start">
+      <img class="me-2 avatar-sm rounded-circle" src="{{ comment.userAvatar }}" alt="avatar" />
+      <div class="w-100">
+        <h5 class="mt-0">
+          <a href="{{'/user/'+comment.username}}"> {{ comment.userFirstName + " " + comment.userLastName }}</a>
+
+          <div class="dropdown float-end" *ngIf="comment.username === currentUsername">
+            <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="mdi mdi-dots-vertical"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end">
+              <a (click)="onEditComment(comment.poemCommentId,comment.poemCommentText)"
+                class="dropdown-item">Düzenle</a>
+
+              <a (click)="deleteComment(comment.poemCommentId)" class="dropdown-item">Sil</a>
+            </div>
+          </div>
+          <small *ngIf="comment.commentTimeInMinute<60" class="text-muted">{{ comment.commentTimeInMinute + " dk önce"
+            }}</small>
+          <small *ngIf="comment.commentTimeInMinute>=60 && comment.commentTimeInMinute<1440" class="text-muted">{{"
+            "+float2int(comment.commentTimeInMinute/60) + " saat önce" }}</small>
+          <small *ngIf="comment.commentTimeInMinute>=1440" class="text-muted">{{comment.lastCommentUpdateTime
+            |date:'medium' }}</small>
+        </h5>
+        <p> {{ comment.poemCommentText }}</p>
+        <div class="w-100">
+          <form *ngIf="editCommentStatus && editCommentId==comment.poemCommentId" [formGroup]="editCommentForm"
+            (ngSubmit)="updateComment()">
+            <input *ngIf="!updateCommentLoading" type="text" id="comment" formControlName="comment"
+              class="form-control border-0 form-control-sm" placeholder="Yorum Yap" />
+            <button *ngIf="updateCommentLoading && editCommentForm.valid" class="btn btn-primary" type="button"
+              disabled>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Yorum yapılıyor...
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="d-flex align-items-start mt-2">
+      <a class="pe-2" href="#">
+        <img src="{{ currentUser.avatar.imageUrl }}" class="rounded-circle" alt="Generic placeholder image"
+          height="31" />
+      </a>
+      <div class="w-100">
+        <form [formGroup]="addCommentForm" (ngSubmit)="addComment(poem.poemId)">
+          <input *ngIf="!commentLoading" type="text" id="comment" formControlName="comment"
+            class="form-control border-0 form-control-sm" placeholder="Yorum Yap" />
+          <button *ngIf="commentLoading && addCommentForm.valid" class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Yorum yapılıyor...
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <!-- Story Box-->

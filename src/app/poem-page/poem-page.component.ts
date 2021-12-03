@@ -14,17 +14,16 @@ import { PoemService } from '../service/poem.service';
   templateUrl: './poem-page.component.html',
   styleUrls: ['./poem-page.component.css']
 })
-export class PoemPageComponent implements OnInit,OnDestroy {
-  poemId:number;
-  poem:PoemBox;
-  loading=false;
+export class PoemPageComponent implements OnInit, OnDestroy {
+  poemId: number;
+  poem: PoemBox;
+  loading = false;
   private subscriptions: Subscription[] = [];
   constructor(private router: ActivatedRoute,
     private poemService: PoemService,
     private notificationService: NotificationService,
-    private authenticationService: AuthenticationService,
 
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.poemId = parseInt(this.router.snapshot.paramMap.get('poemId'));
@@ -32,13 +31,13 @@ export class PoemPageComponent implements OnInit,OnDestroy {
   }
   getPoem() {
     this.loading = true;
-    this.subscriptions.push();
+    this.subscriptions.push(
     this.poemService.getPoemWithPoemBox(this.poemId).subscribe(
       (response: DataResult) => {
         if (response.success) {
-        this.sendNotification(NotificationType.SUCCESS, response.message);
-          this.poem = response.data;      
-    
+          this.sendNotification(NotificationType.SUCCESS, response.message);
+          this.poem = response.data;
+
           this.loading = false;
         } else {
           this.sendNotification(NotificationType.ERROR, response.message);
@@ -52,7 +51,7 @@ export class PoemPageComponent implements OnInit,OnDestroy {
         );
         this.loading = false;
       }
-    );
+    ));
   }
 
 

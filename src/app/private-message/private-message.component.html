@@ -1,4 +1,3 @@
-
 <div class="container">
 
     <!-- Page header start -->
@@ -23,32 +22,36 @@
                 <div class="card m-0">
                     <div class="chat-search-box" style="min-width:250px ;">
                         <div class="input-group">
-                            <input class="form-control" placeholder="Kullanıcı Ara" [(ngModel)]="searchUser" autocomplete="off">                                      
+                            <input class="form-control" placeholder="Kullanıcı Ara" [(ngModel)]="searchUser"
+                                autocomplete="off">
                         </div>
                     </div>
                     <div class="input-group mb-3" style="min-width:250px ;max-width: 30%;">
-                     
-                        <input type="text" class="form-control"  placeholder="Yeni kişiye mesaj" [(ngModel)]="newMessageUser"                                
-                        > 
-                        <span><button class="btn btn-primary" (click)="onSendToNewUser()"><i class="fas fa-paper-plane"></i></button></span>
-                
-                </div> 
+
+                        <input type="text" class="form-control" placeholder="Yeni kişiye mesaj"
+                            [(ngModel)]="newMessageUser">
+                        <span><button class="btn btn-primary" (click)="onSendToNewUser()"><i
+                                    class="fas fa-paper-plane"></i></button></span>
+
+                    </div>
                     <!-- Row start -->
                     <div class="row no-gutters">
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3">
-                            <div class="users-container">                              
-                                
-                             
+                            <div class="users-container">
+
+
                                 <ul class="users" *ngFor="let user of messageList | filter:searchUser">
                                     <li class="person" data-chat="person1" (click)="onSelectUser(user)">
-                                        <div class="user" >
-                                            <img src="{{user.avatar.imageUrl}}" alt="message icon" (click)="onSelectUser(user)">
-                                           
+                                        <div class="user">
+                                            <img src="{{user.avatar.imageUrl}}" alt="message icon"
+                                                (click)="onSelectUser(user)">
+
                                         </div>
                                         <p class="name-time">
-                                            <span class="name" (click)="onSelectUser(user)">{{user.firstName+" "+user.lastName}}</span> 
-                                         </p>
-                                    </li>                                    
+                                            <span class="name" (click)="onSelectUser(user)">{{user.firstName+"
+                                                "+user.lastName}}</span>
+                                        </p>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -56,59 +59,53 @@
                             <div class="selected-user">
                                 <span>Kime: <span class="name">
 
-                                    <a href="{{'/user/'+toUsername}}">{{toUsername}}</a>
-                                
-                                </span></span>
+                                        <a href="{{'/user/'+toUsername}}">{{toUsername}}</a>
+
+                                    </span></span>
                             </div>
                             <div class="search" *ngIf="toUsername!=null">
                                 <div class="input-group">
-                                    <input class="form-control" placeholder="Mesajlarda Ara" [(ngModel)]="searchMessage" autocomplete="off"
-                                    style="max-width: 30%;"
-                                    >  
-                                   <span><button class="btn btn-primary"><i class="fas fa-search"></i> </button></span>                                
+                                    <input class="form-control" placeholder="Mesajlarda Ara" [(ngModel)]="searchMessage"
+                                        autocomplete="off" style="max-width: 30%;">
+                                    <span><button class="btn btn-primary"><i class="fas fa-search"></i> </button></span>
                                 </div>
                             </div>
                             <div class="chat-container">
                                 <div *ngFor="let message of allMessages | filter:searchMessage">
-                                <ul class="chat-box chatContainerScroll">
-                                     <li class="chat-left" *ngIf="message.from.username!=currentUser.username">
-                                        <div class="chat-avatar">
-                                            <img src="{{message.from.avatar.imageUrl}}" alt="Avatar">
-                                            <div class="chat-name">{{toUsername}}</div>
-                                        </div>
-                                        <div class="chat-text" style="background-color: greenyellow;"> {{message.message}}
-                                        </div>
-                                        <div class="chat-hour">{{message.pmTime |date:'medium'}} <span class="fa fa-check-circle"></span></div>
-                                    </li>
-                                    <li class="chat-right" *ngIf="message.from.username==currentUser.username">
-                                        <div class="chat-hour">{{message.pmTime|date:'medium'}}<span class="fa fa-check-circle"></span></div>
-                                        <div class="chat-text">{{message.message}}</div>
-                                        <div class="chat-avatar">
-                                            <img src="{{message.from.avatar.imageUrl}}" alt="Avatar">
-                                            <div class="chat-name">{{message.from.username}}</div>
-                                        </div>
-                                    </li>
-                                   
-                                </ul>
-                            </div>
-                            <form *ngIf="toUsername!=null"
-                            [formGroup]="sendMessageForm"
-                            (ngSubmit)="sendMessage()"
-                        
-                          >
-                            <input
-                              *ngIf="!sendLoading"
-                              type="text"
-                              id="message"
-                              formControlName="message"
-                              class="form-control border-0 form-control-sm"
-                              placeholder="Mesaj Gönder"
-                            />
-                            <button  *ngIf="sendLoading && sendMessageForm.valid" class="btn btn-primary" type="button" disabled>
-                              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                              Mesaj Gönderiliyor
-                            </button>
-                          </form>
+                                    <ul class="chat-box chatContainerScroll">
+                                        <li class="chat-left" *ngIf="message.from.username!=currentUser.username">
+                                            <div class="chat-avatar">
+                                                <img src="{{message.from.avatar.imageUrl}}" alt="Avatar">
+                                                <div class="chat-name">{{toUsername}}</div>
+                                            </div>
+                                            <div class="chat-text" style="background-color: greenyellow;">
+                                                {{message.message}}
+                                            </div>
+                                            <div class="chat-hour">{{message.pmTime |date:'medium'}} <span
+                                                    class="fa fa-check-circle"></span></div>
+                                        </li>
+                                        <li class="chat-right" *ngIf="message.from.username==currentUser.username">
+                                            <div class="chat-hour">{{message.pmTime|date:'medium'}}<span
+                                                    class="fa fa-check-circle"></span></div>
+                                            <div class="chat-text">{{message.message}}</div>
+                                            <div class="chat-avatar">
+                                                <img src="{{message.from.avatar.imageUrl}}" alt="Avatar">
+                                                <div class="chat-name">{{message.from.username}}</div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <form *ngIf="toUsername!=null" [formGroup]="sendMessageForm" (ngSubmit)="sendMessage()">
+                                    <input *ngIf="!sendLoading" type="text" id="message" formControlName="message"
+                                        class="form-control border-0 form-control-sm" placeholder="Mesaj Gönder" />
+                                    <button *ngIf="sendLoading && sendMessageForm.valid" class="btn btn-primary"
+                                        type="button" disabled>
+                                        <span class="spinner-border spinner-border-sm" role="status"
+                                            aria-hidden="true"></span>
+                                        Mesaj Gönderiliyor
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>

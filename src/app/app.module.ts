@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationService } from './service/authentication.service';
@@ -41,35 +41,35 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 
 
 @NgModule({
-  declarations: [																											
+  declarations: [
     AppComponent,
-      LoginComponent,
-      UserComponent,
-      UserComponent,
-      RegisterComponent,
-      RegisterSuccessComponent,
-      FooterComponent,
-      NavbarComponent,        
-      UserComponent,
-      DashboardComponent,
-      PoemManagementComponent,
-      UserManagementComponent,
-      MyAccountComponent,
-      CategoryComponent,
-      RandomPoemComponent,
-      TestComponent,
-      PoemBoxComponent,
-      MostLikedComponent,
-      MostCommentComponent,
-      SearchPoemsComponent,
-      PoemPageComponent,     
-      PrivateMessageComponent,
-      ForgetPasswordComponent,
-      PasswordResetComponent,
-      LogManagementComponent,
-      AboutUsComponent,
-      ContactComponent
-   ],
+    LoginComponent,
+    UserComponent,
+    UserComponent,
+    RegisterComponent,
+    RegisterSuccessComponent,
+    FooterComponent,
+    NavbarComponent,
+    UserComponent,
+    DashboardComponent,
+    PoemManagementComponent,
+    UserManagementComponent,
+    MyAccountComponent,
+    CategoryComponent,
+    RandomPoemComponent,
+    TestComponent,
+    PoemBoxComponent,
+    MostLikedComponent,
+    MostCommentComponent,
+    SearchPoemsComponent,
+    PoemPageComponent,
+    PrivateMessageComponent,
+    ForgetPasswordComponent,
+    PasswordResetComponent,
+    LogManagementComponent,
+    AboutUsComponent,
+    ContactComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -77,15 +77,15 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     FormsModule,
     NotificationModule,
     ReactiveFormsModule,
-    AngularEditorModule, 
-    Ng2SearchPipeModule,   
-    NgxCaptchaModule 
+    AngularEditorModule,
+    Ng2SearchPipeModule,
+    NgxCaptchaModule
 
   ],
   providers: [
     AuthenticationService,
     UserService,
-    {provide: HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthenticationGuard,
     NotificationService,
 

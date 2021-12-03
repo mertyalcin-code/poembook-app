@@ -11,12 +11,12 @@ import { Result } from '../model/result/result';
 export class PoemLikeService {
   private host = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  public likePoem(formData:FormData): Observable<Result> {
-    return this.http.post<Result>(`${this.host}/like-poem/like`,formData);
+  public likePoem(formData: FormData): Observable<Result> {
+    return this.http.post<Result>(`${this.host}/like-poem/like`, formData);
   }
-  public unlikePoem(formData:FormData): Observable<Result> {
-    return this.http.post<Result>(`${this.host}/like-poem/unlike`,formData);
+  public unlikePoem(formData: FormData): Observable<Result> {
+    return this.http.post<Result>(`${this.host}/like-poem/unlike`, formData);
   }
 }

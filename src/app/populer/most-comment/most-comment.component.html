@@ -1,19 +1,19 @@
 <div class="container">
   <div class="row">
-    <button *ngIf="loading"class="btn btn-primary" type="button" disabled>
+    <button *ngIf="loading" class="btn btn-primary" type="button" disabled>
       <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
       Şiirler Getiriliyor...
     </button>
-    <div class="col-12 col-lg-2"></div>    
+    <div class="col-12 col-lg-2"></div>
 
     <div class="col-12 col-lg-8" *ngIf="!loading">
       <div class="card" id="poemBoxCard" *ngFor="let poem of showPopulerPoems(0,next)">
-        <div class="card-body" >
+        <div class="card-body">
           <app-poem-box [poem]="poem"></app-poem-box>
-        </div>     
-        
-      </div> 
-      <button class="btn btn-primary" *ngIf="next<poems.length" (click)="increaseNext()"> Devamını Gör</button>  
-     </div>
+        </div>
+
+      </div>
+      <button class="btn btn-primary" *ngIf="next<poems.length" (click)="increaseNext()"> Devamını Gör</button>
+    </div>
   </div>
 </div>

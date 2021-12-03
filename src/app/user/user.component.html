@@ -1,4 +1,3 @@
-
 <div class="container">
   <div class="row">
     <div class="col-xl-5">
@@ -6,64 +5,34 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex align-items-start">
-            <img
-              src="{{ profileUser.imageUrl }}"
-              class="rounded-circle avatar-lg"
-              alt="profile-image"
-            />
+            <img src="{{ profileUser.imageUrl }}" class="rounded-circle avatar-lg" alt="profile-image" />
             <div class="w-100 ms-3">
               <h4 class="my-0">
                 {{ profileUser.firstName + " " + profileUser.lastName }}
               </h4>
               <p class="text-muted">{{ "@" + profileUser.username }}</p>
 
-              <button
-                *ngIf="
+              <button *ngIf="
                   !isFollowing &&
                   profileUser.username != currentUsername &&
                   !followLoading
-                "
-                (click)="follow(profileUser.username)"
-                type="submit"
-                class="btn btn-secondary"
-              >
+                " (click)="follow(profileUser.username)" type="submit" class="btn btn-secondary">
                 <span *ngIf="!followLoading">Takip Et</span>
-                <div
-                  *ngIf="followLoading"
-                  class="spinner-grow text-primary"
-                  role="status"
-                ></div>
+                <div *ngIf="followLoading" class="spinner-grow text-primary" role="status"></div>
               </button>
-              <button
-                *ngIf="
+              <button *ngIf="
                   isFollowing &&
                   profileUser.username != currentUsername &&
                   !followLoading
-                "
-                (click)="unfollow(profileUser.username)"
-                type="submit"
-                class="btn btn-primary"
-              >
+                " (click)="unfollow(profileUser.username)" type="submit" class="btn btn-primary">
                 <span *ngIf="!followLoading">Takip Ediliyor</span>
-                <div
-                  *ngIf="followLoading"
-                  class="spinner-grow text-primary"
-                  role="status"
-                ></div>
+                <div *ngIf="followLoading" class="spinner-grow text-primary" role="status"></div>
               </button>
 
-              <button
-                (click)="routeMessagePage()"
-                type="button"
-                class="btn btn-success"
-                *ngIf="profileUser.username != currentUsername"
-              >
+              <button (click)="routeMessagePage()" type="button" class="btn btn-success"
+                *ngIf="profileUser.username != currentUsername">
                 <span>Mesaj Gönder</span>
-                <div
-                  *ngIf="followLoading"
-                  class="spinner-grow text-primary"
-                  role="status"
-                ></div>
+                <div *ngIf="followLoading" class="spinner-grow text-primary" role="status"></div>
               </button>
             </div>
           </div>
@@ -76,44 +45,25 @@
               <strong>Üye Olma Tarihi:</strong>
               <span class="ms-2">{{
                 profileUser.joinDate | date: "mediumDate"
-              }}</span>
+                }}</span>
             </p>
 
             <ul class="list-inline mt-3 mb-0">
-              <li
-                *ngIf="profileUser.facebookAccount"
-                class="list-inline-item"
-              >
-                <a
-                  href="{{ profileUser.facebookAccount }}"
-                  class="
+              <li *ngIf="profileUser.facebookAccount" class="list-inline-item">
+                <a href="{{ profileUser.facebookAccount }}" class="
                     social-list-item
                     text-center
                     border-primary
                     text-primary
-                  "
-                  ><i class="fab fa-facebook"></i
-                ></a>
+                  "><i class="fab fa-facebook"></i></a>
               </li>
-              <li
-                *ngIf="profileUser.instagramAccount"
-                class="list-inline-item"
-              >
-                <a
-                  href="{{ profileUser.instagramAccount }}"
-                  class="social-list-item text-center border-danger text-danger"
-                  ><i class="fab fa-instagram"></i
-                ></a>
+              <li *ngIf="profileUser.instagramAccount" class="list-inline-item">
+                <a href="{{ profileUser.instagramAccount }}"
+                  class="social-list-item text-center border-danger text-danger"><i class="fab fa-instagram"></i></a>
               </li>
-              <li
-                *ngIf="profileUser.twitterAccount"
-                class="list-inline-item"
-              >
-                <a
-                  href="{{ profileUser.twitterAccount }}"
-                  class="social-list-item text-center border-info text-info"
-                  ><i class="fab fa-twitter"></i
-                ></a>
+              <li *ngIf="profileUser.twitterAccount" class="list-inline-item">
+                <a href="{{ profileUser.twitterAccount }}" class="social-list-item text-center border-info text-info"><i
+                    class="fab fa-twitter"></i></a>
               </li>
             </ul>
           </div>
@@ -138,54 +88,40 @@
           </div>
         </div>
       </div>
-       <!-- follower -->
+      <!-- follower -->
       <div class="card">
         <div class="card-body">
           <h4 class="header-title mb-3">Takipçiler</h4>
           <form class="form search">
-            <input
-              class="form-control mr-sm-2"
-              type="search"
-              name="search"
-              placeholder="Kullanıcı Adı ile Ara"
-              aria-label="Search"
-              [(ngModel)]="followerSearch"
-            />
+            <input class="form-control mr-sm-2" type="search" name="search" placeholder="Kullanıcı Adı ile Ara"
+              aria-label="Search" [(ngModel)]="followerSearch" />
           </form>
 
           <div class="follower-following">
-   
-              <div
-                *ngFor="
+
+            <div *ngFor="
                   let follower of profileUser.followers | filter: followerSearch
-                "
-                class="d-flex align-items-center pb-1"
-                id="tooltips-container"
-              >
-                <img
-                  src="{{ follower.imageUrl }}"
-                  class="
+                " class="d-flex align-items-center pb-1" id="tooltips-container">
+              <img src="{{ follower.imageUrl }}" class="
                     rounded-circle
                     img-fluid
                     avatar-md
                     img-thumbnail
                     bg-transparent
-                  "
-                  alt=""
-                />
-                <div class="w-100 ms-3">
-                  <a href="{{ '/user/' + follower.username }}">
-                    <h5 class="mb-1">
-                      {{ follower.firstName }}{{ " " }}{{ follower.lastName }}
-                    </h5>
-                  </a>
-                  <p class="mb-0 font-13">
-                    {{ "@" + follower.username }}
-                  </p>
-                </div>
-        
+                  " alt="" />
+              <div class="w-100 ms-3">
+                <a href="{{ '/user/' + follower.username }}">
+                  <h5 class="mb-1">
+                    {{ follower.firstName }}{{ " " }}{{ follower.lastName }}
+                  </h5>
+                </a>
+                <p class="mb-0 font-13">
+                  {{ "@" + follower.username }}
+                </p>
+              </div>
+
             </div>
-           
+
           </div>
         </div>
       </div>
@@ -194,48 +130,34 @@
         <div class="card-body">
           <h4 class="header-title mb-3">Takip Ettikleri</h4>
           <form class="form search">
-            <input
-              class="form-control mr-sm-2"
-              type="search"
-              name="search"
-              placeholder="Kullanıcı Adı ile Ara"
-              aria-label="Search"
-              [(ngModel)]="followingSearch"
-            />
+            <input class="form-control mr-sm-2" type="search" name="search" placeholder="Kullanıcı Adı ile Ara"
+              aria-label="Search" [(ngModel)]="followingSearch" />
           </form>
           <div class="follower-following">
-            
-              <div
-                *ngFor="
+
+            <div *ngFor="
                   let following of profileUser.followings
                     | filter: followingSearch
-                "
-                class="d-flex align-items-center pb-1"
-                id="tooltips-container"
-              >
-                <img
-                  src="{{ following.imageUrl }}"
-                  class="
+                " class="d-flex align-items-center pb-1" id="tooltips-container">
+              <img src="{{ following.imageUrl }}" class="
                     rounded-circle
                     img-fluid
                     avatar-md
                     img-thumbnail
                     bg-transparent
-                  "
-                  alt=""
-                />
-                <div class="w-100 ms-3">
-                  <a href="{{ '/user/' + following.username }}">
-                    <h5 class="mb-1">
-                      {{ following.firstName }}{{ " " }}{{ following.lastName }}
-                    </h5></a
-                  >
+                  " alt="" />
+              <div class="w-100 ms-3">
+                <a href="{{ '/user/' + following.username }}">
+                  <h5 class="mb-1">
+                    {{ following.firstName }}{{ " " }}{{ following.lastName }}
+                  </h5>
+                </a>
 
-                  <p class="mb-0 font-13">
-                    {{ "@" + following.username }}
-                  </p>
-                </div>
-      
+                <p class="mb-0 font-13">
+                  {{ "@" + following.username }}
+                </p>
+              </div>
+
             </div>
           </div>
           <!-- end inbox-widget -->
@@ -245,32 +167,19 @@
     <!-- end left col-->
     <div class="col-xl-7">
       <div class="card" *ngFor="let poem of profilePoems">
-        <div class="card-body" >
+        <div class="card-body">
           <!-- Poems-->
           <app-poem-box [poem]="poem"></app-poem-box>
-        </div>    
+        </div>
       </div>
-      <button
-      class="btn btn-primary"
-      type="button"
-      *ngIf="!profilePoemsLoading && profilePoems.length<profileUser.poemCount"
-      (click)="loadMorePoem()"
-    >
-      Devamını Gör
-    </button>
-      <button
-      *ngIf="profilePoemsLoading"
-      class="btn btn-primary"
-      type="button"
-      disabled
-    >
-      <span
-        class="spinner-grow spinner-grow-sm"
-        role="status"
-        aria-hidden="true"
-      ></span>
-      Kullanıcıya ait şiirler yükleniyor
-    </button>
+      <button class="btn btn-primary" type="button"
+        *ngIf="!profilePoemsLoading && profilePoems.length<profileUser.poemCount" (click)="loadMorePoem()">
+        Devamını Gör
+      </button>
+      <button *ngIf="profilePoemsLoading" class="btn btn-primary" type="button" disabled>
+        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+        Kullanıcıya ait şiirler yükleniyor
+      </button>
     </div>
     <!-- end row-->
   </div>

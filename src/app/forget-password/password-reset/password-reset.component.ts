@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { NotificationType } from 'src/app/enum/notification-type.enum';
 import { Result } from 'src/app/model/result/result';
 import { AuthenticationService } from 'src/app/service/authentication.service';
@@ -11,10 +12,11 @@ import { NotificationService } from 'src/app/service/notification.service';
   templateUrl: './password-reset.component.html',
   styleUrls: ['./password-reset.component.css']
 })
-export class PasswordResetComponent implements OnInit {
+export class PasswordResetComponent implements OnInit,OnDestroy{
 code:string;
 message:String;
 loading=false;
+private subscriptions: Subscription[] = [];
   constructor(
     private authenticationService:AuthenticationService,
     private router: ActivatedRoute,
@@ -27,6 +29,7 @@ loading=false;
   }
  onResetPasswordWithCode(): void {
     this.loading==true;
+    this.subscriptions.push(
     this.authenticationService.resetPasswordWithCode(this.code).subscribe(
       (response: Result) => {
         if (response.success) {
@@ -47,7 +50,7 @@ loading=false;
         this.message="Sistemse hata"
         this.loading==false;
       }
-    );
+    ));
   }
   private sendNotification(
     notificationType: NotificationType,
@@ -61,5 +64,8 @@ loading=false;
         'bir şeyler ters gitti.'
       );
     }
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

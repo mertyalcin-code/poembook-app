@@ -18,19 +18,19 @@
           <i class="fa fa-users"></i>
           Kullanıcılar
         </a>
-        <a  class="nav-item nav-link ml-3" (click)="changeTitle('Ayarlar')" data-toggle="tab" href="#reset-password">
+        <a class="nav-item nav-link ml-3" (click)="changeTitle('Ayarlar')" data-toggle="tab" href="#reset-password">
           <i class="fa fa-cogs"></i>
           Şifre Sıfırla
         </a>
-        <a  class="nav-item nav-link ml-3" (click)="changeTitle('Super Admin Yap')" data-toggle="tab" href="#superAdmin">
+        <a class="nav-item nav-link ml-3" (click)="changeTitle('Super Admin Yap')" data-toggle="tab" href="#superAdmin">
           <i class="fas fa-users-cog"></i>
           Super Admin Yap
         </a>
-        <a  class="nav-item nav-link ml-3" (click)="changeTitle('Formlar ')" data-toggle="tab" href="#contactForms">
+        <a class="nav-item nav-link ml-3" (click)="changeTitle('Formlar ')" data-toggle="tab" href="#contactForms">
           <i class="far fa-envelope"></i>
           İletişim formları
         </a>
-    
+
       </div>
     </div>
   </nav>
@@ -43,9 +43,10 @@
         <div class="btn-group mr-2">
           <form class="form-inline my-2 my-lg-0 justify-content-center">
             <input name="searchTerm" #searchInput="ngModel" class="form-control mr-sm-2" ngModel
-            (ngModelChange)="searchUsers(searchInput.value)" type="search" placeholder="Search users...">
-         </form>
-          <button [hidden]="!isAdmin" type="button" class="btn btn-info" data-toggle="modal" data-target="#addUserModal">
+              (ngModelChange)="searchUsers(searchInput.value)" type="search" placeholder="Search users...">
+          </form>
+          <button [hidden]="!isAdmin" type="button" class="btn btn-info" data-toggle="modal"
+            data-target="#addUserModal">
             <i class="fa fa-plus"></i>Yeni Kullanıcı
           </button>
         </div>
@@ -73,7 +74,8 @@
         <tbody *ngFor="let appUser of users">
           <tr class="text-center">
             <td (click)="onSelectAvatar(appUser)">
-              <img height="40" width="40" src="{{appUser?.avatar.imageUrl}}" class="rounded-circle img-fluid img-thumbnail" alt=""/>
+              <img height="40" width="40" src="{{appUser?.avatar.imageUrl}}"
+                class="rounded-circle img-fluid img-thumbnail" alt="" />
             </td>
             <td (click)="onSelectUser(appUser)">{{appUser?.userId}}</td>
             <td (click)="onSelectUser(appUser)">{{appUser?.firstName}}</td>
@@ -86,13 +88,14 @@
               <span [hidden]="!appUser?.active" class="badge bg-success">Aktif</span>
               <span [hidden]="appUser?.active" class="badge bg-danger">Aktif Değil</span>
             </td>
-            
+
             <td class="">
 
               <div class="btn-group">
-                
+
                 <button class="btn btn-outline-info" (click)="onEditUser(appUser)"><i class="fas fa-edit"></i></button>
-                <button [hidden]="!isAdmin" class="btn btn-outline-danger" (click)="onDeleteUser(appUser?.username)"><i class="fas fa-trash"></i></button>
+                <button [hidden]="!isAdmin" class="btn btn-outline-danger" (click)="onDeleteUser(appUser?.username)"><i
+                    class="fas fa-trash"></i></button>
               </div>
             </td>
           </tr>
@@ -101,7 +104,7 @@
     </div>
 
     <!-- reset password  -->
-    <div  class="tab-pane fade" id="reset-password">
+    <div class="tab-pane fade" id="reset-password">
       <form #resetPasswordForm="ngForm" (ngSubmit)="onResetPassword(resetPasswordForm)">
         <fieldset>
           <legend>Kullanıcı Şifre Sıfırlama</legend>
@@ -128,7 +131,7 @@
             <h5 class="modal-title text-center" id="exampleModalLongTitle">{{selectedUser?.firstName}}
               {{selectedUser?.lastName}}
             </h5>
-              
+
           </div>
           <div class="modal-body">
             <div>
@@ -138,7 +141,8 @@
                     <div class="col-12 col-sm-auto">
                       <div class="mx-auto" style="width: 120px;">
                         <div class="d-flex justify-content-center align-items-center rounded">
-                          <img class="rounded" height="120" width="120" src="{{selectedUser?.avatar.imageUrl}}" alt="{{selectedUser?.firstName}}">
+                          <img class="rounded" height="120" width="120" src="{{selectedUser?.avatar.imageUrl}}"
+                            alt="{{selectedUser?.firstName}}">
                         </div>
                       </div>
                     </div>
@@ -151,24 +155,29 @@
                           <span [hidden]="!selectedUser?.active" class="badge bg-success">Aktif</span>
                           <span [hidden]="selectedUser?.active" class="badge bg-danger">Kilitli değil</span>
                         </div>
-                        <div *ngIf="selectedUser?.lastLoginDateDisplay" class="text-muted"><small>Son Giriş: {{selectedUser?.lastLoginDateDisplay | date: 'medium'}}</small>
+                        <div *ngIf="selectedUser?.lastLoginDateDisplay" class="text-muted"><small>Son Giriş:
+                            {{selectedUser?.lastLoginDateDisplay | date: 'medium'}}</small>
                         </div>
                       </div>
                       <div class="text-center text-sm-right">
-                        <div class="text-muted"><small>Katılma Tarihi {{selectedUser?.joinDate | date: 'mediumDate'}}</small></div>
+                        <div class="text-muted"><small>Katılma Tarihi {{selectedUser?.joinDate | date:
+                            'mediumDate'}}</small></div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item"></li>
-                  <li class="list-group-item"><i class="fas fa-id-badge fa-pull-right fa-2x"></i>{{selectedUser?.userId}}
+                  <li class="list-group-item"><i
+                      class="fas fa-id-badge fa-pull-right fa-2x"></i>{{selectedUser?.userId}}
                   </li>
                   <li class="list-group-item"><i class="fas fa-envelope fa-pull-right fa-2x"></i>{{selectedUser?.email}}
                   </li>
-                  <li class="list-group-item"><i class="fas fa-shield-alt fa-pull-right fa-2x"></i>{{selectedUser?.role.substring(5)}}
+                  <li class="list-group-item"><i
+                      class="fas fa-shield-alt fa-pull-right fa-2x"></i>{{selectedUser?.role.substring(5)}}
                   <li *ngIf="selectedUser?.lastLoginDateDisplay" class="list-group-item"><i
-                      class="fas fa-sign-in-alt fa-pull-right fa-2x"></i>{{selectedUser?.lastLoginDateDisplay | date: 'medium'}}
+                      class="fas fa-sign-in-alt fa-pull-right fa-2x"></i>{{selectedUser?.lastLoginDateDisplay | date:
+                    'medium'}}
                   </li>
                   <li class="list-group-item">
                     <span [hidden]="selectedUser?.notLocked">
@@ -226,7 +235,7 @@
                 <div *ngIf="isAdmin" class="form-group">
                   <label for="authority">Rol</label>
                   <select name="role" required ngModel="ROLE_POET" class="form-control">
-                    <option value="ROLE_POET">POET</option>                  
+                    <option value="ROLE_POET">POET</option>
                     <option value="ROLE_EDITOR">EDITOR</option>
                     <option value="ROLE_ADMIN">ADMIN</option>
                     <option value="ROLE_SUPER_ADMIN">SUPER ADMIN</option>
@@ -235,11 +244,11 @@
                 <div *ngIf="!isAdmin" class="form-group">
                   <label for="authority">Rol</label>
                   <input type="text" name="role" required ngModel="POET" readonly class="form-control">
-                </div>        
+                </div>
                 <fieldset class="form-group">
                   <div class="form-check">
                     <label class="form-check-label">
-                      <input type="checkbox" name="active" ngModel class="form-check-input" >
+                      <input type="checkbox" name="active" ngModel class="form-check-input">
                       Aktif
                     </label>
                   </div>
@@ -256,7 +265,8 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal" id="new-user-close">Kapat</button>
-            <button *ngIf="!refreshing" type="button" (click)="saveNewUser()" [disabled]="newUserForm.invalid" class="btn btn-primary">Değişiklikleri Kaydet</button>
+            <button *ngIf="!refreshing" type="button" (click)="saveNewUser()" [disabled]="newUserForm.invalid"
+              class="btn btn-primary">Değişiklikleri Kaydet</button>
             <button *ngIf="refreshing" class="btn btn-primary" type="button" disabled>
               <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
               Kaydediliyor...
@@ -266,183 +276,189 @@
       </div>
     </div>
 
-     <!-- modal edit user -->
-  <div class="modal draggable fade bd-example-modal-lg" id="editUserModal" tabindex="-1"
-  role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-center">Edit {{editUser?.firstName}}
-          {{editUser?.lastName}} <small [hidden]="isAdminOrSuperAdmin">
-            (read only)
-          </small></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+    <!-- modal edit user -->
+    <div class="modal draggable fade bd-example-modal-lg" id="editUserModal" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center">Edit {{editUser?.firstName}}
+              {{editUser?.lastName}} <small [hidden]="isAdminOrSuperAdmin">
+                (read only)
+              </small></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="">
+              <form #editUserForm="ngForm">
+                <div class="form-group">
+                  <label for="firstName">İsim</label>
+                  <input type="text" name="firstName" [disabled]="!isAdminOrSuperAdmin" required
+                    [(ngModel)]="editUser.firstName" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="lastName">Soyad</label>
+                  <input type="text" name="lastName" [disabled]="!isAdminOrSuperAdmin" required
+                    [(ngModel)]="editUser.lastName" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="username">Kullanıcı Adı</label>
+                  <input type="text" name="username" [disabled]="!isAdminOrSuperAdmin" required
+                    [(ngModel)]="editUser.username" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" name="email" [disabled]="!isAdminOrSuperAdmin" required
+                    [(ngModel)]="editUser.email" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="authority">Rol <small [hidden]="isAdmin">(read only)</small></label>
+                  <select name="role" [disabled]="!isAdmin" required [(ngModel)]="editUser.role" class="form-control">
+                    <option value="ROLE_POET">POET</option>
+                    <option value="ROLE_EDITOR">EDITOR</option>
+                    <option value="ROLE_ADMIN">ADMIN</option>
+                    <option value="ROLE_SUPER_ADMIN">SUPER ADMIN</option>
+                  </select>
+                </div>
+                <fieldset class="form-group">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input name="active" type="checkbox" [disabled]="!isAdminOrSuperAdmin"
+                        [(ngModel)]="editUser.active" class="form-check-input">
+                      Aktif <small [hidden]="isAdminOrSuperAdmin">(read only)</small>
+                    </label>
+                  </div>
+                  <div class="form-check disabled">
+                    <label class="form-check-label">
+                      <input name="locked" type="checkbox" [disabled]="!isAdminOrSuperAdmin"
+                        [(ngModel)]="editUser.notLocked" class="form-check-input">
+                      Kilitli Değil <small [hidden]="isAdminOrSuperAdmin">(read only)</small>
+                    </label>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+              id="closeEditUserModalButton">Kapat</button>
+            <button *ngIf="!refreshing" type="button" (click)="onUpdateUser()"
+              [disabled]="editUserForm.invalid || !isAdminOrSuperAdmin" class="btn btn-primary">Değişiklikleri
+              Kaydet</button>
+            <button *ngIf="refreshing" class="btn btn-primary" type="button" disabled>
+              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              Kaydediliyor...
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
-        <div class="">
-          <form #editUserForm="ngForm">
-            <div class="form-group">
-              <label for="firstName">İsim</label>
-              <input type="text" name="firstName" [disabled]="!isAdminOrSuperAdmin" required
-                [(ngModel)]="editUser.firstName" class="form-control">
+    </div>
+    <!-- edit Avatar -->
+    <div class="modal draggable fade bd-example-modal-lg" id="editAvatar" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center">Avatar Güncelle {{selectedUser?.firstName}}
+              {{selectedUser?.lastName}} <small [hidden]="isAdminOrSuperAdmin">
+                (read only)
+              </small></h5>
+            <div class="mt-2">
+              <button (click)="updateUserAvatar()" class="btn btn-primary" type="button">
+                <i class="fa fa-fw fa-camera"></i>
+                <span>Avatarı değiştir</span>
+              </button>
             </div>
-            <div class="form-group">
-              <label for="lastName">Soyad</label>
-              <input type="text" name="lastName" [disabled]="!isAdminOrSuperAdmin" required
-                [(ngModel)]="editUser.lastName" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="username">Kullanıcı Adı</label>
-              <input type="text" name="username" [disabled]="!isAdminOrSuperAdmin" required
-                [(ngModel)]="editUser.username" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" name="email" [disabled]="!isAdminOrSuperAdmin" required [(ngModel)]="editUser.email"
-                class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="authority">Rol <small [hidden]="isAdmin">(read only)</small></label>
-                <select name="role" [disabled]="!isAdmin" required [(ngModel)]="editUser.role" class="form-control">
-                  <option value="ROLE_POET">POET</option>                
-                  <option value="ROLE_EDITOR">EDITOR</option>
-                  <option value="ROLE_ADMIN">ADMIN</option>
-                  <option value="ROLE_SUPER_ADMIN">SUPER ADMIN</option>
-                </select>
-            </div>           
-            <fieldset class="form-group">
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input name="active" type="checkbox" [disabled]="!isAdminOrSuperAdmin" [(ngModel)]="editUser.active"
-                    class="form-check-input">
-                  Aktif <small [hidden]="isAdminOrSuperAdmin">(read only)</small>
-                </label>
-              </div>
-              <div class="form-check disabled">
-                <label class="form-check-label">
-                  <input name="locked" type="checkbox" [disabled]="!isAdminOrSuperAdmin" [(ngModel)]="editUser.notLocked"
-                    class="form-check-input">
-                  Kilitli Değil <small [hidden]="isAdminOrSuperAdmin">(read only)</small>
-                </label>
-              </div>
-            </fieldset>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"
+            id="closeEditUserModalButton">Kapat</button>
+        </div>
+      </div>
+    </div>
+    <!--make super admin-->
+    <div [hidden]="!isSuperAdmin" class="tab-pane fade" id="superAdmin">
+      <form #makeSuperAdminForm="ngForm" (ngSubmit)="onMakeSuperAdmin(makeSuperAdminForm)">
+        <fieldset>
+          <legend>Kullanıcı Süper Admin Yapma</legend>
+          <div class="form-group">
+            <label for="make-admin-username">Kullanıcı Adı</label>
+            <input type="text" name="make-admin-username" required ngModel class="form-control"
+              placeholder="Kullanıcı Adı giriniz">
+          </div>
+          <button type="submit" [disabled]="makeSuperAdminForm.invalid" class="btn btn-primary">
+            <i *ngIf="refreshing" class="fas fa-spinner fa-spin"></i>&nbsp;&nbsp;
+            <span *ngIf="refreshing">Yükleniyor...</span>
+            <span *ngIf="!refreshing">Süper Admin yap</span>
+          </button>
+        </fieldset>
+      </form>
+    </div>
+    <!--contact forms-->
+    <div class="tab-pane fade" id="contactForms">
+
+      <div class="mb-3 float-right">
+        <div class="btn-group mr-2">
+          <form class="form-inline my-2 my-lg-0 justify-content-center">
+            <input name="searchTerm" #searchInput="ngModel" class="form-control mr-sm-2" [ngModel]="searchContact"
+              type="search" placeholder="İletişim formlarında ara">
           </form>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeEditUserModalButton">Kapat</button>
-        <button *ngIf="!refreshing" type="button" (click)="onUpdateUser()" [disabled]="editUserForm.invalid || !isAdminOrSuperAdmin" class="btn btn-primary">Değişiklikleri Kaydet</button>
-        <button *ngIf="refreshing" class="btn btn-primary" type="button" disabled>
-          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-          Kaydediliyor...
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- edit Avatar -->
-  <div class="modal draggable fade bd-example-modal-lg" id="editAvatar" tabindex="-1"
-  role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-center">Avatar Güncelle {{selectedUser?.firstName}}
-          {{selectedUser?.lastName}} <small [hidden]="isAdminOrSuperAdmin">
-            (read only)
-          </small></h5>
-          <div class="mt-2">
-            <button (click)="updateUserAvatar()" class="btn btn-primary" type="button">
-              <i class="fa fa-fw fa-camera"></i>
-              <span>Avatarı değiştir</span>
-            </button>
-          </div>          
+        <div class="btn-group">
+          <button type="button" (click)="getAllForms()" class="btn btn-info">
+            <i *ngIf="refreshing" class="fas fa-sync fa-spin"></i><i *ngIf="!refreshing" class="fas fa-sync"></i>
+          </button>
+          <button type="button" (click)="onDeleteAllContactForm()" class="btn btn-info">
+            <i *ngIf="refreshing" class="fas fa-sync fa-spin"></i><i *ngIf="!refreshing" class="far fa-trash-alt"></i>
+          </button>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeEditUserModalButton">Kapat</button>
-      </div>
-    </div>
-  </div>
-  <!--make super admin-->
-<div [hidden]="!isSuperAdmin" class="tab-pane fade" id="superAdmin">
-  <form #makeSuperAdminForm="ngForm" (ngSubmit)="onMakeSuperAdmin(makeSuperAdminForm)">
-    <fieldset>
-      <legend>Kullanıcı Süper Admin Yapma</legend>
-      <div class="form-group">
-        <label for="make-admin-username">Kullanıcı Adı</label>
-        <input type="text" name="make-admin-username" required ngModel class="form-control"
-          placeholder="Kullanıcı Adı giriniz">
-      </div>
-      <button type="submit" [disabled]="makeSuperAdminForm.invalid" class="btn btn-primary">
-        <i *ngIf="refreshing" class="fas fa-spinner fa-spin"></i>&nbsp;&nbsp;
-        <span *ngIf="refreshing">Yükleniyor...</span>
-        <span *ngIf="!refreshing">Süper Admin yap</span>
-      </button>
-    </fieldset>
-  </form>
-</div>
-<!--contact forms-->
-<div  class="tab-pane fade" id="contactForms">
+      <table class="table table-hover">
+        <thead class="table-borderless">
+          <tr class="text-center">
 
-    <div class="mb-3 float-right">
-      <div class="btn-group mr-2">
-        <form class="form-inline my-2 my-lg-0 justify-content-center">
-          <input name="searchTerm" #searchInput="ngModel" class="form-control mr-sm-2" [ngModel]="searchContact" type="search" placeholder="İletişim formlarında ara">
-       </form>      
-      </div>
-      <div class="btn-group" >
-        <button type="button" (click)="getAllForms()" class="btn btn-info">
-          <i *ngIf="refreshing" class="fas fa-sync fa-spin"></i><i *ngIf="!refreshing" class="fas fa-sync"></i>
-        </button>
-        <button type="button" (click)="onDeleteAllContactForm()" class="btn btn-info">
-          <i *ngIf="refreshing" class="fas fa-sync fa-spin"></i><i *ngIf="!refreshing" class="far fa-trash-alt"></i>
-        </button>
-      </div>
+            <th>form ID</th>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Email</th>
+            <th>Form türü</th>
+            <th>Oluşturma Zamanı</th>
+            <th>İşlem</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let contactForm of contactForms">
+          <tr class="text-center">
+            <td (click)="onSelectContactForm(contactForm)">{{contactForm?.formId}}</td>
+            <td (click)="onSelectContactForm(contactForm)">{{contactForm?.firstName}}</td>
+            <td (click)="onSelectContactForm(contactForm)">{{contactForm?.lastName}}</td>
+            <td (click)="onSelectContactForm(contactForm)">{{contactForm?.email}}</td>
+            <td (click)="onSelectContactForm(contactForm)">{{contactForm?.formType}}</td>
+            <td (click)="onSelectContactForm(contactForm)">{{contactForm?.formTime | date: 'medium'}}</td>
+            <td>
+              <div class="btn-group">
+
+                <button class="btn btn-outline-danger" (click)="onDeleteContactForm(contactForm?.formId)"><i
+                    class="fas fa-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <table class="table table-hover">
-      <thead class="table-borderless">
-        <tr class="text-center">
-         
-          <th>form ID</th>
-          <th>Ad</th>
-          <th>Soyad</th>        
-          <th>Email</th>
-          <th>Form türü</th>
-          <th>Oluşturma Zamanı</th>          
-          <th>İşlem</th>
-        </tr>
-      </thead>
-      <tbody *ngFor="let contactForm of contactForms">
-        <tr class="text-center">         
-          <td (click)="onSelectContactForm(contactForm)">{{contactForm?.formId}}</td>
-          <td (click)="onSelectContactForm(contactForm)">{{contactForm?.firstName}}</td>
-          <td (click)="onSelectContactForm(contactForm)">{{contactForm?.lastName}}</td>      
-          <td (click)="onSelectContactForm(contactForm)">{{contactForm?.email}}</td>
-          <td (click)="onSelectContactForm(contactForm)">{{contactForm?.formType}}</td>
-          <td (click)="onSelectContactForm(contactForm)">{{contactForm?.formTime | date: 'medium'}}</td>
-          <td>
-            <div class="btn-group">            
-     
-              <button class="btn btn-outline-danger" (click)="onDeleteContactForm(contactForm?.formId)"><i class="fas fa-trash"></i></button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-<!-- modal contact form-->
-<div class="modal fade bd-example-modal-lg" id="wievContactFormModal" tabindex="-1" role="dialog" aria-labelledby=""
+    <!-- modal contact form-->
+    <div class="modal fade bd-example-modal-lg" id="wievContactFormModal" tabindex="-1" role="dialog" aria-labelledby=""
       aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          
+
           <div class="modal-header">
             <h5 class="modal-title text-center" id="exampleModalLongTitle">
               {{selectedContactForm?.firstName}}
               {{selectedContactForm?.lastName}}
-            </h5>              
+            </h5>
             <button type="button" id="contactFormModalDismiss" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -455,59 +471,64 @@
                     <div class="col-12 col-sm-auto">
                       {{selectedContactForm?.text}}
                     </div>
-                
+
                   </div>
                 </div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item"></li>
-                  <li class="list-group-item"><i class="fas fa-id-badge fa-pull-right fa-2x"></i>{{selectedContactForm?.firstName+" "+selectedContactForm?.lastName}}
+                  <li class="list-group-item"><i
+                      class="fas fa-id-badge fa-pull-right fa-2x"></i>{{selectedContactForm?.firstName+"
+                    "+selectedContactForm?.lastName}}
                   </li>
-                  <li class="list-group-item"><i class="fas fa-envelope fa-pull-right fa-2x"></i>{{selectedContactForm?.email}}
+                  <li class="list-group-item"><i
+                      class="fas fa-envelope fa-pull-right fa-2x"></i>{{selectedContactForm?.email}}
                   </li>
-                  <li class="list-group-item"><i class="fas fa-shield-alt fa-pull-right fa-2x"></i>{{selectedContactForm?.formType}}
-                  <li class="list-group-item"><i class="fas fa-sign-in-alt fa-pull-right fa-2x"></i>{{selectedContactForm?.formTime | date: 'medium'}}
-                  </li>                  
+                  <li class="list-group-item"><i
+                      class="fas fa-shield-alt fa-pull-right fa-2x"></i>{{selectedContactForm?.formType}}
+                  <li class="list-group-item"><i
+                      class="fas fa-sign-in-alt fa-pull-right fa-2x"></i>{{selectedContactForm?.formTime | date:
+                    'medium'}}
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button"  class="btn btn-secondary" data-dismiss="modal">Kapat</button>
-            <button type="button"  class="btn btn-warning" (click)="onDeleteContactForm(selectedContactForm.formId)">Sil</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+            <button type="button" class="btn btn-warning"
+              (click)="onDeleteContactForm(selectedContactForm.formId)">Sil</button>
           </div>
         </div>
       </div>
     </div>
 
 
-</div>
-
-
-
-
-<button [hidden]="true" type="button" id="openUserInfo" data-toggle="modal" data-target="#viewUserModal">
-</button>
-<button [hidden]="true" type="button" id="openAvatarChange" data-toggle="modal" data-target="#editAvatar">
-</button>
-<button [hidden]="true" type="button" id="openUserEdit" data-toggle="modal" data-target="#editUserModal">
-</button>
-<button [hidden]="true" type="button" id="openContactForm" data-toggle="modal" data-target="#wievContactFormModal">
-</button>
-
-    
-
   </div>
-  <!-- profile image change form -->
-  <form enctype="multipart/form-data" style="display:none;">
-    <input type="file"
-      (change)="onProfileImageChange($event.target.files[0].name, $event.target.files[0]); onUpdateProfileImage()"
-     name="profile-image-input" id="profile-image-input" placeholder="file" accept="image/*" />
-</form>
-   <!-- edit avatar change form -->
-  <form enctype="multipart/form-data" style="display:none;">
-    <input type="file"
-      (change)="onProfileImageChange($event.target.files[0].name, $event.target.files[0]); onEditAvatar()"
-     name="profile-image-input" id="edit-avatar-input" placeholder="file" accept="image/*" />
-</form>
 
 
+
+
+  <button [hidden]="true" type="button" id="openUserInfo" data-toggle="modal" data-target="#viewUserModal">
+  </button>
+  <button [hidden]="true" type="button" id="openAvatarChange" data-toggle="modal" data-target="#editAvatar">
+  </button>
+  <button [hidden]="true" type="button" id="openUserEdit" data-toggle="modal" data-target="#editUserModal">
+  </button>
+  <button [hidden]="true" type="button" id="openContactForm" data-toggle="modal" data-target="#wievContactFormModal">
+  </button>
+
+
+
+</div>
+<!-- profile image change form -->
+<form enctype="multipart/form-data" style="display:none;">
+  <input type="file"
+    (change)="onProfileImageChange($event.target.files[0].name, $event.target.files[0]); onUpdateProfileImage()"
+    name="profile-image-input" id="profile-image-input" placeholder="file" accept="image/*" />
+</form>
+<!-- edit avatar change form -->
+<form enctype="multipart/form-data" style="display:none;">
+  <input type="file"
+    (change)="onProfileImageChange($event.target.files[0].name, $event.target.files[0]); onEditAvatar()"
+    name="profile-image-input" id="edit-avatar-input" placeholder="file" accept="image/*" />
+</form>

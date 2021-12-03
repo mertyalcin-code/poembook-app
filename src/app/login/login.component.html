@@ -1,11 +1,12 @@
 <div class="text-center">
   <main class="form-signin">
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-      <img class="mb-1" src="https://res.cloudinary.com/mertyalcin/image/upload/v1636739442/poembookbig_wcg7xb.png" alt="" width="200" height="113">
-      <h1 class="h3 mb-2 fw-normal">Lütfen Giriş Yapınız</h1>  
+      <img class="mb-1" src="https://res.cloudinary.com/mertyalcin/image/upload/v1636739442/poembookbig_wcg7xb.png"
+        alt="" width="200" height="113">
+      <h1 class="h3 mb-2 fw-normal">Lütfen Giriş Yapınız</h1>
       <div class="form-floating">
-        <input type="username" class="form-control" name="username"  formControlName="username"  placeholder="Kullanıcı Adı"         
-         >
+        <input type="username" class="form-control" name="username" formControlName="username"
+          placeholder="Kullanıcı Adı">
         <label for="floatingInput">Kullanıcı Adı</label>
       </div>
       <div class="alert alert-danger" *ngIf="username.invalid && username.touched">
@@ -14,8 +15,7 @@
         <p *ngIf="username.errors.maxlength">En fazla 20 karakter girebilirsiniz.</p>
       </div>
       <div class="form-floating">
-        <input type="password" class="form-control" name="password" formControlName="password" placeholder="Şifre"       
-        >
+        <input type="password" class="form-control" name="password" formControlName="password" placeholder="Şifre">
         <label for="floatingPassword">Şifre</label>
       </div>
       <div class="alert alert-danger" *ngIf="password.invalid && password.touched">
@@ -23,22 +23,21 @@
         <p *ngIf="password.errors.minlength">En az 6 karakter girmelisiniz.</p>
         <p *ngIf="username.errors.maxlength">En fazla 20 karakter girebilirsiniz.</p>
       </div>
-      <ngx-recaptcha2 #captchaElem
-    [siteKey]="siteKey"
-    formControlName="recaptcha">
+      <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" formControlName="recaptcha">
       </ngx-recaptcha2>
-      
+
       <button class="w-100 btn btn-lg btn-primary" name="button" type="submit" [disabled]="loginForm.invalid">
         <span *ngIf="!showLoading">Giriş Yap</span>
         <div *ngIf="showLoading">
-          <div  class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></div>
+          <div class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></div>
           Giriş Yapılıyor
-        </div>  </button>
-      
+        </div>
+      </button>
+
     </form>
     <div class="mt-4">
       <div class="d-flex justify-content-center links">
-        Hala hesabın yok mu  ><a routerLink="/register" class="ml-2" style="color: #2C3E50;">Kayıt ol</a>
+        Hala hesabın yok mu ><a routerLink="/register" class="ml-2" style="color: #2C3E50;">Kayıt ol</a>
       </div>
       <br>
       <div class="d-flex justify-content-center links">

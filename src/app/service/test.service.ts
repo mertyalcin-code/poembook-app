@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 export class TestService {
   private host = environment.apiUrl;
   constructor(private http: HttpClient) { }
-  
+
   public test(): Observable<Date> {
     return this.http.get<Date>(`${this.host}/test/test`);
   }

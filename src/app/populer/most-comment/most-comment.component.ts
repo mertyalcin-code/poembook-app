@@ -39,7 +39,7 @@ export class MostCommentComponent implements OnInit,OnDestroy {
 
   list20MostCommentsPoems(): void {
     this.loading=true;
-    this.subscriptions.push();
+    this.subscriptions.push(
     this.poemService.list20MostCommentsPoems().subscribe(
       (response: DataResult) => {
         if (response.success) {
@@ -58,7 +58,7 @@ export class MostCommentComponent implements OnInit,OnDestroy {
         );
         this.loading=false;
       }
-    );
+    ));
   }
   private sendNotification(
     notificationType: NotificationType,

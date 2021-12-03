@@ -15,7 +15,7 @@ export class LogService {
   public allLogs(): Observable<DataResult> {
     return this.http.get<DataResult>(`${this.host}/log/logs`);
   }
-  public getLogWithLogType(type:string): Observable<DataResult> {
+  public getLogWithLogType(type: string): Observable<DataResult> {
     return this.http.get<DataResult>(`${this.host}/log/logs/${type}`);
   }
   public getLogTypes(): Observable<DataResult> {
@@ -24,7 +24,7 @@ export class LogService {
   public deleteAllLogs(): Observable<Result> {
     return this.http.get<Result>(`${this.host}/log/delete-all`);
   }
-  public deleteByType(type:string): Observable<Result> {
+  public deleteByType(type: string): Observable<Result> {
     return this.http.get<Result>(`${this.host}/log/delete-type/${type}`);
   }
   public deleteAllLogsExceptThisWeek(): Observable<Result> {

@@ -8,7 +8,6 @@ export const environment = {
  apiUrl:'http://localhost:8080',
  siteKey:'6Ldtb3YdAAAAAO4eS9Ri139yp7D35B-1C342bWbQ'
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

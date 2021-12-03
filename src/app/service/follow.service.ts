@@ -11,35 +11,34 @@ import { Result } from '../model/result/result';
 export class FollowService {
   private host = environment.apiUrl;
   constructor(private http: HttpClient) { }
-  
-  public isFollowing(formData:FormData): Observable<Result> {
-    return this.http.post<Result>(`${this.host}/follower/isfollowing`,formData);
+
+  public isFollowing(formData: FormData): Observable<Result> {
+    return this.http.post<Result>(`${this.host}/follower/isfollowing`, formData);
   }
-  public follow(formData:FormData): Observable<Result> {
-    return this.http.post<Result>(`${this.host}/follower/follow`,formData);
+  public follow(formData: FormData): Observable<Result> {
+    return this.http.post<Result>(`${this.host}/follower/follow`, formData);
   }
-  public unfollow(formData:FormData): Observable<Result> {
-    return this.http.post<Result>(`${this.host}/follower/unfollow`,formData);
+  public unfollow(formData: FormData): Observable<Result> {
+    return this.http.post<Result>(`${this.host}/follower/unfollow`, formData);
   }
 
   public createIsFollowingFormData(currentUsername: string, toUsername: string): FormData {
-    const formData = new FormData();   
+    const formData = new FormData();
     formData.append('fromUsername', currentUsername);
     formData.append('toUsername', toUsername);
     return formData;
   }
   public createFollowFormData(currentUsername: string, toUsername: string): FormData {
-    const formData = new FormData();   
+    const formData = new FormData();
     formData.append('fromUsername', currentUsername);
     formData.append('toUsername', toUsername);
     return formData;
   }
   public createUnfollowFormData(currentUsername: string, toUsername: string): FormData {
-    const formData = new FormData();   
+    const formData = new FormData();
     formData.append('fromUsername', currentUsername);
     formData.append('toUsername', toUsername);
     return formData;
   }
 
-  }
-  
+}

@@ -15,18 +15,18 @@ import { UserService } from '../service/user.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit,OnDestroy {
-  public showLoading=false;
+export class RegisterComponent implements OnInit, OnDestroy {
+  public showLoading = false;
   private subscriptions: Subscription[] = [];
-  siteKey=environment.siteKey;
+  siteKey = environment.siteKey;
   constructor(private userService: UserService,
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
     private router: Router
-    ) { }
- 
-  ngOnInit():void {
-    if (this.authenticationService.isUserLoggedIn()){
+  ) { }
+
+  ngOnInit(): void {
+    if (this.authenticationService.isUserLoggedIn()) {
       this.router.navigateByUrl('user/management')
     }
     else {
@@ -34,49 +34,49 @@ export class RegisterComponent implements OnInit,OnDestroy {
     }
   }
   registerForm = new FormGroup({
-    firstName: new FormControl("",[Validators.required,]),
-    lastName: new FormControl("",[Validators.required]),
-    username: new FormControl("",[Validators.required,Validators.minLength(6),Validators.maxLength(20)]),
-    email: new FormControl("",[Validators.required,Validators.email,]),
-    recaptcha: new FormControl("",[Validators.required]),
+    firstName: new FormControl("", [Validators.required,]),
+    lastName: new FormControl("", [Validators.required]),
+    username: new FormControl("", [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
+    email: new FormControl("", [Validators.required, Validators.email,]),
+    recaptcha: new FormControl("", [Validators.required]),
   })
-  
-  get firstName(){
+
+  get firstName() {
     return this.registerForm.get("firstName")
   }
-  get lastName(){
+  get lastName() {
     return this.registerForm.get("lastName")
   }
-  get username(){
+  get username() {
     return this.registerForm.get("username")
   }
-  get email(){
+  get email() {
     return this.registerForm.get("email")
-  } 
-  public onRegister(formData:FormData): void {    
+  }
+  public onRegister(formData: FormData): void {
     this.showLoading = true;
     this.subscriptions.push(
       this.userService.register(formData).subscribe(
-       (result:Result) =>{
-         if(!result.success){
-          this.sendErrorNotification(NotificationType.ERROR,result.message)
+        (result: Result) => {
+          if (!result.success) {
+            this.sendErrorNotification(NotificationType.ERROR, result.message)
+            this.showLoading = false;
+
+          }
+          else {
+            this.sendSuccessNotification(NotificationType.SUCCESS, result.message)
+            this.showLoading = false;
+            this.router.navigateByUrl('/register-success');
+
+          }
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.sendErrorNotification(NotificationType.ERROR, errorResponse.error.message);
           this.showLoading = false;
-         
-         }
-         else{
-           this.sendSuccessNotification(NotificationType.SUCCESS,result.message)
-           this.showLoading = false;
-           this.router.navigateByUrl('/register-success');
-           
-         }
-       },
-       (errorResponse: HttpErrorResponse) => {
-        this.sendErrorNotification(NotificationType.ERROR, errorResponse.error.message);
-        this.showLoading = false;
-      }
+        }
       )
     );
-  
+
   }
 
   private sendErrorNotification(notificationType: NotificationType, message: string): void {
