@@ -24,7 +24,7 @@
           "+float2int(poem.creationDateInMinute/60) + " saat önce" }}</small>
         <small *ngIf="poem.creationDateInMinute>=1440" class="text-muted">{{poem.creationDate |date:'medium' }}</small>
       </h5>
-      {{poem.creationDate|date:'medium'}}
+   
 
       <h3 style="text-align: center">
         {{ poem.poemTitle }}
