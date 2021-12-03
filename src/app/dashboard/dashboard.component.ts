@@ -14,35 +14,32 @@ import { NotificationService } from '../service/notification.service';
 import { PoemService } from '../service/poem.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent implements OnInit,OnDestroy {
-  public user: User;
-  public currentUsername: string;
-  poemLoading: boolean;
-  followingsPoemsLoading: boolean;
-  followingUsers: User[]=[];
-  categories: Category[]=[];
-  followingsPoems: PoemBox[]=[]; 
+export class DashboardComponent implements OnInit, OnDestroy {
+  public currentUser: User;
+  public poemLoading: boolean;
+  public followingsPoemsLoading: boolean;
+  public followingUsers: User[] = [];
+  public categories: Category[] = [];
+  public followingsPoems: PoemBox[] = [];
   private subscriptions: Subscription[] = [];
-  indexStart=0
-  indexEnd=5
+  private indexStart = 0;
+  private indexEnd = 5;
   constructor(
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
     private categoryService: CategoryService,
-    private poemService: PoemService,
+    private poemService: PoemService
   ) {}
 
   ngOnInit() {
+    this.currentUser = this.authenticationService.getUserFromLocalCache();
     this.getCategories();
-    this.currentUsername =this.authenticationService.getUserFromLocalCache().username;
     this.getFollowingsPoems();
-    console.log(this.followingsPoems.length)
   }
 
   addPoemForm = new FormGroup({
@@ -62,7 +59,6 @@ export class DashboardComponent implements OnInit,OnDestroy {
   get poemContent() {
     return this.addPoemForm.get('poemContent');
   }
-
   get categoryTitle() {
     return this.addPoemForm.get('categoryTitle');
   }
@@ -77,25 +73,28 @@ export class DashboardComponent implements OnInit,OnDestroy {
   public getFollowingsPoems() {
     this.followingsPoemsLoading = true;
     this.subscriptions.push(
-    this.poemService.getFollowingsPoems(this.requestPoemData()).subscribe(
-      (response: DataResult) => {
-        if (response.success) {
-         // this.sendNotification(NotificationType.SUCCESS, response.message);
-          this.followingsPoems = response.data;        
-          this.followingsPoemsLoading = false;
-        } else {
-          this.sendNotification(NotificationType.ERROR, response.message);
+      this.poemService.getFollowingsPoems(this.poemService.requestFollowingsPoemData(
+    this.indexStart,
+    this.indexEnd
+      )).subscribe(
+        (response: DataResult) => {
+          if (response.success) {
+            this.followingsPoems = response.data;
+            this.followingsPoemsLoading = false;
+          } else {
+            this.sendNotification(NotificationType.ERROR, response.message);
+            this.followingsPoemsLoading = false;
+          }
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.sendNotification(
+            NotificationType.ERROR,
+            errorResponse.error.message
+          );
           this.followingsPoemsLoading = false;
         }
-      },
-      (errorResponse: HttpErrorResponse) => {
-        this.sendNotification(
-          NotificationType.ERROR,
-          errorResponse.error.message
-        );
-        this.followingsPoemsLoading = false;
-      }
-    ));
+      )
+    );
   }
   public getCategories(): void {
     this.subscriptions.push();
@@ -118,7 +117,11 @@ export class DashboardComponent implements OnInit,OnDestroy {
   addPoem(): void {
     this.poemLoading = true;
     this.subscriptions.push(
-      this.poemService.addPoem(this.createPoemData()).subscribe(
+      this.poemService.addPoem(this.poemService.createPoemData(
+        this.poemTitle.value,
+        this.poemContent.value,
+        this.categoryTitle.value
+      )).subscribe(
         (response: Result) => {
           if (response.success) {
             this.poemLoading = false;
@@ -140,16 +143,6 @@ export class DashboardComponent implements OnInit,OnDestroy {
       )
     );
   }
-  public createPoemData(): FormData {
-    const formData = new FormData();
-    formData.append('currentUsername', this.currentUsername);
-    formData.append('poemContent', this.addPoemForm.value.poemContent);
-    formData.append('poemTitle', this.addPoemForm.value.poemTitle);
-    formData.append('categoryTitle', this.addPoemForm.value.categoryTitle);
-
-    return formData;
-  }
-
   private sendNotification(
     notificationType: NotificationType,
     message: string
@@ -163,19 +156,11 @@ export class DashboardComponent implements OnInit,OnDestroy {
       );
     }
   }
-
-  loadMorePoem(){
-    this.indexEnd=this.indexEnd+10;
+  loadMorePoem() {
+    this.indexEnd = this.indexEnd + 10;
     this.getFollowingsPoems();
   }
-
-   public requestPoemData(): FormData {
-    const formData = new FormData();
-    formData.append('username', this.currentUsername);
-    formData.append('indexStart', JSON.stringify(this.indexStart));
-    formData.append('indexEnd', JSON.stringify(this.indexEnd));
-    return formData;
-  }
+  
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -192,25 +177,20 @@ export class DashboardComponent implements OnInit,OnDestroy {
     defaultFontName: '',
     defaultFontSize: '',
     fonts: [
-      {class: 'arial', name: 'Arial'},
-      {class: 'times-new-roman', name: 'Times New Roman'},
-      {class: 'calibri', name: 'Calibri'},
-      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' },
     ],
     sanitize: true,
     toolbarPosition: 'top',
     toolbarHiddenButtons: [
-     
       ['insertImage'],
       ['insertVideo'],
       ['backgroundColor'],
-    
-
     ],
-    
-
-};
+  };
   ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

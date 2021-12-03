@@ -2,15 +2,12 @@
 <ul class="nav justify-content-center">
   <li class="nav-item" *ngFor="let category of categories">
     <a *ngIf="selectedCategory!=category.categoryTitle" class="nav-link " aria-current="page" href="{{'/categories/'+category.categoryTitle}}">{{category.categoryTitle}}</a>
-    <a *ngIf="selectedCategory==category.categoryTitle" class="nav-link active " aria-current="page" href="{{'/categories/'+category.categoryTitle}}" >{{category.categoryTitle}}</a>
+    <a *ngIf="selectedCategory==category.categoryTitle" class="nav-link selected"  aria-current="page" href="{{'/categories/'+category.categoryTitle}}" >{{category.categoryTitle}}</a>
   </li>
 
 </ul>
 <div id="categoryList" >
-  <button class="btn btn-primary" type="button" *ngIf="categoryPoemsLoading" >
-    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-    Yükleniyor...
-  </button>
+ 
 </div>
   <!-- category list end--> 
   <!-- poems start-->
@@ -22,8 +19,16 @@
         <div class="card-body">
         <app-poem-box [poem]="poem"></app-poem-box>
       </div>
-      <button *ngIf="!categoryPoemsLoading&&categoryPoems.length>5"class="btn btn-success" (click)="loadMorePoem()">Daha Fazla Gör</button>
+     
     </div>
+    <div class="card">
+      <button *ngIf="!categoryPoemsLoading&&categoryPoems.length>4"class="btn btn-success" (click)="loadMorePoem()">Daha Fazla Gör</button>
+      <button class="btn btn-primary" type="button" *ngIf="categoryPoemsLoading" >
+        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+        Yükleniyor...
+      </button>
+    </div>
+ 
   </div>     
   </div>
 </div>

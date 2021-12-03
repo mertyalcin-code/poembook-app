@@ -98,24 +98,7 @@ export class LogManagementComponent implements OnInit,OnDestroy {
         }
       )
     );
-  }
-
-  private sendNotification(
-    notificationType: NotificationType,
-    message: string
-  ): void {
-    if (message) {
-      this.notificationService.notify(notificationType, message);
-    } else {
-      this.notificationService.notify(
-        NotificationType.ERROR,
-        'bir şeyler ters gitti.'
-      );
-    }
-  }
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
-  }
+  }  
   deleteAllLogs():void{
 
     this.subscriptions.push(
@@ -172,5 +155,22 @@ export class LogManagementComponent implements OnInit,OnDestroy {
         }
       )
     );
+  }
+  
+  private sendNotification(
+    notificationType: NotificationType,
+    message: string
+  ): void {
+    if (message) {
+      this.notificationService.notify(notificationType, message);
+    } else {
+      this.notificationService.notify(
+        NotificationType.ERROR,
+        'bir şeyler ters gitti.'
+      );
+    }
+  }
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

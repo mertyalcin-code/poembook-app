@@ -194,18 +194,6 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
     categoryTitle: new FormControl('', [Validators.required]),
   });
 
-  get comment() {
-    return this.addCommentForm.get('comment');
-  }
-  get poemTitle() {
-    return this.editPoemForm.get('poemTitle');
-  }
-  get poemContent() {
-    return this.editPoemForm.get('poemContent');
-  }
-  get categoryTitle() {
-    return this.editPoemForm.get('categoryTitle');
-  }
 
   clearAddCommentForm() {
     this.addCommentForm.patchValue({
@@ -229,7 +217,10 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
     this.commentLoading = true;
     this.subscriptions.push(
       this.poemCommentService
-        .addComment(this.createCommentData(poemId))
+        .addComment(this.poemCommentService.createCommentData(
+          poemId,
+          this.addCommentForm.get('comment').value
+          ))
         .subscribe(
           (response: Result) => {
             if (response.success) {
@@ -256,7 +247,10 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
     this.updateCommentLoading = true;
     this.editCommentStatus = true;
     this.subscriptions.push(
-      this.poemCommentService.updateComment(this.editCommentData()).subscribe(
+      this.poemCommentService.updateComment(this.poemCommentService.editCommentData(
+        this.editCommentId,
+        this.editCommentForm.get('comment').value
+      )).subscribe(
         (response: Result) => {
           if (response.success) {
             this.updateCommentLoading = false;
@@ -283,7 +277,12 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
   updatePoem(poemId: number): void {
     this.loading = true;
     this.subscriptions.push(
-      this.poemService.updatePoem(this.updatePoemData(poemId)).subscribe(
+      this.poemService.updatePoem(this.poemService.updatePoemData(
+        poemId,
+        this.editCommentForm.get('poemTitle').value,
+        this.editCommentForm.get('poemContent').value, 
+        this.editCommentForm.get('categoryTitle').value,        
+        )).subscribe(
         (response: Result) => {
           if (response.success) {
             this.loading = false;
@@ -310,7 +309,7 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
     this.commentLoading = true;
     this.subscriptions.push(
       this.poemCommentService
-        .deleteComment(this.deleteCommentData(poemCommentId))
+        .deleteComment(poemCommentId)
         .subscribe(
           (response: Result) => {
             if (response.success) {
@@ -333,31 +332,11 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
     );
   }
 
-  public deleteCommentData(poemCommentId: number): FormData {
-    const formData = new FormData();
-    formData.append('username', this.currentUsername);
-    formData.append('poemCommentId', JSON.stringify(poemCommentId));
-    return formData;
-  }
 
-  public createCommentData(poemId: number): FormData {
-    const formData = new FormData();
-    formData.append('username', this.currentUsername);
-    formData.append('poemId', JSON.stringify(poemId));
-    formData.append('poemCommentText', this.addCommentForm.value.comment);
-    return formData;
-  }
-  public editCommentData(): FormData {
-    const formData = new FormData();
-    formData.append('currentUsername', this.currentUsername);
-    formData.append('poemCommentId', JSON.stringify(this.editCommentId));
-    formData.append('poemCommentText', this.editCommentForm.value.comment);
-    return formData;
-  }
   deletePoem(poemId: number): void {
     this.poemLoading = true;
     this.subscriptions.push(
-      this.poemService.deletePoem(this.deletePoemData(poemId)).subscribe(
+      this.poemService.deletePoem(poemId).subscribe(
         (response: Result) => {
           if (response.success) {
             this.poemLoading = false;
@@ -378,21 +357,7 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
       )
     );
   }
-  public deletePoemData(poemId: number): FormData {
-    const formData = new FormData();
-    formData.append('currentUsername', this.currentUsername);
-    formData.append('poemId', JSON.stringify(poemId));
-    return formData;
-  }
-  public updatePoemData(poemId: number): FormData {
-    const formData = new FormData();
-    formData.append('currentUsername', this.currentUsername);
-    formData.append('poemId', JSON.stringify(poemId));
-    formData.append('poemTitle', this.poemTitle.value);
-    formData.append('poemContent', this.poemContent.value);
-    formData.append('categoryTitle', this.categoryTitle.value);
-    return formData;
-  }
+
 
   refresh() {
     window.location.reload();

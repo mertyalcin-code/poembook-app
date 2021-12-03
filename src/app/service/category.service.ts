@@ -30,7 +30,13 @@ export class CategoryService {
     }
    
     
-    
+    public categoryPoemRequestData(selectedCategory:string,indexStart:number,indexEnd:number): FormData {
+      const formData = new FormData();
+      formData.append('categoryTitle',selectedCategory );
+      formData.append('indexStart',JSON.stringify(indexStart) );
+      formData.append('indexEnd',JSON.stringify(indexEnd));
+      return formData;
+    }
 
 
   }

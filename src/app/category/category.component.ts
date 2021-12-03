@@ -23,25 +23,22 @@ import { PoemService } from '../service/poem.service';
 })
 export class CategoryComponent implements OnInit,OnDestroy {
   public currentUsername: string;
-  poemLoading: boolean;
-  categoryPoemsLoading: boolean;
-  categories: Category[]=[];
-  categoryPoems: PoemBox[]=[];
- 
-  likeButtonLoading=false;
+  public poemLoading: boolean;
+  public categoryPoemsLoading: boolean;
+  public categories: Category[]=[];
+  public categoryPoems: PoemBox[]=[];
   private subscriptions: Subscription[] = [];
-  selectedCategory:string='all';
-  isReadMore = true
-  indexStart=0;
-  indexEnd=5;
+  public selectedCategory:string='';
+  public isReadMore = true
+  public indexStart=0;
+  public indexEnd=5;
 
   constructor(   private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
     private categoryService: CategoryService,
     private router: ActivatedRoute,
     private poemService: PoemService,
-    private poemCommentService: PoemCommentService,
-    private poemLikeService: PoemLikeService,) { }
+  ) { }
 
 
   ngOnInit() {
@@ -49,11 +46,10 @@ export class CategoryComponent implements OnInit,OnDestroy {
     this.currentUsername= this.authenticationService.getUserFromLocalCache().username;
     this.selectedCategory=this.router.snapshot.paramMap.get('category');
     this.getSelectedCategoriesPoems();
-    this.indexStart=0;
-    this.indexEnd=5;
+
   }
   public getCategories(): void {
-    this.subscriptions.push();
+    this.subscriptions.push(
     this.categoryService.getActiveCategories().subscribe(
       (response: DataResult) => {
         if (response.success) {
@@ -68,17 +64,21 @@ export class CategoryComponent implements OnInit,OnDestroy {
           errorResponse.error.message
         );
       }
-    );
+    ));
   }
   public getSelectedCategoriesPoems():void{
     this.categoryPoemsLoading=true;
-    this.subscriptions.push();
-    this.poemService.getSelectedCategoriesPoems(this.categoryPoemRequestData()).subscribe(
+    console.log(this.selectedCategory,this.indexEnd,this.indexStart)
+    this.subscriptions.push(
+    this.poemService.getSelectedCategoriesPoems(this.categoryService.categoryPoemRequestData(
+      this.selectedCategory,
+      this.indexStart,
+      this.indexEnd
+    )).subscribe(
       (response: DataResult) => {
         if (response.success) {
           this.categoryPoems = response.data;
-          this.categoryPoemsLoading=false;
-          
+          this.categoryPoemsLoading=false;          
 
         } else {
           this.sendNotification(NotificationType.ERROR, response.message);
@@ -91,22 +91,15 @@ export class CategoryComponent implements OnInit,OnDestroy {
           errorResponse.error.message
         );
         this.categoryPoemsLoading=false;
-      }
-    );
-  }
-  public categoryPoemRequestData(): FormData {
-    const formData = new FormData();
-    formData.append('currentUsername', this.currentUsername);
-    formData.append('categoryTitle',this.selectedCategory );
-    formData.append('indexStart',JSON.stringify(this.indexStart) );
-    formData.append('indexEnd',JSON.stringify(this.indexEnd));
-    return formData;
+      }      
+    ));
   }
 
-  loadMorePoem(){
+  loadMorePoem():void{
     this.indexEnd=this.indexEnd+5;
     this.getSelectedCategoriesPoems();
   }
+
   private sendNotification(
     notificationType: NotificationType,
     message: string

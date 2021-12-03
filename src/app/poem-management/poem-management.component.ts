@@ -65,7 +65,7 @@ export class PoemManagementComponent implements OnInit,OnDestroy {
   }
   onDeletePoem(poemId: number): void {
     this.subscriptions.push(
-      this.poemService.deletePoem(this.deletePoemFormData(poemId)).subscribe(
+      this.poemService.deletePoem(poemId).subscribe(
         (response: Result) => {
           if (response.success) {
             this.sendNotification(NotificationType.SUCCESS, response.message);
@@ -102,9 +102,14 @@ export class PoemManagementComponent implements OnInit,OnDestroy {
     );
   }
 
-
   public onUpdatePoem(): void {
-    const formData = this.updatePoemFormData();
+    const formData = this.editorService.updatePoemFormData(
+      this.editPoem.poemId,
+      this.editPoem.poemContent,
+      this.editPoem.poemTitle,
+      this.editPoem.category.categoryTitle,
+      this.editPoem.active
+    );
     this.subscriptions.push(
       this.editorService.adminUpdate(formData).subscribe(
         (response: Result) => {
@@ -147,23 +152,7 @@ export class PoemManagementComponent implements OnInit,OnDestroy {
       )
     );
   }
-  public updatePoemFormData(): FormData {
-    const formData = new FormData();
-    formData.append('currentUsername', this.currentUsername);
-    formData.append('poemId', JSON.stringify(this.editPoem.poemId));
-    formData.append('poemTitle', this.editPoem.poemTitle);
-    formData.append('poemContent', this.editPoem.poemContent);
-    formData.append('categoryTitle', this.editPoem.category.categoryTitle);
-    formData.append('isActive',JSON.stringify(this.editPoem.active));
-    return formData;
-  }
-  public deletePoemFormData(poemId: number): FormData {
-    const formData = new FormData();
-    formData.append('currentUsername', this.currentUsername);
-    formData.append('poemId', JSON.stringify(poemId));
-
-    return formData;
-  }
+ 
 
   private clickButton(buttonId: string): void {
     document.getElementById(buttonId).click();

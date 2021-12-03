@@ -38,7 +38,7 @@ export class RandomPoemComponent implements OnInit,OnDestroy{
   getRandomPoem():void{    
     this.randomPoemLoading = true;
     this.subscriptions.push(
-      this.poemService.getRandomPoem(this.currentUsername).subscribe(
+      this.poemService.getRandomPoem().subscribe(
         (response: DataResult) => {
           if (response.success) {
             this.randomPoem=response.data;           

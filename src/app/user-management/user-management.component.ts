@@ -13,6 +13,8 @@ import { UserService } from 'src/app/service/user.service';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { FileUploadStatus } from 'src/app/model/file-upload.status';
 import { AdminService } from '../service/admin.service';
+import { ContactService } from '../service/contact.service';
+import { Contact } from '../model/contact';
 @Component({
   selector: 'app-user-management',
   templateUrl: './user-management.component.html',
@@ -25,10 +27,13 @@ export class UserManagementComponent implements OnInit,OnDestroy {
   
   public users:User[];
   public user: User;
+  public searchContact:any;
   private currentUsername: string;
   public refreshing: boolean;
   public selectedUser: User;
+  selectedContactForm:Contact;
   public editUser = new User();
+  public contactForms :Contact[]=[];
   private subscriptions: Subscription[]=[];
 
   public fileStatus = new FileUploadStatus();
@@ -40,13 +45,15 @@ export class UserManagementComponent implements OnInit,OnDestroy {
     private  router: Router,
     private  authenticationService:AuthenticationService,
     private notificationService: NotificationService,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private contactService: ContactService,
     ) { }
 
     ngOnInit(): void{
       this.user = this.authenticationService.getUserFromLocalCache();
       this.currentUsername=this.authenticationService.getUserFromLocalCache().username;
-      this.getUsers();      
+      this.getUsers();   
+      this.getAllForms();   
     }
     public onLogOut(): void {
       this.authenticationService.logOut();
@@ -194,7 +201,7 @@ public saveNewUser(): void {
 }
 public onAddNewUser(userForm: NgForm): void {
   this.refreshing=true;
-  const formData = this.userService.createUserFormData(this.currentUsername, userForm.value);
+  const formData = this.adminService.createUserFormData(this.currentUsername, userForm.value);
   this.subscriptions.push(
     this.adminService.addUser(formData).subscribe(
       (response: Result) => {
@@ -224,7 +231,7 @@ onSelectAvatar(selectedUser:User){
 
 }
 public onUpdateUser(): void {
-  const formData = this.updateUserFormData(this.currentUsername, this.editUser);
+  const formData = this.adminService.updateUserFormData(this.editUser.username, this.editUser);
   this.subscriptions.push(
     this.adminService.updateUser(formData).subscribe(
       (response: Result) => {
@@ -248,46 +255,7 @@ public onUpdateUser(): void {
     )
     );
 }
-public updateUserFormData(loggedInUsername: string, user: User): FormData {
-  const formData = new FormData();    
-  formData.append('adminUsername', loggedInUsername);
-  formData.append('userUsername', this.editUser.username);
-  formData.append('firstName', user.firstName);
-  formData.append('lastName', user.lastName);
-  formData.append('username', user.username);
-  formData.append('email', user.email);
-  formData.append('role', user.role);
-  formData.append('isActive', JSON.stringify(user.active));
-  formData.append('isNonLocked', JSON.stringify(user.notLocked));
-  return formData;
-}
-public onUpdateCurrentUser(user: User): void {
-  this.refreshing = true;
-  this.currentUsername = this.authenticationService.getUserFromLocalCache().username;
-  const formData = this.userService.createUserFormData(this.currentUsername, user);
-  this.subscriptions.push(
-    this.adminService.updateUser(formData).subscribe(
-      (response: Result) => {
-        if(response.success){
-          this.clickButton('closeEditUserModalButton');
-          this.getUsers();
-          this.fileName = null;
-          this.profileImage = null;
-          this.sendNotification(NotificationType.SUCCESS,response.message);
-        }
-        else{
-          this.sendNotification(NotificationType.ERROR, response.message);
-        this.profileImage = null;
-        }
-        
-      },
-      (errorResponse: HttpErrorResponse) => {
-        this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
-        this.profileImage = null;
-      }    
-    )
-    );
-}
+
 
 public onUpdateProfileImage(): void {
   const formData = new FormData();
@@ -372,6 +340,79 @@ this.refreshing=true;
     )
   );
 }
+getAllForms():void { 
+this.refreshing=true;
+  this.subscriptions.push(
+    this.contactService.getAllForms().subscribe(
+      (response: DataResult) => {
+        if(response.success){ 
+          this.contactForms=response.data;
+          this.sendNotification(NotificationType.SUCCESS, response.message);   
+          this.refreshing=false;          
+        }else{
+          this.sendNotification(NotificationType.ERROR, response.message);   
+          this.refreshing=false;
+        }
+        
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
+        this.refreshing=false;
+        
+      }
+    )
+  );
+}
+onDeleteContactForm(formId:number):void { 
+  this.refreshing=true;
+    this.subscriptions.push(
+      this.contactService.deleteForm(formId).subscribe(
+        (response: Result) => {
+          if(response.success){ 
+            this.getAllForms();
+            this.sendNotification(NotificationType.SUCCESS, response.message);   
+            this.refreshing=false;          
+          }else{
+            this.sendNotification(NotificationType.ERROR, response.message);   
+            this.refreshing=false;
+          }
+          
+        },
+        (errorResponse: HttpErrorResponse) => {
+          this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
+          this.refreshing=false;
+          
+        }
+      )
+    );
+  }
+  onDeleteAllContactForm():void { 
+    this.refreshing=true;
+      this.subscriptions.push(
+        this.contactService.deleteAllForms().subscribe(
+          (response: Result) => {
+            if(response.success){ 
+              this.contactForms=[]; 
+              this.sendNotification(NotificationType.SUCCESS, response.message);   
+              this.refreshing=false;          
+            }else{
+              this.sendNotification(NotificationType.ERROR, response.message);   
+              this.refreshing=false;
+            }
+            
+          },
+          (errorResponse: HttpErrorResponse) => {
+            this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
+            this.refreshing=false;
+            
+          }
+        )
+      );
+    }
+  onSelectContactForm(selectedContactForm:Contact):void { 
+    this.selectedContactForm = selectedContactForm;
+    this.clickButton('openContactForm');
+    }
 private clickButton(buttonId: string): void {
   document.getElementById(buttonId).click();
 }

@@ -84,7 +84,11 @@ export class UserComponent implements OnInit,OnDestroy{
   getProfilePoems() {
     this.profilePoemsLoading = true;
     this.subscriptions.push();
-    this.poemService.getProfilePoemsByUsername(this.requestPoemData()).subscribe(
+    this.poemService.getProfilePoemsByUsername(this.poemService.requestPoemData(
+      this.profileUsername,
+      this.indexStart,
+      this.indexEnd
+    )).subscribe(
       (response: DataResult) => {
         if (response.success) {
          // this.sendNotification(NotificationType.SUCCESS, response.message);
@@ -205,14 +209,7 @@ export class UserComponent implements OnInit,OnDestroy{
     this.getProfilePoems();
   }
 
-   public requestPoemData(): FormData {
-    const formData = new FormData();
-    formData.append('currentUsername', this.currentUsername);
-    formData.append('username', this.profileUsername);
-    formData.append('indexStart', JSON.stringify(this.indexStart));
-    formData.append('indexEnd', JSON.stringify(this.indexEnd));
-    return formData;
-  }
+
   routeMessagePage(){
     this.urlRouter.navigateByUrl('/message/'+this.profileUser.username) 
   }

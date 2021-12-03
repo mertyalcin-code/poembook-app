@@ -106,5 +106,10 @@ public createLoginFormData(username: string, password: string): FormData {
   formData.append('password', password);
   return formData;
 }
+public forgetPasswordData(email:string): FormData {
+  const formData = new FormData();   
+  formData.append('email', email);    
+  return formData;
+}
 
 }

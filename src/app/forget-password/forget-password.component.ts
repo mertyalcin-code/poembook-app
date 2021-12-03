@@ -36,14 +36,15 @@ export class ForgetPasswordComponent implements OnInit {
   forgetPasswordForm = new FormGroup({
     email: new FormControl("",[Validators.required,Validators.email,])
   }) 
-
   get email(){
     return this.forgetPasswordForm.get("email")
   } 
   public onForgetPassword(): void {    
     this.showLoading = true;
     this.subscriptions.push(
-      this.authenticationService.forgetPassword(this.forgetPasswordData()).subscribe(
+      this.authenticationService.forgetPassword(this.authenticationService.forgetPasswordData(
+        this.email.value
+      )).subscribe(
        (result:Result) =>{
          if(!result.success){
           this.sendNotification(NotificationType.ERROR,result.message)
@@ -65,11 +66,7 @@ export class ForgetPasswordComponent implements OnInit {
     );
   
   }
-  public forgetPasswordData(): FormData {
-    const formData = new FormData();   
-    formData.append('email', this.email.value);    
-    return formData;
-  }
+ 
   private sendNotification(
     notificationType: NotificationType,
     message: string

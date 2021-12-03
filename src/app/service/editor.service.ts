@@ -59,4 +59,13 @@ constructor(
     formData.append('categoryTitle', categoryTitle);
     return formData;
   }
+  public updatePoemFormData(poemId:number,poemTitle:string,poemContent:string,categoryTitle:string,isActive:boolean): FormData {
+    const formData = new FormData();
+    formData.append('poemId', JSON.stringify(poemId));
+    formData.append('poemTitle', poemTitle);
+    formData.append('poemContent', poemContent);
+    formData.append('categoryTitle', categoryTitle);
+    formData.append('isActive',JSON.stringify(isActive));
+    return formData;
+  }
 }

@@ -27,8 +27,8 @@ export class PoemService {
   public searchPoems (search:string): Observable<DataResult> {
     return this.http.get<DataResult>(`${this.host}/poem/list/search/${search}`);
   }
-  public getRandomPoem(currentUsername:string): Observable<DataResult> {
-    return this.http.get<DataResult>(`${this.host}/poem/list/random/${currentUsername}`);
+  public getRandomPoem(): Observable<DataResult> {
+    return this.http.get<DataResult>(`${this.host}/poem/list/random`);
   }
   public getProfilePoemsByUsername(formData:FormData): Observable<DataResult> {
     return this.http.post<DataResult>(`${this.host}/poem/list/profile/username`,formData);
@@ -38,8 +38,7 @@ export class PoemService {
   }
   public getFollowingsPoems(formData:FormData): Observable<DataResult> {
     return this.http.post<DataResult>(`${this.host}/poem/list/followings/`,formData);
-  }
-  
+  }  
   public getUsersPoemByCategoryTitle(categoryTitle:string): Observable<DataResult> {
     return this.http.get<DataResult>(`${this.host}/poem/category-title/${categoryTitle}`);
   }
@@ -49,8 +48,52 @@ export class PoemService {
   public updatePoem(formData:FormData): Observable<Result> {
     return this.http.post<Result>(`${this.host}/poem/update`,formData);
   }
-  public deletePoem(formData:FormData): Observable<Result> {
-    return this.http.post<Result>(`${this.host}/poem/delete`,formData);
+  public deletePoem(poemId:number): Observable<Result> {
+    return this.http.delete<Result>(`${this.host}/poem/delete/${poemId}`);
   } 
+
+
+  public createPoemData(poemContent:string,poemTitle:string,categoryTitle:string): FormData {
+    const formData = new FormData();
+    formData.append('poemContent', poemContent);
+    formData.append('poemTitle', poemTitle);
+    formData.append('categoryTitle', categoryTitle);
+    return formData;
+  }
+
+  public requestPoemData(profileUsername:string,indexStart:number,indexEnd:number): FormData {
+    const formData = new FormData();
+    formData.append('username', profileUsername);
+    formData.append('indexStart', JSON.stringify(indexStart));
+    formData.append('indexEnd', JSON.stringify(indexEnd));
+    return formData;
+  }
   
+  public requestFollowingsPoemData(indexStart:number,indexEnd:number): FormData {
+    const formData = new FormData();
+    formData.append('indexStart', JSON.stringify(indexStart));
+    formData.append('indexEnd', JSON.stringify(indexEnd));
+    return formData;
+  }
+
+
+  public updatePoemData(poemId: number,poemTitle: string,poemContent: string,categoryTitle: string): FormData {
+    const formData = new FormData();
+    formData.append('poemId', JSON.stringify(poemId));
+    formData.append('poemTitle', poemTitle);
+    formData.append('poemContent', poemContent);
+    formData.append('categoryTitle', categoryTitle);
+    return formData;
+  }
+
+
+
+
+
+
+
+
+
+
+
 }

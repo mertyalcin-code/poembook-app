@@ -18,7 +18,7 @@ import { UserService } from '../service/user.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit,OnDestroy{
-  public user: User;
+  public user= new User();
   loading=false;
   deleteLoading=false;
   private subscriptions: Subscription[] = [];
@@ -26,7 +26,6 @@ export class NavbarComponent implements OnInit,OnDestroy{
 
   constructor(
     private authenticationService: AuthenticationService,
-    private userService: UserService,
     private router: Router,
     private notificationService: NotificationService,
     private noticeService: NoticeService,

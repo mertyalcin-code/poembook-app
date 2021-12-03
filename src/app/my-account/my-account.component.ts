@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NotificationType } from '../enum/notification-type.enum';
 import { DataResult } from '../model/result/data-result';
@@ -35,6 +36,7 @@ export class MyAccountComponent implements OnInit,OnDestroy {
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
     private userService: UserService,
+    private router:Router
  ) { }
   ngOnInit() {    
     this.currentUser=this.authenticationService.getUserFromLocalCache();
@@ -84,7 +86,9 @@ export class MyAccountComponent implements OnInit,OnDestroy {
   }
   public OnUpdateProfile(){
     this.loading=true;
-   let formData=this.updateProfileFormData(this.currentUsername,this.editUser);
+   let formData=this.userService.updateProfileFormData(
+     this.editUser
+     );
     this.subscriptions.push(    
       this.userService.selfUpdate(formData).subscribe(
         (response: Result) => {
@@ -105,7 +109,9 @@ export class MyAccountComponent implements OnInit,OnDestroy {
   }
   public onChangePassword(){
     this.loading=true;
-    let formData=this.changePasswordFormData();
+    let formData=this.userService.changePasswordFormData(
+      this.newPassword
+    );
      this.subscriptions.push(    
        this.userService.changePassword(formData).subscribe(
          (response: Result) => {
@@ -126,7 +132,7 @@ export class MyAccountComponent implements OnInit,OnDestroy {
    }
    public onChangeEmail(){
     this.loading=true;
-    let formData=this.changeEmailFormData();
+    let formData=this.userService.changeEmailFormData(this.newEmail);
      this.subscriptions.push(    
        this.userService.changeEmail(formData).subscribe(
          (response: Result) => {
@@ -148,14 +154,16 @@ export class MyAccountComponent implements OnInit,OnDestroy {
    }
    public onChangeUsername(){
      this.loading=true;
-    let formData=this.changeUsernameFormData();
+    let formData=this.userService.changeUsernameFormData(this.newUsername);
      this.subscriptions.push(    
        this.userService.changeUsername(formData).subscribe(
          (response: Result) => {
            if (response.success) {         
              this.clickButton("closeChangeUsername");  
              this.loading=false;
-            this.sendNotification(NotificationType.SUCCESS, response.message);          
+            this.sendNotification(NotificationType.SUCCESS, response.message);  
+            this.authenticationService.logOut();    
+            this.router.navigateByUrl("/login");
            } else {
              this.sendNotification(NotificationType.ERROR, response.message);  
              this.loading=false;        }
@@ -195,36 +203,6 @@ export class MyAccountComponent implements OnInit,OnDestroy {
         }
       )
     );
-  }
-  private updateProfileFormData(loggedInUsername: string, user: User): FormData {
-    const formData = new FormData();   
-    formData.append('currentUsername', loggedInUsername);
-    formData.append('firstName', user.firstName);
-    formData.append('lastName', user.lastName);
-    formData.append('username', user.username);
-    formData.append('facebookAccount', user.facebookAccount);
-    formData.append('twitterAccount', user.twitterAccount);
-    formData.append('instagramAccount', user.instagramAccount);
-    formData.append('aboutMe', user.aboutMe); 
-    return formData;
-  }
-  private changePasswordFormData(): FormData {
-    const formData = new FormData();   
-    formData.append('username', this.currentUsername);
-    formData.append('password', this.newPassword);
-    return formData;
-  }
-  private changeEmailFormData(): FormData {
-    const formData = new FormData();   
-    formData.append('currentUsername', this.currentUsername);
-    formData.append('newEmail', this.newEmail);
-    return formData;
-  }
-  private changeUsernameFormData(): FormData {
-    const formData = new FormData();   
-    formData.append('currentUsername', this.currentUsername);
-    formData.append('newUsername', this.newUsername);
-    return formData;
   }
 
   private updateLoggedInUser():User{

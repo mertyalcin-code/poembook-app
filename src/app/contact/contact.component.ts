@@ -1,9 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { NotificationType } from '../enum/notification-type.enum';
 import { Result } from '../model/result/result';
+import { User } from '../model/user';
+import { AuthenticationService } from '../service/authentication.service';
 import { ContactService } from '../service/contact.service';
 import { NotificationService } from '../service/notification.service';
 
@@ -12,14 +14,26 @@ import { NotificationService } from '../service/notification.service';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })
-export class ContactComponent implements OnInit {
-  loading: boolean;
+export class ContactComponent implements OnInit,OnDestroy{
+  public loading: boolean;
   private subscriptions: Subscription[] = [];
-  constructor(    private notificationService: NotificationService,
-    private contactService:ContactService ) { }
+  currentUser:User;
+  constructor(    
+    private notificationService: NotificationService,
+    private contactService:ContactService,
+    private authenticationService:AuthenticationService,
+    ) { }
 
   ngOnInit() {
-
+    this.currentUser=this.authenticationService.getUserFromLocalCache();
+    if(this.currentUser!=null){
+      this.contactForm.patchValue({
+        firstName: this.currentUser.firstName,
+        lastName: this.currentUser.lastName,
+        email: this.currentUser.email,
+        text: '',
+      });
+    }
   }
   contactForm = new FormGroup({
     firstName: new FormControl("",[Validators.required,Validators.minLength(3),Validators.maxLength(30)]),
@@ -51,7 +65,11 @@ export class ContactComponent implements OnInit {
   onSubmit(){
     this.loading = true;
     this.subscriptions.push(
-    this.contactService.submitForm(this.contactService.submitFormData(this.firstName.value,this.lastName.value,this.email.value,this.text.value)).subscribe(
+    this.contactService.submitForm(this.contactService.submitFormData(
+      this.firstName.value,
+      this.lastName.value,
+      this.email.value,
+      this.text.value)).subscribe(
       (response: Result) => {
         if (response.success) {
           this.sendNotification(NotificationType.SUCCESS, response.message);              

@@ -17,8 +17,24 @@ public addComment(formData:FormData): Observable<Result> {
 public updateComment(formData:FormData): Observable<Result> {
   return this.http.post<Result>(`${this.host}/comment/update`,formData);
 }
-public deleteComment(formData:FormData): Observable<Result> {
-  return this.http.post<Result>(`${this.host}/comment/delete`,formData);
+public deleteComment(id:number): Observable<Result> {
+  return this.http.delete<Result>(`${this.host}/comment/delete/${id}`);
 }
+
+
+public createCommentData(poemId: number,poemCommentText:string): FormData {
+  const formData = new FormData();
+  formData.append('poemId', JSON.stringify(poemId));
+  formData.append('poemCommentText', poemCommentText);
+  return formData;
+}
+public editCommentData(poemCommentId:number,poemCommentText:string): FormData {
+  const formData = new FormData();
+  formData.append('poemCommentId', JSON.stringify(poemCommentId));
+  formData.append('poemCommentText', poemCommentText);
+  return formData;
+}
+
+
 
 }

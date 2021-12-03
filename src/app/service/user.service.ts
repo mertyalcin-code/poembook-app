@@ -58,6 +58,30 @@ export class UserService {
     formData.append('isNonLocked', JSON.stringify(user.notLocked));
     return formData;
   }
-
+  public updateProfileFormData(user: User): FormData {
+    const formData = new FormData();   
+    formData.append('firstName', user.firstName);
+    formData.append('lastName', user.lastName);
+    formData.append('facebookAccount', user.facebookAccount);
+    formData.append('twitterAccount', user.twitterAccount);
+    formData.append('instagramAccount', user.instagramAccount);
+    formData.append('aboutMe', user.aboutMe); 
+    return formData;
+  }
+  public changePasswordFormData(newPassword:string): FormData {
+    const formData = new FormData();   
+    formData.append('newPassword', newPassword);
+    return formData;
+  }
+  public changeEmailFormData(newEmail:string): FormData {
+    const formData = new FormData();   
+    formData.append('newEmail', newEmail);
+    return formData;
+  }
+  public changeUsernameFormData(newUsername:string): FormData {
+    const formData = new FormData();   
+    formData.append('newUsername', newUsername);
+    return formData;
+  }
 
 }

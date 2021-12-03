@@ -18,7 +18,7 @@ export class ContactService {
     public submitForm(formData:FormData): Observable<Result> {
       return this.http.post<Result>(`${this.host}/contact/submit`,formData);
     }
-    public getAllForms(formData:FormData): Observable<DataResult> {
+    public getAllForms(): Observable<DataResult> {
       return this.http.get<DataResult>(`${this.host}/contact/list`);
     }
     public deleteForm(formId:number): Observable<Result> {

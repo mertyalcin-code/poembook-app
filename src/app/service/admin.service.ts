@@ -85,6 +85,17 @@ public makeSuperAdmin(username: string): Observable<Result> {
     formData.append('isNonLocked', JSON.stringify(user.notLocked));
     return formData;
   }
-
+  public updateUserFormData(username:string,user: User): FormData {
+    const formData = new FormData();    
+    formData.append('userUsername', username);
+    formData.append('firstName', user.firstName);
+    formData.append('lastName', user.lastName);
+    formData.append('username', user.username);
+    formData.append('email', user.email);
+    formData.append('role', user.role);
+    formData.append('isActive', JSON.stringify(user.active));
+    formData.append('isNonLocked', JSON.stringify(user.notLocked));
+    return formData;
+  }
 
 }
