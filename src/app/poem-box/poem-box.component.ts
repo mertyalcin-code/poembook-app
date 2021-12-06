@@ -37,6 +37,7 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
   editPoem = new Poem();
   editCommentId: number;
   updateCommentLoading = false;
+  showMorePoemContent:boolean;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -53,6 +54,10 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
     this.currentUser = this.authenticationService.getUserFromLocalCache();
     this.getpoem();
     this.getCategories();
+    if(this.poem.poemContent.length<500){
+      this.showMorePoemContent=true;
+    }
+   
   }
 
   getpoem(): void {
@@ -357,7 +362,12 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
       )
     );
   }
-
+  showLessContent():void{
+    this.showMorePoemContent=false;
+  }
+  showMoreContent():void{
+    this.showMorePoemContent=true;
+  }
 
   refresh() {
     window.location.reload();

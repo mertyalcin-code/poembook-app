@@ -10,7 +10,7 @@ export class TestService {
   private host = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
-  public test(): Observable<Date> {
-    return this.http.get<Date>(`${this.host}/test/test`);
+  public test(): Observable<any> {
+    return this.http.get<any>(`${this.host}/test/test`);
   }
 }

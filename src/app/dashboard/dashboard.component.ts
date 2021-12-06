@@ -97,7 +97,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     );
   }
   public getCategories(): void {
-    this.subscriptions.push();
+    this.subscriptions.push(
     this.categoryService.getCategories().subscribe(
       (response: DataResult) => {
         if (response.success) {
@@ -112,14 +112,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
           errorResponse.error.message
         );
       }
-    );
+    ));
   }
   addPoem(): void {
     this.poemLoading = true;
     this.subscriptions.push(
       this.poemService.addPoem(this.poemService.createPoemData(
-        this.poemTitle.value,
         this.poemContent.value,
+        this.poemTitle.value,
         this.categoryTitle.value
       )).subscribe(
         (response: Result) => {

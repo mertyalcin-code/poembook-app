@@ -29,9 +29,15 @@
       <h3 style="text-align: center">
         {{ poem.poemTitle }}
       </h3>
-      <div *ngIf="!editPoemStatus">
-        <p class="e2e-inner-html-bound" style="text-align: center;overflow-y: auto;max-height: 500px;"
+      <div *ngIf="!editPoemStatus &&!showMorePoemContent">
+        <p class="e2e-inner-html-bound" style="text-align: center;overflow-y: hidden;"
+          [innerHTML]="poem.poemContent.slice(0,500)+'<b>...</b>'"></p>
+          <button *ngIf="poem.poemContent.length>500" class="btn btn-success" (click)="showMoreContent()">Daha Fazla</button>
+      </div>
+      <div *ngIf="!editPoemStatus &&showMorePoemContent">
+        <p class="e2e-inner-html-bound" style="text-align: center;"
           [innerHTML]="poem.poemContent"></p>
+          <button *ngIf="poem.poemContent.length>500" class="btn btn-primary" (click)="showLessContent()">Daha az</button>
       </div>
       <form *ngIf="editPoemStatus" action="#" class="row g-3" [formGroup]="editPoemForm"
         (ngSubmit)="updatePoem(poem.poemId)">
