@@ -23,7 +23,6 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { MyAccountComponent } from './my-account/my-account.component';
 import { CategoryComponent } from './category/category.component';
 import { RandomPoemComponent } from './random-poem/random-poem.component';
-import { TestComponent } from './test/test.component';
 import { PoemBoxComponent } from './poem-box/poem-box.component';
 import { MostLikedComponent } from './populer/most-liked/most-liked.component';
 import { MostCommentComponent } from './populer/most-comment/most-comment.component';
@@ -57,7 +56,6 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     MyAccountComponent,
     CategoryComponent,
     RandomPoemComponent,
-    TestComponent,
     PoemBoxComponent,
     MostLikedComponent,
     MostCommentComponent,

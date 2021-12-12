@@ -76,6 +76,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             const token = response.headers.get(HeaderType.JWT_TOKEN);
             this.authenticationService.saveToken(token);
             this.authenticationService.addUserToLocalCache(response.body);
+            console.log("çalıştım")
             this.router.navigateByUrl('/home');
             location.reload();
             this.showLoading = false;

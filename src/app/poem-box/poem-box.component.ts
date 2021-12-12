@@ -284,9 +284,9 @@ export class PoemBoxComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.poemService.updatePoem(this.poemService.updatePoemData(
         poemId,
-        this.editCommentForm.get('poemTitle').value,
-        this.editCommentForm.get('poemContent').value,
-        this.editCommentForm.get('categoryTitle').value,
+        this.editPoemForm.get('poemTitle').value,
+        this.editPoemForm.get('poemContent').value,
+        this.editPoemForm.get('categoryTitle').value,
       )).subscribe(
         (response: Result) => {
           if (response.success) {

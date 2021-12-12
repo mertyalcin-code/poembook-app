@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import SecureStorage from 'secure-web-storage';
 import CryptoJS from 'crypto-js';
-const SECRET_KEY = 'buraya_secret_key_yazabilirsiniz';
+const SECRET_KEY = 'secrethere';
 @Injectable({
   providedIn: 'root'
 })

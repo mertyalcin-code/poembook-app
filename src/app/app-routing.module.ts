@@ -13,7 +13,6 @@ import { UserComponent } from './user/user.component';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { CategoryComponent } from './category/category.component';
 import { RandomPoemComponent } from './random-poem/random-poem.component';
-import { TestComponent } from './test/test.component';
 import { MostCommentComponent } from './populer/most-comment/most-comment.component';
 import { MostLikedComponent } from './populer/most-liked/most-liked.component';
 import { SearchPoemsComponent } from './search-poems/search-poems.component';
@@ -32,7 +31,6 @@ const routes: Routes = [
   { path: 'forget-password/code/:code', component: PasswordResetComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'register-success', component: RegisterSuccessComponent },
-  { path: 'test', component: TestComponent },
   { path: 'about-us', component: AboutUsComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'home', component: DashboardComponent, canActivate: [AuthenticationGuard] },
