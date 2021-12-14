@@ -22,7 +22,7 @@
           }}</small>
         <small *ngIf="poem.creationDateInMinute>=60 && poem.creationDateInMinute<1440" class="text-muted">{{"
           "+float2int(poem.creationDateInMinute/60) + " saat önce" }}</small>
-        <small *ngIf="poem.creationDateInMinute>=1440" class="text-muted">{{poem.creationDate |date:'d/M/yy, HH:mm ' }}</small>
+        <small *ngIf="poem.creationDateInMinute>=1440" class="text-muted">{{poem.creationDate |date:'dd/M/yy, HH:mm ' }}</small>
       </h5>
    
 
@@ -114,7 +114,7 @@
           <small *ngIf="comment.commentTimeInMinute>=60 && comment.commentTimeInMinute<1440" class="text-muted">{{"
             "+float2int(comment.commentTimeInMinute/60) + " saat önce" }}</small>
           <small *ngIf="comment.commentTimeInMinute>=1440" class="text-muted">{{comment.lastCommentUpdateTime
-            |date:'d/M/yy, HH:mm ' }}</small>
+            |date:'dd/M/yy, HH:mm ' }}</small>
         </h5>
         <p> {{ comment.poemCommentText }}</p>
         <div class="w-100">
