@@ -81,11 +81,11 @@
                                             <div class="chat-text" style="background-color: greenyellow;">
                                                 {{message.message}}
                                             </div>
-                                            <div class="chat-hour">{{message.pmTime |date:'medium'}} <span
+                                            <div class="chat-hour">{{message.pmTime |date:'dd/M/yy, HH:mm '}} <span
                                                     class="fa fa-check-circle"></span></div>
                                         </li>
                                         <li class="chat-right" *ngIf="message.from.username==currentUser.username">
-                                            <div class="chat-hour">{{message.pmTime|date:'medium'}}<span
+                                            <div class="chat-hour">{{message.pmTime|date:'dd/M/yy, HH:mm '}}<span
                                                     class="fa fa-check-circle"></span></div>
                                             <div class="chat-text">{{message.message}}</div>
                                             <div class="chat-avatar">
